@@ -3,16 +3,7 @@ name: research
 description: >
   Use this skill when the user wants to conduct academic research: generating
   ideas from a research direction or papers, deepening an idea, designing
-  experiments, or implementing research code. Triggers on /research followed
-  by a research direction description (which may include paper info);
-  /research --papers followed by a PDF or paper name;
-  /research download-paper followed by a paper description (standalone download
-  command, independent of the research flow). Also triggers when the user says
-  "start research", "help me find papers", "generate a research idea",
-  "design experiments", "implement based on idea report", or describes a
-  research direction in free-form text (with or without attached PDFs).
-  If the user inputs /research with no content, prompt them to provide a
-  research description.
+  experiments, or implementing research code.
 version: 2.0.0
 license: LICENSE
 ---

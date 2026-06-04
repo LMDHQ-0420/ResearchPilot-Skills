@@ -2,12 +2,7 @@
 name: research
 description: >
   当用户想要开展学术研究时使用此 skill：包括从研究方向生成 idea、深化 idea、
-  设计实验、或实现研究代码。在以下情况触发：/research 后跟研究方向描述文字
-  （可包含论文信息）；/research --papers 后跟 PDF 或论文名称；
-  /research download-paper 后跟论文描述（独立下载命令，与研究流程无关）。
-  当用户说"开始科研流程"、"帮我找论文"、"生成研究 idea"、"帮我设计实验"、
-  "根据 idea 报告写代码"，或用中文描述研究方向（可附带 PDF）时也触发。
-  若用户仅输入 /research 不带任何内容，提示用户需要输入研究描述。
+  设计实验、或实现研究代码。
 version: 2.0.0
 license: LICENSE
 ---
