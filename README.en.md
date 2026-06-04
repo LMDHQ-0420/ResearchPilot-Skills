@@ -42,7 +42,7 @@ cd research-scout
 ### Install English Version
 
 ```bash
-cp -r skills/research-scout-en/research/* ~/.claude/skills/research/
+cp -r skills/research-scout-en/* ~/.claude/skills/
 ```
 
 ### Verify Installation
