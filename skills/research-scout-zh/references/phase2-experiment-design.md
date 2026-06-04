@@ -2,7 +2,7 @@
 
 ## 入口
 
-由 `/research-scout-zh step2` 触发。
+由 `/research step2` 触发。
 
 前置条件：`docs/idea_report.md` 存在且包含 `# 第一部分`，但尚不包含 `# 第二部分`。
 
@@ -11,7 +11,7 @@
 ### 第一步 —— 读取用户需求
 
 检查 `docs/user_requirements.md` → `## 阶段二` 章节。
-- 若为空：提示用户填写阶段二章节，等待 `/research-scout-zh confirm`
+- 若为空：提示用户填写阶段二章节，等待 `/research confirm`
 - 若已填写：读取并作为实验设计的约束条件应用
 
 ### 第二步 —— 读取完整 idea_report.md
@@ -85,15 +85,15 @@
 
 ```
 docs/idea_report.md 第二部分已追加。请审阅实验设计，然后：
-- /research-scout-zh step3  —— 确认并进入编码阶段
-- /research-scout-zh revise "反馈"  —— 根据修改意见重新生成第二部分
+- /research step3  —— 确认并进入编码阶段
+- /research revise "反馈"  —— 根据修改意见重新生成第二部分
 ```
 
 在用户执行 step3 或 revise 之前，不得继续推进。
 
 ## 阶段二中的 revise 处理
 
-当用户在第二部分已存在的情况下执行 `/research-scout-zh revise "反馈"` 时：
+当用户在第二部分已存在的情况下执行 `/research revise "反馈"` 时：
 1. 读取反馈内容
 2. 将修改意见纳入，重新执行第四至六步
 3. 替换现有第二部分内容（保留第二部分标题和可行性摘要）

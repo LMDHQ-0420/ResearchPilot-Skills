@@ -6,16 +6,16 @@ Four input modes, combinable:
 
 ```bash
 # Mode 1 — topic string
-/research-scout-en "battery SOH prediction"
+/research "battery SOH prediction"
 
 # Mode 2 — papers flag (PDF files, paper names, or descriptions; mix allowed)
-/research-scout-en --papers paper1.pdf "Attention is All You Need" "transformer 2017 Google"
+/research --papers paper1.pdf "Attention is All You Need" "transformer 2017 Google"
 
 # Mode 3 — combined (recommended)
-/research-scout-en "battery SOH prediction" --papers paper1.pdf "BattFormer 2023"
+/research "battery SOH prediction" --papers paper1.pdf "BattFormer 2023"
 
 # Mode 4 — free-form description (with or without attached PDFs)
-/research-scout-en
+/research
 # User then types a paragraph describing their idea and attaches PDFs
 ```
 
@@ -38,7 +38,7 @@ Based on your description, I extracted:
 | 1 | paper.pdf         | Read directly |
 | 2 | {description}     | Infer metadata |
 
-Confirm with `/research-scout-en confirm` or correct inline.
+Confirm with `/research confirm` or correct inline.
 ```
 
 After Mode 4 confirmation: write extracted content into `docs/user_requirements.md`
@@ -55,8 +55,8 @@ I inferred the following papers. Please confirm:
 |---|-----------|-------|------|-------------|-----------------|
 | 1 | Attention Is All You Need | NeurIPS | 2017 | Vaswani et al. | Transformer: pure attention replacing RNN |
 
-To fix one entry: /research-scout-en revise-paper 1 "correct info"
-To confirm all:  /research-scout-en confirm
+To fix one entry: /research revise-paper 1 "correct info"
+To confirm all:  /research confirm
 ```
 
 `revise-paper` modifies only the specified row and re-displays the full table.
@@ -67,7 +67,7 @@ PDF inputs skip this step entirely.
 Check `docs/user_requirements.md` → `## Phase 1` section.
 - If file missing or section empty: create file using the template in
   `references/user-requirements-template.md`, tell user to fill Phase 1 section,
-  wait for `/research-scout-en confirm`
+  wait for `/research confirm`
 - If filled (or Mode 4 auto-populated): read and apply as generation constraints
 
 ## Step 4 — Literature Retrieval (dual-track, parallel)
@@ -120,10 +120,10 @@ Based on literature analysis, here are {N} candidate ideas:
 
 ### Idea 2: ...
 
-Select with `/research-scout-en pick {n}`
+Select with `/research pick {n}`
 ```
 
-User runs `/research-scout-en pick {n}` to choose one.
+User runs `/research pick {n}` to choose one.
 
 ## Step 7 — Deepen Selected Idea
 
@@ -180,7 +180,7 @@ The following papers could not be downloaded automatically:
 | 1 | {title} | Sci-Hub / author email / library |
 
 Place PDFs in docs/papers/ with the exact title as filename.
-Run `/research-scout-en confirm` when done, or `/research-scout-en skip-papers` to skip.
+Run `/research confirm` when done, or `/research skip-papers` to skip.
 ```
 
 On `confirm`: re-scan `docs/papers/`, match new files to reference entries, continue.
@@ -199,8 +199,8 @@ PDF summary:
 - ❌ {title} [PDF unavailable]
 
 docs/idea_report.md generated. Please review, then:
-- /research-scout-en step2   — confirm and enter experiment design
-- /research-scout-en revise "feedback"  — regenerate Part I with changes
+- /research step2   — confirm and enter experiment design
+- /research revise "feedback"  — regenerate Part I with changes
 ```
 
 Do not proceed until user runs step2 or revise.

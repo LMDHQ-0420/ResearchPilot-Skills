@@ -2,7 +2,7 @@
 
 ## Entry
 
-Triggered by `/research-scout-en step2`.
+Triggered by `/research step2`.
 
 Precondition: `docs/idea_report.md` exists and contains `# Part I`, does NOT yet contain `# Part II`.
 
@@ -11,7 +11,7 @@ Precondition: `docs/idea_report.md` exists and contains `# Part I`, does NOT yet
 ### Step 1 — Read User Requirements
 
 Check `docs/user_requirements.md` → `## Phase 2` section.
-- If empty: prompt user to fill Phase 2 section, wait for `/research-scout-en confirm`
+- If empty: prompt user to fill Phase 2 section, wait for `/research confirm`
 - If filled: read and apply as constraints on experiment design
 
 ### Step 2 — Read Full idea_report.md
@@ -87,15 +87,15 @@ STOP and display:
 
 ```
 docs/idea_report.md Part II appended. Please review the experiment design, then:
-- /research-scout-en step3  — confirm and enter coding
-- /research-scout-en revise "feedback"  — regenerate Part II with changes
+- /research step3  — confirm and enter coding
+- /research revise "feedback"  — regenerate Part II with changes
 ```
 
 Do not proceed until user runs step3 or revise.
 
 ## Handling revise in Phase 2
 
-When user runs `/research-scout-en revise "feedback"` while Part II exists:
+When user runs `/research revise "feedback"` while Part II exists:
 1. Read the feedback
 2. Re-run Steps 4–6 incorporating the changes
 3. Replace the existing Part II content (keep the Part II header and feasibility summary)

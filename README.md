@@ -1,257 +1,253 @@
 # Research Scout
 
-**Automated academic research workflow for Claude Code**
+**Claude Code 学术研究自动化工作流**
 
-English | [中文](README.zh.md)
+[English](README.en.md) | 中文
 
 ---
 
-## Overview
+## 概述
 
-Research Scout automates the complete academic research workflow from literature survey to code implementation. It guides researchers through three structured phases with human review checkpoints, ensuring high-quality output at each stage.
+Research Scout 自动化从文献调研到代码实现的完整学术研究工作流。通过三个结构化阶段引导研究者，每个阶段都有人工审查节点，确保高质量输出。
 
-**Three-Phase Pipeline:**
+**三阶段流程：**
 
 ```
-Phase 1: Literature Survey & Idea Generation
-          ↓ (user review & confirm)
-Phase 2: Experiment Design & Feasibility Verification  
-          ↓ (user review & confirm)
-Phase 3: Code Implementation & Results Logging
+阶段 1：文献调研与 Idea 生成
+          ↓（用户审查并确认）
+阶段 2：实验设计与可行性验证  
+          ↓（用户审查并确认）
+阶段 3：代码实现与结果记录
 ```
 
-## Features
+## 功能特性
 
-- **4 Input Modes**: Topic string, paper PDFs, paper names, or free-form description
-- **Multi-Candidate Ideas**: Generates 3-5 ideas with novelty verification and self-critique
-- **Citation Verification**: Extracts supporting text from PDFs to prevent hallucination
-- **Feasibility Checks**: Validates dataset availability, baseline code, and GPU memory before design
-- **Structured Documents**: Generates `idea_report.md`, `dev_log.md`, `code_guide.md` with strict formatting
-- **Rollback Support**: Can return to Phase 2 from Phase 3 to revise experiments
-- **Results Tracking**: Sub-phase 3c compares actual vs expected results with diagnostic suggestions
+- **4 种输入模式**：研究方向、论文 PDF、论文名称、或自由描述
+- **多候选 Idea**：生成 3-5 个 idea 并进行新颖性验证与自我批判
+- **引用核验**：从 PDF 中提取支撑句，防止引用幻觉
+- **可行性检查**：设计前验证数据集可用性、baseline 代码、GPU 显存
+- **结构化文档**：生成严格格式的 `idea_report.md`、`dev_log.md`、`code_guide.md`
+- **回溯支持**：可从阶段 3 回到阶段 2 修改实验设计
+- **结果追踪**：子阶段 3c 对比实际与预期结果，提供诊断建议
 
-## Installation
+## 安装方法
 
-### Option 1: Via Git Clone (Recommended)
+### 克隆仓库
 
 ```bash
-# Clone the repository
 git clone https://github.com/YOUR_USERNAME/research-scout.git
 cd research-scout
-
-# Create symlink for English version to Claude Code plugins
-mkdir -p ~/.claude/plugins/marketplaces
-ln -s "$(pwd)/code/skills/research-scout-en" ~/.claude/plugins/marketplaces/research-scout-en
-
-# Restart Claude Code to activate
 ```
 
-### Option 2: Manual Installation
-
-1. Download or clone this repository
-2. Copy `code/skills/research-scout-en/` directory to `~/.claude/plugins/marketplaces/research-scout-en/`
-3. Restart Claude Code
-
-### Verify Installation
-
-In Claude Code, type:
+### 安装中文版
 
 ```bash
-/research-scout-en "test installation"
+cp -r code/skills/research-scout-zh/* ~/.claude/skills/
 ```
 
-If Claude starts asking about papers or prompts to fill user_requirements.md, installation succeeded.
+### 验证安装
 
-## Quick Start
-
-### Phase 1: Literature Survey & Idea Generation
-
-Start with a research topic or papers:
+在 Claude Code 中输入：
 
 ```bash
-# Mode 1 — Topic string
-/research-scout-en "battery state-of-health prediction"
-
-# Mode 2 — With seed papers (PDFs, names, or descriptions)
-/research-scout-en "battery SOH" --papers paper1.pdf "BattFormer 2023"
-
-# Mode 3 — Free-form description (attach PDFs if available)
-/research-scout-en
-# Then type your research idea in plain language
+/research "测试安装"
 ```
 
-Claude will:
-1. Infer paper metadata (if names/descriptions provided) and ask for confirmation
-2. Create `docs/user_requirements.md` Phase 1 section → you fill it → `/research-scout-en confirm`
-3. Retrieve 15+ papers via dual-track search (user papers + autonomous web search)
-4. Generate 3-5 candidate ideas with novelty checks and self-critique
-5. You select one: `/research-scout-en pick 3`
-6. Claude deepens the selected idea and generates `docs/idea_report.md` Part I
-7. Attempts to download PDFs; prompts if any fail
+若 Claude 开始询问论文信息或提示填写 user_requirements.md，说明安装成功。
 
-**Phase 1 Review Checkpoint** — Claude stops here. Review `docs/idea_report.md` Part I, then:
-- `/research-scout-en step2` — confirm and advance to Phase 2
-- `/research-scout-en revise "feedback"` — regenerate Part I with changes
+> **注意**：中英文版不能同时安装。如需切换，先删除 `~/.claude/skills/` 下现有文件，再复制新版本。
 
-### Phase 2: Experiment Design
+## 快速开始
 
-After reviewing Phase 1 output:
+### 阶段 1：文献调研与 Idea 生成
+
+用研究方向或论文启动：
 
 ```bash
-/research-scout-en step2
+# 模式 1 — 研究方向字符串
+/research "电池健康状态预测"
+
+# 模式 2 — 附带种子论文（PDF、名称或描述）
+/research "电池 SOH" --papers paper1.pdf "BattFormer 2023"
+
+# 模式 3 — 自由描述（可附 PDF）
+/research
+# 然后用自然语言描述你的研究想法
 ```
 
-Claude will:
-1. Check `docs/user_requirements.md` Phase 2 section (prompts you to fill if empty)
-2. Read full `idea_report.md` and retrieve experiment conventions from literature
-3. Design complete experiment plan (datasets, metrics, baselines, ablations)
-4. **Feasibility verification** (before writing):
-   - ✅ Dataset download links still valid?
-   - ✅ Baseline code repositories accessible?
-   - ✅ GPU memory sufficient for proposed config?
-5. Append Part II to `idea_report.md` with verification summary
+Claude 将：
+1. 推断论文元信息（若提供名称/描述）并请求确认
+2. 创建 `docs/user_requirements.md` 阶段 1 章节 → 你填写 → `/research confirm`
+3. 双轨检索 15+ 篇论文（用户论文 + 自主 web 搜索）
+4. 生成 3-5 个候选 idea，附新颖性检查与自我批判
+5. 你选择一个：`/research pick 3`
+6. Claude 深化选定 idea 并生成 `docs/idea_report.md` Part I
+7. 尝试下载 PDF；若失败则提示
 
-**Phase 2 Review Checkpoint** — Claude stops. Review experiment design, then:
-- `/research-scout-en step3` — confirm and advance to Phase 3
-- `/research-scout-en revise "feedback"` — regenerate Part II
+**阶段 1 审查节点** — Claude 在此停止。审查 `docs/idea_report.md` Part I，然后：
+- `/research step2` — 确认并进入阶段 2
+- `/research revise "修改意见"` — 带修改重新生成 Part I
 
-### Phase 3: Code Implementation
+### 阶段 2：实验设计
 
-After reviewing Phase 2 output:
+审查阶段 1 输出后：
 
 ```bash
-/research-scout-en step3
+/research step2
 ```
 
-Claude will:
+Claude 将：
+1. 检查 `docs/user_requirements.md` 阶段 2 章节（空则提示填写）
+2. 读取完整 `idea_report.md` 并从文献中检索实验惯例
+3. 设计完整实验方案（数据集、指标、baseline、消融）
+4. **可行性验证**（写入文件前）：
+   - ✅ 数据集下载链接仍有效？
+   - ✅ Baseline 代码仓库可访问？
+   - ✅ GPU 显存对提议配置足够？
+5. 将 Part II 追加到 `idea_report.md`，包含验证摘要
 
-**Sub-phase 3a — Project Structure Design:**
-1. Check `docs/user_requirements.md` Phase 3 section
-2. Choose Strategy A (based on existing project) or Strategy B (from scratch)
-3. Show structure → `/research-scout-en confirm` to proceed or `/research-scout-en revise-structure "feedback"`
+**阶段 2 审查节点** — Claude 停止。审查实验设计，然后：
+- `/research step3` — 确认并进入阶段 3
+- `/research revise "修改意见"` — 重新生成 Part II
 
-**Sub-phase 3b — Code Implementation:**
-1. Create `docs/dev_log.md` and `docs/code_guide.md`
-2. Implement in order: `requirements.txt` → `configs/` → `README.md` → `src/` → `scripts/` → `baselines/`
-3. **After each file**: update progress table + add log entry + update code_guide.md corresponding section
-4. `requirements.txt` rule: NO `torch`/`torchvision`/`torchaudio`, library names only, no version pins
+### 阶段 3：代码实现
 
-**Sub-phase 3c — Results Logging:**
-
-After running experiments locally:
+审查阶段 2 输出后：
 
 ```bash
-/research-scout-en log-results
-# Claude prompts for experiment output
-# Fills actual results into Part II table
-# Compares vs expected, provides diagnosis if below target
+/research step3
 ```
 
-### Rollback to Phase 2
+Claude 将：
 
-If Phase 3 reveals experiment design issues:
+**子阶段 3a — 项目结构设计：**
+1. 检查 `docs/user_requirements.md` 阶段 3 章节
+2. 选择策略 A（基于已有项目）或策略 B（从头构建）
+3. 展示结构 → `/research confirm` 继续或 `/research revise-structure "意见"`
+
+**子阶段 3b — 代码实现：**
+1. 创建 `docs/dev_log.md` 和 `docs/code_guide.md`
+2. 按顺序实现：`requirements.txt` → `configs/` → `README.md` → `src/` → `scripts/` → `baselines/`
+3. **每完成一个文件**：更新进度表 + 添加日志条目 + 更新 code_guide.md 对应章节
+4. `requirements.txt` 规则：不含 `torch`/`torchvision`/`torchaudio`，只写库名，不写版本号
+
+**子阶段 3c — 结果记录：**
+
+本地运行实验后：
 
 ```bash
-/research-scout-en back-to-step2 "dataset inaccessible"
-# Archives dev_log.md
-# Marks Part II status as REVISING
-# Run /research-scout-en revise "feedback" to update Part II
-# Then /research-scout-en step3 to restart coding
+/research log-results
+# Claude 提示粘贴实验输出
+# 将实际结果填入 Part II 表格
+# 与预期对比，低于目标时提供诊断
 ```
 
-## Commands Reference
+### 回溯到阶段 2
 
-| Command | Phase | Description |
-|---------|-------|-------------|
-| `/research-scout-en "topic"` | 1 entry | Start with research direction |
-| `/research-scout-en --papers <files/names>` | 1 entry | Start with seed papers |
-| `/research-scout-en` (free-form) | 1 entry | Extract from user description |
-| `/research-scout-en confirm` | 1, 3 | Confirm papers, PDFs, or structure |
-| `/research-scout-en revise-paper {n} "fix"` | 1 | Fix one inferred paper entry |
-| `/research-scout-en skip-papers` | 1 | Skip missing PDFs |
-| `/research-scout-en pick {n}` | 1 | Select candidate idea |
-| `/research-scout-en step2` | 1→2 | Advance to experiment design |
-| `/research-scout-en step3` | 2→3 | Advance to coding |
-| `/research-scout-en revise "feedback"` | 1, 2 | Regenerate current phase doc |
-| `/research-scout-en revise-structure "feedback"` | 3 | Adjust project structure |
-| `/research-scout-en back-to-step2 "reason"` | 3 | Rollback to Phase 2 |
-| `/research-scout-en log-results` | 3c | Record experiment results |
+若阶段 3 发现实验设计问题：
 
-## Output Files
+```bash
+/research back-to-step2 "数据集无法访问"
+# 归档 dev_log.md
+# 标记 Part II 状态为 REVISING
+# 运行 /research revise "意见" 更新 Part II
+# 然后 /research step3 重新开始编码
+```
+
+## 命令速查表
+
+| 命令 | 阶段 | 说明 |
+|------|------|------|
+| `/research "topic"` | 1 入口 | 提供研究方向启动 |
+| `/research --papers <文件/名称>` | 1 入口 | 提供种子论文启动 |
+| `/research`（自由描述）| 1 入口 | 从用户描述中提取 |
+| `/research confirm` | 1, 3 | 确认论文、PDF、或结构 |
+| `/research revise-paper {n} "修正"` | 1 | 修正第 n 条论文推断 |
+| `/research skip-papers` | 1 | 跳过缺失的 PDF |
+| `/research pick {n}` | 1 | 选择候选 idea |
+| `/research step2` | 1→2 | 进入实验设计 |
+| `/research step3` | 2→3 | 进入编码 |
+| `/research revise "意见"` | 1, 2 | 重新生成当前阶段文档 |
+| `/research revise-structure "意见"` | 3 | 调整项目结构 |
+| `/research back-to-step2 "原因"` | 3 | 回溯到阶段 2 |
+| `/research log-results` | 3c | 记录实验结果 |
+
+## 输出文件
 
 ```
 docs/
-  idea_report.md        # Phase 1 Part I + Phase 2 Part II
-  dev_log.md            # Phase 3 change log
-  code_guide.md         # Phase 3 implementation reference
-  user_requirements.md  # User inputs per phase (never copied into main docs)
-  papers/               # Downloaded PDFs (filename = full paper title)
+  idea_report.md        # 阶段 1 Part I + 阶段 2 Part II
+  dev_log.md            # 阶段 3 修改日志
+  code_guide.md         # 阶段 3 实现逻辑参考
+  user_requirements.md  # 各阶段用户输入（不复制进主文档）
+  papers/               # 下载的 PDF（文件名 = 论文完整标题）
 code/
   src/, scripts/, configs/, baselines/
   data/, results/, logs/  # gitignored
   README.md, requirements.txt
 ```
 
-## Template Flexibility
+## 文档模板灵活性
 
-All documents follow flexible template rules:
+所有文档遵循灵活模板规则：
 
-- **Required chapters**: Must appear (content can be "N/A")
-- **Optional chapters**: Include only when relevant (e.g., Data Format chapter omitted for pure algorithm work)
-- **Extensible chapters**: Add freely when research needs it
+- **必选章节**：必须出现（内容可为"不适用"）
+- **可选章节**：仅在相关时包含（如纯算法工作省略数据格式章节）
+- **可扩展章节**：研究需要时自由添加
 
-Content volume hints ("3-5 sentences") are guidance, not hard limits.
+内容量提示（"3-5 句"）是指导，非硬限制。
 
-### Document Preferences
+### 文档偏好设置
 
-In `user_requirements.md` any phase section, you can add:
+在 `user_requirements.md` 任意阶段章节中，可添加：
 
 ```markdown
-### Document Preferences
-- Language: full English (default) / Chinese body + English headings / full Chinese
-- Introduction detail: placeholder draft (default) / publication-ready detailed version
-- Data format chapter: generate (default) / omit
-- Other: {your preferences}
+### 文档偏好设置
+- 语言：全英文 / 中文正文 + 英文章节标题（默认）/ 全中文
+- Introduction 详细程度：占位草稿（默认）/ 可直接投稿的详细版本
+- 数据格式章节：生成（默认）/ 省略
+- 其他：{你的偏好}
 ```
 
-## FAQ
+## 常见问题
 
-### How to install both Chinese and English versions?
+### 如何切换到英文版？
 
 ```bash
-# Chinese version
-ln -s "$(pwd)/code/skills/research-scout-zh" ~/.claude/plugins/marketplaces/research-scout-zh
+# 删除中文版
+rm -rf ~/.claude/skills/*
 
-# English version
-ln -s "$(pwd)/code/skills/research-scout-en" ~/.claude/plugins/marketplaces/research-scout-en
+# 安装英文版
+cd research-scout
+cp -r code/skills/research-scout-en/* ~/.claude/skills/
 ```
 
-### Claude doesn't trigger the skill?
+### Claude 没有触发 skill？
 
-1. Check command spelling: `/research-scout-en` (with `-en` suffix)
-2. Restart Claude Code
-3. Verify symlink path: `ls -la ~/.claude/plugins/marketplaces/`
+1. 检查是否正确输入命令 `/research`
+2. 重启 Claude Code
+3. 确认安装目录：`ls -la ~/.claude/skills/`
 
-### Can I modify generated document formats?
+### 可以修改生成的文档格式吗？
 
-Yes. Declare in "Document Preferences" section in `user_requirements.md`, or directly edit `skills/research-scout-en/references/document-formats.md`.
+可以。在 `user_requirements.md` 的"文档偏好设置"中声明，或直接修改 `~/.claude/skills/references/document-formats.md`。
 
-### Phase 1 ideas not satisfactory?
+### Phase 1 生成的 idea 不满意怎么办？
 
-Run `/research-scout-en revise "more specific direction guidance"` — Claude will regenerate candidate ideas.
+运行 `/research revise "更具体的方向指导"`，Claude 会重新生成候选 idea。
 
-### How to recover from failed experiments?
+### 如何从失败的实验中恢复？
 
-Use `/research-scout-en back-to-step2 "failure reason"`, revise experiment design, then re-enter Phase 3.
+使用 `/research back-to-step2 "失败原因"`，修改实验设计后重新进入 Phase 3。
 
-## Project Structure
+## 项目结构
 
 ```
 code/
 ├── .claude-plugin/
 │   └── plugin.json
 ├── skills/
-│   ├── research-scout-en/      # English version skill
+│   ├── research-scout-zh/      # 中文版 skill（安装此目录到 ~/.claude/skills/）
 │   │   ├── SKILL.md
 │   │   └── references/
 │   │       ├── phase1-idea-generation.md
@@ -260,27 +256,27 @@ code/
 │   │       ├── document-formats.md
 │   │       ├── template-flexibility.md
 │   │       └── user-requirements-template.md
-│   └── research-scout-zh/      # Chinese version skill
-│       └── ...
+│   └── research-scout-en/      # 英文版 skill（安装此目录到 ~/.claude/skills/）
+│       └── ...（结构相同）
 ├── LICENSE
-├── README.md (中文)
-└── README.en.md (this file)
+├── README.md（本文件）
+└── README.en.md（English）
 ```
 
-## Contributing
+## 贡献指南
 
-Issues and Pull Requests are welcome!
+欢迎提交 Issue 和 Pull Request！
 
-Improvement directions:
-- Support for more domain-specific paper retrieval sources
-- Enhanced PDF parsing for citation verification
-- Experiment result visualization templates
-- Support for more programming languages/frameworks
+改进方向：
+- 支持更多领域的论文检索源
+- 增强引用核验的 PDF 解析能力
+- 新增实验结果可视化模板
+- 支持更多编程语言/框架
 
-## License
+## 许可证
 
-MIT License - see [LICENSE](LICENSE)
+MIT License - 见 [LICENSE](LICENSE)
 
-## Acknowledgments
+## 致谢
 
-Built on [Claude Code](https://code.claude.com) skill framework.
+本项目基于 [Claude Code](https://code.claude.com) 的 skill 框架构建。

@@ -179,8 +179,8 @@ $$
 ---
 
 > ⚠️ **Phase 1 Review Checkpoint**
-> - /research-scout-en step2  — confirm, enter experiment design
-> - /research-scout-en revise "feedback"  — regenerate Part I
+> - /research step2  — confirm, enter experiment design
+> - /research revise "feedback"  — regenerate Part I
 ```
 
 ### Part II Template
@@ -244,7 +244,7 @@ training (epochs, early stopping) → evaluation → result logging}
 |--------|---------|----------------|----------------|---------|
 | {name} | {formula} | {estimate} | {lit value} | higher/lower is better |
 
-### Expected Results (placeholder — fill via /research-scout-en log-results)
+### Expected Results (placeholder — fill via /research log-results)
 | Method | {Dataset} | {Metric1} | {Metric2} |
 |--------|-----------|-----------|-----------|
 | {Baseline} | — | — | — |
@@ -268,8 +268,8 @@ training (epochs, early stopping) → evaluation → result logging}
 ---
 
 > ⚠️ **Phase 2 Review Checkpoint**
-> - /research-scout-en step3  — confirm, enter coding
-> - /research-scout-en revise "feedback"  — regenerate Part II
+> - /research step3  — confirm, enter coding
+> - /research revise "feedback"  — regenerate Part II
 ```
 
 ---
@@ -361,7 +361,7 @@ Status legend: ⬜ TODO / 🔄 WIP / ✅ Done (run-verified) / ❌ Blocked
 
 ---
 
-> To revise experiment design: /research-scout-en back-to-step2 "reason"
+> To revise experiment design: /research back-to-step2 "reason"
 > This dev_log will be prefixed with [ARCHIVED] and history preserved.
 ```
 

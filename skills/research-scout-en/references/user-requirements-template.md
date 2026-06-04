@@ -48,7 +48,7 @@ omit the Data Format section in code_guide.md}
 ---
 
 ## Phase 2: Experiment Design Requirements
-> Fill before running /research-scout-en step2.
+> Fill before running /research step2.
 
 ### Hardware
 {GPU model and count, available VRAM.
@@ -73,7 +73,7 @@ results need statistical significance tests with std dev reported}
 ---
 
 ## Phase 3: Coding Requirements
-> Fill before running /research-scout-en step3.
+> Fill before running /research step3.
 
 ### Programming language
 {Default: Python. Specify if different.}

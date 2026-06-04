@@ -2,7 +2,7 @@
 
 ## 入口
 
-由 `/research-scout-zh step3` 触发。
+由 `/research step3` 触发。
 
 前置条件：`docs/idea_report.md` 存在且包含 `# 第二部分`。
 
@@ -13,7 +13,7 @@
 ### 第一步 —— 读取用户编码需求
 
 检查 `docs/user_requirements.md` → `## 阶段三` 章节。
-- 若为空：提示用户填写阶段三章节，等待 `/research-scout-zh confirm`
+- 若为空：提示用户填写阶段三章节，等待 `/research confirm`
 - 若已填写：读取并应用（语言、框架、现有项目、代码风格）
 
 ### 第二步 —— 读取完整 idea_report.md
@@ -65,11 +65,11 @@ code/
 code/
 {渲染的目录树，每个文件附一行注释}
 
-确认：  /research-scout-zh confirm
-调整：  /research-scout-zh revise-structure "反馈"
+确认：  /research confirm
+调整：  /research revise-structure "反馈"
 ```
 
-等待 `/research-scout-zh confirm` 后再进入子阶段 3b。
+等待 `/research confirm` 后再进入子阶段 3b。
 
 ---
 
@@ -152,7 +152,7 @@ src/trainers/ → src/utils/ → scripts/ → baselines/
 ⚠️ 阻塞：{具体问题}
 
 此问题需要回顾实验设计。
-执行 /research-scout-zh back-to-step2 "{原因}" 以回滚。
+执行 /research back-to-step2 "{原因}" 以回滚。
 若问题无需修改设计即可解决，请直接回复。
 ```
 
@@ -160,7 +160,7 @@ src/trainers/ → src/utils/ → scripts/ → baselines/
 
 ## 子阶段 3c：结果反馈循环
 
-在编码过程中或编码完成后，随时可由 `/research-scout-zh log-results` 触发。
+在编码过程中或编码完成后，随时可由 `/research log-results` 触发。
 
 ### 步骤
 
@@ -181,9 +181,9 @@ src/trainers/ → src/utils/ → scripts/ → baselines/
 2. {原因}（建议：{具体修复措施}）
 
 选项：
-- /research-scout-zh revise "调整内容"  —— 调整超参数或预处理
-- /research-scout-zh back-to-step2 "原因"  —— 修改实验设计
-- /research-scout-zh log-results  —— 继续记录下一个实验
+- /research revise "调整内容"  —— 调整超参数或预处理
+- /research back-to-step2 "原因"  —— 修改实验设计
+- /research log-results  —— 继续记录下一个实验
 ```
 
 5. 在 `dev_log.md` 中添加条目：
@@ -200,7 +200,7 @@ src/trainers/ → src/utils/ → scripts/ → baselines/
 
 ## back-to-step2 回滚
 
-当用户执行 `/research-scout-zh back-to-step2 "原因"` 时：
+当用户执行 `/research back-to-step2 "原因"` 时：
 
 1. 在 `dev_log.md` 顶部前置：
    ```markdown
@@ -210,6 +210,6 @@ src/trainers/ → src/utils/ → scripts/ → baselines/
 3. 显示：
    ```
    dev_log.md 已归档。实验设计现已标记为 REVISING。
-   执行 /research-scout-zh revise "反馈" 以更新第二部分。
-   然后执行 /research-scout-zh step3 以使用修订后的设计重新进入编码阶段。
+   执行 /research revise "反馈" 以更新第二部分。
+   然后执行 /research step3 以使用修订后的设计重新进入编码阶段。
    ```

@@ -48,7 +48,7 @@ Introduction 应为可投稿的详细版本，而非占位草稿 /
 ---
 
 ## Phase 2: Experiment Design Requirements
-> 运行 /research-scout-zh step2 前填写。
+> 运行 /research step2 前填写。
 
 ### Hardware
 {GPU 型号和数量，可用显存。
@@ -73,7 +73,7 @@ Introduction 应为可投稿的详细版本，而非占位草稿 /
 ---
 
 ## Phase 3: Coding Requirements
-> 运行 /research-scout-zh step3 前填写。
+> 运行 /research step3 前填写。
 
 ### Programming language
 {默认：Python。如有不同请指定。}

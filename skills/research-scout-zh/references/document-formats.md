@@ -178,8 +178,8 @@ $$
 ---
 
 > ⚠️ **Phase 1 Review Checkpoint**
-> - /research-scout-zh step2  — 确认后进入实验设计
-> - /research-scout-zh revise "feedback"  — 重新生成第一部分
+> - /research step2  — 确认后进入实验设计
+> - /research revise "feedback"  — 重新生成第一部分
 ```
 
 ### 第二部分模板
@@ -243,7 +243,7 @@ $$
 |--------|---------|----------------|----------------|---------|
 | {name} | {formula} | {estimate} | {lit value} | higher/lower is better |
 
-### Expected Results（占位符——通过 /research-scout-zh log-results 填入）
+### Expected Results（占位符——通过 /research log-results 填入）
 | Method | {Dataset} | {Metric1} | {Metric2} |
 |--------|-----------|-----------|-----------|
 | {Baseline} | — | — | — |
@@ -267,8 +267,8 @@ $$
 ---
 
 > ⚠️ **Phase 2 Review Checkpoint**
-> - /research-scout-zh step3  — 确认后进入编码
-> - /research-scout-zh revise "feedback"  — 重新生成第二部分
+> - /research step3  — 确认后进入编码
+> - /research revise "feedback"  — 重新生成第二部分
 ```
 
 ---
@@ -360,7 +360,7 @@ load best_ckpt → test DataLoader → forward → postprocess → compute metri
 
 ---
 
-> 如需修改实验设计：/research-scout-zh back-to-step2 "reason"
+> 如需修改实验设计：/research back-to-step2 "reason"
 > 本 dev_log 将被加上 [ARCHIVED] 前缀，历史记录得以保留。
 ```
 

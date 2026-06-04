@@ -6,16 +6,16 @@
 
 ```bash
 # 模式一 —— 主题字符串
-/research-scout-zh "电池 SOH 预测"
+/research "电池 SOH 预测"
 
 # 模式二 —— papers 标志（PDF 文件、论文名称或描述；可混用）
-/research-scout-zh --papers paper1.pdf "Attention is All You Need" "transformer 2017 Google"
+/research --papers paper1.pdf "Attention is All You Need" "transformer 2017 Google"
 
 # 模式三 —— 组合模式（推荐）
-/research-scout-zh "电池 SOH 预测" --papers paper1.pdf "BattFormer 2023"
+/research "电池 SOH 预测" --papers paper1.pdf "BattFormer 2023"
 
 # 模式四 —— 自由描述（可附带或不附带 PDF）
-/research-scout-zh
+/research
 # 用户随后输入一段描述自己想法的文字，并可附上 PDF
 ```
 
@@ -38,7 +38,7 @@
 | 1 | paper.pdf  | 直接读取 |
 | 2 | {描述}     | 推断元数据 |
 
-请使用 `/research-scout-zh confirm` 确认，或直接在线修改。
+请使用 `/research confirm` 确认，或直接在线修改。
 ```
 
 模式四确认后：自动将提取内容写入 `docs/user_requirements.md` 的阶段一章节，跳过手动填写步骤（第三步）。
@@ -54,8 +54,8 @@
 |---|---------|----------|------|---------|----------|
 | 1 | Attention Is All You Need | NeurIPS | 2017 | Vaswani et al. | Transformer：纯注意力机制替代 RNN |
 
-修正某条：/research-scout-zh revise-paper 1 "正确信息"
-确认全部：/research-scout-zh confirm
+修正某条：/research revise-paper 1 "正确信息"
+确认全部：/research confirm
 ```
 
 `revise-paper` 仅修改指定行并重新显示完整表格。
@@ -64,7 +64,7 @@ PDF 输入跳过此步骤。
 ## 第三步 —— 读取用户需求
 
 检查 `docs/user_requirements.md` → `## 阶段一` 章节。
-- 若文件缺失或章节为空：使用 `references/user-requirements-template.md` 中的模板创建文件，告知用户填写阶段一章节，等待 `/research-scout-zh confirm`
+- 若文件缺失或章节为空：使用 `references/user-requirements-template.md` 中的模板创建文件，告知用户填写阶段一章节，等待 `/research confirm`
 - 若已填写（或由模式四自动填充）：读取并作为生成约束条件应用
 
 ## 第四步 —— 文献检索（双轨并行）
@@ -117,10 +117,10 @@ PDF 输入跳过此步骤。
 
 ### 想法 2：...
 
-使用 `/research-scout-zh pick {n}` 选择
+使用 `/research pick {n}` 选择
 ```
 
-用户执行 `/research-scout-zh pick {n}` 选定一个。
+用户执行 `/research pick {n}` 选定一个。
 
 ## 第七步 —— 深化所选想法
 
@@ -177,7 +177,7 @@ arXiv → Semantic Scholar → 作者主页 → OpenReview
 | 1 | {标题} | Sci-Hub / 作者邮件 / 图书馆 |
 
 请将 PDF 放入 docs/papers/，文件名使用完整标题。
-完成后执行 `/research-scout-zh confirm`，或执行 `/research-scout-zh skip-papers` 跳过。
+完成后执行 `/research confirm`，或执行 `/research skip-papers` 跳过。
 ```
 
 收到 `confirm`：重新扫描 `docs/papers/`，将新文件与参考文献条目匹配，继续执行。
@@ -196,8 +196,8 @@ PDF 摘要：
 - ❌ {标题} [PDF 不可用]
 
 docs/idea_report.md 已生成，请审阅，然后：
-- /research-scout-zh step2   —— 确认并进入实验设计
-- /research-scout-zh revise "反馈"  —— 根据修改意见重新生成第一部分
+- /research step2   —— 确认并进入实验设计
+- /research revise "反馈"  —— 根据修改意见重新生成第一部分
 ```
 
 在用户执行 step2 或 revise 之前，不得继续推进。

@@ -2,7 +2,7 @@
 
 ## Entry
 
-Triggered by `/research-scout-en step3`.
+Triggered by `/research step3`.
 
 Precondition: `docs/idea_report.md` exists and contains `# Part II`.
 
@@ -13,7 +13,7 @@ Precondition: `docs/idea_report.md` exists and contains `# Part II`.
 ### Step 1 — Read User Coding Requirements
 
 Check `docs/user_requirements.md` → `## Phase 3` section.
-- If empty: prompt user to fill Phase 3 section, wait for `/research-scout-en confirm`
+- If empty: prompt user to fill Phase 3 section, wait for `/research confirm`
 - If filled: read and apply (language, framework, existing project, style)
 
 ### Step 2 — Read Full idea_report.md
@@ -65,11 +65,11 @@ Structure strategy: build from scratch / based on {project name} (Strategy A)
 code/
 {rendered directory tree with one-line comment per file}
 
-Confirm:  /research-scout-en confirm
-Adjust:   /research-scout-en revise-structure "feedback"
+Confirm:  /research confirm
+Adjust:   /research revise-structure "feedback"
 ```
 
-Wait for `/research-scout-en confirm` before proceeding to 3b.
+Wait for `/research confirm` before proceeding to 3b.
 
 ---
 
@@ -152,7 +152,7 @@ baseline interface incompatible, etc.): STOP immediately and display:
 ⚠️ Blocked: {specific problem}
 
 This requires revisiting the experiment design.
-Run /research-scout-en back-to-step2 "{reason}" to roll back.
+Run /research back-to-step2 "{reason}" to roll back.
 Or respond inline if the issue can be resolved without changing the design.
 ```
 
@@ -160,7 +160,7 @@ Or respond inline if the issue can be resolved without changing the design.
 
 ## Sub-phase 3c: Results Feedback Loop
 
-Triggered by `/research-scout-en log-results` at any point during or after coding.
+Triggered by `/research log-results` at any point during or after coding.
 
 ### Steps
 
@@ -181,9 +181,9 @@ Main experiment result is below expected. Likely causes:
 2. {cause} (suggestion: {specific fix})
 
 Options:
-- /research-scout-en revise "adjustment"  — tweak hyperparameters or preprocessing
-- /research-scout-en back-to-step2 "reason"  — revise experiment design
-- /research-scout-en log-results  — continue recording next experiment
+- /research revise "adjustment"  — tweak hyperparameters or preprocessing
+- /research back-to-step2 "reason"  — revise experiment design
+- /research log-results  — continue recording next experiment
 ```
 
 5. Add entry to `dev_log.md`:
@@ -200,7 +200,7 @@ Options:
 
 ## back-to-step2 Rollback
 
-When user runs `/research-scout-en back-to-step2 "reason"`:
+When user runs `/research back-to-step2 "reason"`:
 
 1. Prepend to top of `dev_log.md`:
    ```markdown
@@ -210,6 +210,6 @@ When user runs `/research-scout-en back-to-step2 "reason"`:
 3. Display:
    ```
    dev_log.md archived. Experiment design is now marked REVISING.
-   Run /research-scout-en revise "feedback" to update Part II.
-   Then run /research-scout-en step3 to re-enter coding with the revised design.
+   Run /research revise "feedback" to update Part II.
+   Then run /research step3 to re-enter coding with the revised design.
    ```

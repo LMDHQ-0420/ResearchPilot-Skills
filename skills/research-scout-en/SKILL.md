@@ -3,7 +3,7 @@ name: research-scout-en
 description: >
   This skill should be used when the user wants to conduct academic research:
   generating ideas from a topic or papers, designing experiments, or implementing
-  research code. Triggers on /research-scout-en with a topic string, --papers flag,
+  research code. Triggers on /research with a topic string, --papers flag,
   or sub-commands: step2, step3, confirm, pick, revise, revise-paper, skip-papers,
   revise-structure, back-to-step2, log-results. Also triggers when the user says
   "start research", "help me find papers", "generate a research idea", "design
@@ -23,9 +23,9 @@ before advancing to the next phase.
 
 | Phase | Trigger | Output |
 |-------|---------|--------|
-| 1 — Literature Survey & Idea Generation | `/research-scout-en "topic"` or `--papers` | `docs/idea_report.md` Part I |
-| 2 — Experiment Design | `/research-scout-en step2` | `docs/idea_report.md` Part II (appended) |
-| 3 — Code Implementation | `/research-scout-en step3` | `docs/dev_log.md`, `docs/code_guide.md`, `code/` |
+| 1 — Literature Survey & Idea Generation | `/research "topic"` or `--papers` | `docs/idea_report.md` Part I |
+| 2 — Experiment Design | `/research step2` | `docs/idea_report.md` Part II (appended) |
+| 3 — Code Implementation | `/research step3` | `docs/dev_log.md`, `docs/code_guide.md`, `code/` |
 
 ## State Detection
 
@@ -53,19 +53,19 @@ Run at the start of EVERY invocation before doing anything else:
 
 | Command | Phase | Action |
 |---------|-------|--------|
-| `/research-scout-en "topic"` | Phase 1 entry | Start with research direction |
-| `/research-scout-en --papers <pdf/name/description>` | Phase 1 entry | Start with seed papers |
-| `/research-scout-en` (free-form text + optional PDFs) | Phase 1 entry | Extract topic and papers from description |
-| `/research-scout-en confirm` | Phase 1 / Phase 3 sub-step | Confirm paper list, PDF uploads, or project structure |
-| `/research-scout-en revise-paper {n} "correction"` | Phase 1 sub-step | Fix one inferred paper entry, re-display full table |
-| `/research-scout-en skip-papers` | Phase 1 sub-step | Mark remaining missing PDFs as [PDF unavailable] |
-| `/research-scout-en pick {n}` | Phase 1 sub-step | Select idea candidate n for deepening |
-| `/research-scout-en step2` | Phase 1 → 2 | Confirm idea report, enter experiment design |
-| `/research-scout-en step3` | Phase 2 → 3 | Confirm experiment design, enter coding |
-| `/research-scout-en revise "feedback"` | Phase 1 / Phase 2 | Regenerate current phase doc with changes |
-| `/research-scout-en revise-structure "feedback"` | Phase 3 sub-step | Adjust project structure before coding |
-| `/research-scout-en back-to-step2 "reason"` | Phase 3 | Archive dev_log, revise experiment design |
-| `/research-scout-en log-results` | Phase 3 sub-step 3c | Record actual results vs expected |
+| `/research "topic"` | Phase 1 entry | Start with research direction |
+| `/research --papers <pdf/name/description>` | Phase 1 entry | Start with seed papers |
+| `/research` (free-form text + optional PDFs) | Phase 1 entry | Extract topic and papers from description |
+| `/research confirm` | Phase 1 / Phase 3 sub-step | Confirm paper list, PDF uploads, or project structure |
+| `/research revise-paper {n} "correction"` | Phase 1 sub-step | Fix one inferred paper entry, re-display full table |
+| `/research skip-papers` | Phase 1 sub-step | Mark remaining missing PDFs as [PDF unavailable] |
+| `/research pick {n}` | Phase 1 sub-step | Select idea candidate n for deepening |
+| `/research step2` | Phase 1 → 2 | Confirm idea report, enter experiment design |
+| `/research step3` | Phase 2 → 3 | Confirm experiment design, enter coding |
+| `/research revise "feedback"` | Phase 1 / Phase 2 | Regenerate current phase doc with changes |
+| `/research revise-structure "feedback"` | Phase 3 sub-step | Adjust project structure before coding |
+| `/research back-to-step2 "reason"` | Phase 3 | Archive dev_log, revise experiment design |
+| `/research log-results` | Phase 3 sub-step 3c | Record actual results vs expected |
 
 ## Directory Layout
 
