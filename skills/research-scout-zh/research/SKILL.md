@@ -1,108 +1,139 @@
 ---
 name: research
 description: >
-  当用户想要开展学术研究时使用此 skill：包括从研究方向或论文生成 idea、设计实验、或实现研究代码。
-  在以下情况触发：/research 后跟研究方向字符串、--papers 参数、或子命令（step2、step3、
-  confirm、pick、revise、revise-paper、skip-papers、revise-structure、back-to-step2、log-results）。
-  当用户说"开始科研流程"、"帮我找论文"、"生成研究 idea"、"帮我设计实验"、"根据 idea 报告写代码"，
-  或用一大段中文描述研究方向（可附带 PDF）时也触发。
-version: 1.0.0
+  当用户想要开展学术研究时使用此 skill：包括从研究方向生成 idea、深化 idea、
+  设计实验、或实现研究代码。在以下情况触发：/research 后跟研究方向描述文字
+  （可包含论文信息）；/research --papers 后跟 PDF 或论文名称；
+  /research download-paper 后跟论文描述（独立下载命令，与研究流程无关）。
+  当用户说"开始科研流程"、"帮我找论文"、"生成研究 idea"、"帮我设计实验"、
+  "根据 idea 报告写代码"，或用中文描述研究方向（可附带 PDF）时也触发。
+  若用户仅输入 /research 不带任何内容，提示用户需要输入研究描述。
+version: 2.0.0
 license: LICENSE
 ---
 
 # Research Scout（中文版）
 
-自动化三阶段学术研究工作流。每个阶段产出结构化文档供用户审查。
-Claude 必须在每个阶段结束后停止，等待用户明确确认后才能进入下一阶段。
+自动化学术研究工作流，从方向探索到代码实现。流程通过对话自然推进，
+Claude 在每个节点主动询问用户是否继续，无需记忆命令切换阶段。
 
-## 阶段概览
+---
 
-| 阶段 | 触发命令 | 产出文件 |
-|------|---------|---------|
-| 1 — 文献调研与 Idea 生成 | `/research "topic"` 或 `--papers` | `docs/idea_report.md` Part I |
-| 2 — 实验设计 | `/research step2` | `docs/idea_report.md` Part II（追加）|
-| 3 — 代码实现 | `/research step3` | `docs/dev_log.md`、`docs/code_guide.md`、`code/` |
+## 命令
 
-## 状态检测
+| 命令 | 说明 |
+|------|------|
+| `/research "研究方向描述"` | 启动完整研究流程 |
+| `/research --papers <pdf/名称/描述>` | 带参考论文启动流程 |
+| `/research download-paper "描述" [--to "路径"]` | 独立下载单篇论文（与流程无关，随时可用）|
+| `/research` | 提示用户需要输入研究描述 |
 
-每次调用开始前必须执行以下检测：
+> **`/research download-paper`** 是独立命令，不依赖任何流程状态。
+> 用户可在任何时候使用，指定论文描述和可选的保存路径（默认 `docs/papers/`）。
+> 下载完成后 Claude 输出文件的完整路径。
+
+---
+
+## 五阶段流程
 
 ```
-0. 读取 docs/user_requirements.md 对应阶段章节。
-   若文件不存在或章节为空：创建文件，提示用户填写，等待 confirm。
+阶段 A：方向探索（迭代）
+  描述方向 → 检索论文 → 下载 → 提出5个idea方向 → 用户选择/修改
+  → 再检索 → 再下载 → 优化 → Claude询问确认 → 循环直到方向确定
 
-1. docs/idea_report.md 不存在 → 执行 Phase 1
-2. idea_report.md 存在，不含 "# Part II" → Phase 1 已完成
-   pick {n}  → 深化选定 idea，继续 Phase 1
-   step2     → 检查 Phase 2 要求，执行 Phase 2
-   revise    → 重新生成 Part I
-3. idea_report.md 含 "# Part II" → Phase 2 已完成
-   step3     → 检查 Phase 3 要求，执行 Phase 3
-   revise    → 重新生成 Part II
-4. docs/dev_log.md 存在 → Phase 3 进行中
-   confirm       → 继续编码或确认项目结构
-   log-results   → 子阶段 3c：记录实验结果
-   back-to-step2 → 回溯到实验设计阶段
+阶段 B：Idea 深化（迭代）
+  构建 idea_report.md Part 1 + Part 2 → 检索/下载论文
+  → 用户提建议 → 优化 → Claude询问确认 → 循环直到 idea 完善
+
+阶段 C：实验设计（迭代）
+  生成 idea_report.md Part 3 → 用户提建议 → 优化
+  → Claude询问确认 → 循环直到实验设计完善
+
+阶段 D：实现设计（迭代）
+  生成 implementation.md（非常详细，直接指导编码）
+  → 用户提建议 → 优化 → Claude询问确认 → 循环直到实现方案完善
+
+阶段 E：编码
+  根据 implementation.md 编码
+  同步维护 dev_log.md
 ```
 
-## 命令速查
+阶段间过渡全部通过 Claude 主动询问完成，例如：
+> "方向已整理完毕。你觉得这个方向够完善了吗？如果可以，我们进入 idea 深化阶段。"
 
-| 命令 | 适用阶段 | 说明 |
-|------|---------|------|
-| `/research "topic"` | Phase 1 入口 | 提供研究方向启动 |
-| `/research --papers <pdf/名称/描述>` | Phase 1 入口 | 提供种子论文启动 |
-| `/research`（自由描述 + 可附 PDF）| Phase 1 入口 | 从描述中提炼 topic 和论文 |
-| `/research confirm` | Phase 1 / Phase 3 子步骤 | 确认论文列表、PDF 上传、或项目结构 |
-| `/research revise-paper {n} "修正信息"` | Phase 1 子步骤 | 局部修正第 n 条论文推断信息 |
-| `/research skip-papers` | Phase 1 子步骤 | 跳过无法下载的论文，标注 [PDF 不可用] |
-| `/research pick {n}` | Phase 1 子步骤 | 选定第 n 个候选 idea 进入深化 |
-| `/research step2` | Phase 1 → 2 | 确认 idea 报告，进入实验设计 |
-| `/research step3` | Phase 2 → 3 | 确认实验设计，进入编码 |
-| `/research revise "意见"` | Phase 1 / Phase 2 | 修改当前阶段文档并重新生成 |
-| `/research revise-structure "意见"` | Phase 3 子步骤 | 调整项目结构后重新确认 |
-| `/research back-to-step2 "原因"` | Phase 3 | 归档 dev_log，回溯到实验设计 |
-| `/research log-results` | Phase 3 子阶段 3c | 记录实验实际结果并与预期对比 |
+---
 
 ## 目录结构
 
 ```
 docs/
-  idea_report.md        # Phase 1 + Phase 2 共用文档
-  dev_log.md            # Phase 3 修改日志
-  code_guide.md         # Phase 3 实现逻辑参考文档
-  user_requirements.md  # 用户各阶段输入要求（不得复制进主文档）
-  papers/               # 下载的论文 PDF，文件名 = 论文完整标题
-code/                   # 所有项目代码（扁平结构，不嵌套 project_name 子目录）
-  src/
-  scripts/
-  configs/
-  data/                 # 加入 .gitignore
-  results/              # 加入 .gitignore
-  logs/                 # 加入 .gitignore
-  README.md
-  requirements.txt      # 不含 torch/torchvision/torchaudio；只写库名，不写版本号
+  idea_report.md        # 阶段B产出 Part 1+2；阶段C追加 Part 3
+  implementation.md     # 阶段D产出，详细实现指南
+  dev_log.md            # 阶段E编码日志
+  user_requirements.md  # 由 Claude 通过对话收集，自动维护
+  papers/               # 下载的论文 PDF / 摘要 TXT
+code/
+  README.md             # 环境安装、数据准备、运行命令（阶段E初期生成）
+  src/ scripts/ configs/ baselines/
+  data/ results/ logs/  # gitignored
+  requirements.txt      # 只写库名，不写版本，不含 torch/torchvision/torchaudio
 ```
+
+---
+
+## 状态检测
+
+每次调用时按以下顺序判断当前状态：
+
+```
+/research download-paper → 执行独立下载，不进入流程
+
+/research（无内容）→ 提示用户需要输入研究描述
+
+docs/idea_report.md 不存在
+  → 阶段 A：方向探索
+
+idea_report.md 存在，不含 "## Part 3"
+  → 阶段 A/B 进行中（看 Part 2 是否存在来区分）
+
+idea_report.md 含 "## Part 3"，docs/implementation.md 不存在
+  → 阶段 C/D 之间
+
+implementation.md 存在，docs/dev_log.md 不存在
+  → 阶段 D 完成，可进入阶段 E
+
+dev_log.md 存在
+  → 阶段 E：编码进行中
+```
+
+---
 
 ## 流程详情
 
-各阶段的详细执行步骤在 `references/` 中：
+详细执行步骤见 `references/`：
 
-- Phase 1 详细步骤：见 `references/phase1-idea-generation.md`
-- Phase 2 详细步骤：见 `references/phase2-experiment-design.md`
-- Phase 3 详细步骤：见 `references/phase3-implementation.md`
+- 阶段 A+B+C：见 `references/phase-research.md`
+- 阶段 D+E：见 `references/phase-implementation.md`
 - 文档格式规范：见 `references/document-formats.md`
 - 模板灵活性规则：见 `references/template-flexibility.md`
-- user_requirements.md 模板：见 `references/user-requirements-template.md`
+- 用户需求收集：见 `references/user-requirements-template.md`
 
-## 硬性约束（始终执行）
+---
 
-1. 未经用户确认，不得推进到下一阶段。每个阶段以停止 + 审查节点结束。
-2. 不得捏造引用。所有参考文献必须经 web_search 验证。无法确认的加 `[待核实]`。
-3. 不得隐藏不确定性。低置信度内容加 `⚠️ [低置信度：原因]`，并写入待核实清单。
+## 论文下载逻辑
+
+论文下载使用 arXiv API，集成在流程中，也可独立触发。
+完整下载逻辑见 `references/phase-research.md` 中的"论文下载"章节。
+
+---
+
+## 硬性约束
+
+1. 阶段间过渡必须由 Claude 主动询问用户确认，不得自动跳过。
+2. 不得捏造引用。所有参考文献必须经 web_search 验证，无法确认的加 `[待核实]`。
+3. 不得隐藏不确定性。低置信度内容加 `⚠️ [低置信度：原因]`。
 4. requirements.txt 不得包含 torch、torchvision、torchaudio。
-5. user_requirements.md 内容不得复制进主文档。主文档只体现执行结果。
-6. 进度表 `✅ Done` 表示已运行验证，不是写完即标。
-7. code_guide.md 和 dev_log.md 随每个完成的文件同步更新，不得批量补写。
-8. 若某阶段产出已存在，先询问"已存在——是否覆盖？"再重新生成。
-9. 文档默认中文正文 + 英文章节标题，除非 user_requirements 另有声明。
-10. `references/template-flexibility.md` 中的模板灵活性规则优先于任何具体模板指令。
+5. user_requirements.md 由 Claude 通过对话收集维护，内容不复制进主文档。
+6. dev_log.md 随每个完成的文件同步更新，不得批量补写。
+7. `references/template-flexibility.md` 中的规则优先于任何具体模板指令。
+8. `download-paper` 命令完成后必须输出文件完整路径。

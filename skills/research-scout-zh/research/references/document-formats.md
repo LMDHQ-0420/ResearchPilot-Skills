@@ -1,7 +1,13 @@
 # 文档格式规范
 
-`idea_report.md`、`dev_log.md` 和 `code_guide.md` 的详细格式规范。
+`idea_report.md`、`implementation.md`、`dev_log.md` 的详细格式规范。
 章节的存在与内容篇幅遵循 `references/template-flexibility.md`。
+
+> **文档分工**：
+> - `idea_report.md`：学术内容（文献综述、idea、实验设计），阶段 A/B/C 产出
+> - `implementation.md`：编码实现指南（非常详细，直接指导编码），阶段 D 产出，格式见 `references/phase-implementation.md` 第 D-2 节
+> - `dev_log.md`：编码进度和日志，阶段 E 维护，格式见 `references/phase-implementation.md` 第 E-1 节
+> - `code_guide.md`：**已废弃**，原内容拆分到 `implementation.md`（实现逻辑）和 `code/README.md`（安装/运行）
 
 ---
 
@@ -11,524 +17,362 @@
 
 | 符号 | 含义 | 约束 |
 |------|------|------|
-| `#` | 文件标题 / 部分分隔符 | 恰好 3 处：文件标题、`# Part I`、`# Part II` |
-| `##` | 主要章节 | 语义化名称；编号可选 |
-| `###` | 小节 | 语义化名称；数量跟随内容 |
-| `>` | 解释性注释 | 紧跟正式内容之后；对上一段落的通俗解释 |
-| `>>` | 来源注释 | 紧跟借用的观点之后；必须引用 `[n]`；附上已验证的原文句子 |
-| `⚠️ [low confidence: ...]` | 不确定性标记 | 放在证据不足的论断末尾；在 Pending Verification 中登记 |
-| `` `code` `` | 行内代码 | 文件名、函数名、变量名、命令、字段名 |
+| `#` | 文件总标题 | 全文唯一 |
+| `## Part 1` / `## Part 2` / `## Part 3` | 三大部分标题 | 固定，不得增删，文字固定 |
+| `### 1` / `### 2` / `### 3` | 一级章节（每部分内从 1 起重新编号） | 固定章节标题见下方模板 |
+| `#### 1.1` / `#### 1.2` | 二级小节 | 按内容自由增删，语义化命名 |
+| `##### 1.1.1` | 三级小节 | 仅在必要时使用 |
+| `>` | 解释性批注 | 紧跟正文之后；对公式、设计决策、难点的通俗解释；**大量使用** |
+| `>>` | 来源性批注 | 紧跟借用观点之后；必须引用 `[n]`；附上已验证的原文句子 |
+| `⚠️ [低置信度：...]` | 不确定性标记 | 放在证据不足的论断末尾；在待核实清单中登记 |
+| `` `code` `` | 行内代码 | 文件名、函数名、变量名、命令 |
 | ` ```text ` | 数据流 / 结构图 | |
 | ` ```python ` | 伪代码 | |
 | `$$...$$` | 块级公式 | |
 | `$...$` | 行内公式 | |
-| `**粗体**` | 关键术语首次出现；表格中方法行的值 | 最多 5 个词 |
-| `1.` 有序列表 | 仅用于 References 章节 | |
-| `- [ ]` 复选框 | 实现策略选项 | |
-| `---` | 部分分隔符；每个审阅检查点前 | 仅限这些位置 |
-| HTML 注释 | 最终输出中禁止使用 | |
+| `**粗体**` | 关键术语首次出现；表格中本文方法行的数值 | 最多 5 词 |
+| `1.` 有序列表 | 仅用于参考文献章节 | |
+| `---` | Part 之间的分隔；每个审查节点之前 | 仅限这两种位置 |
+| HTML 注释 | 最终输出中严格禁止 | |
 
-### 第一部分模板
-
-```markdown
-# {Topic} Idea Report
-> Project: {project_name} | Generated: {YYYY-MM-DD} | Phase: 1 | Status: PENDING_REVIEW
-> Omitted: {chapter} — {reason}    ← 仅在省略章节时包含
-> Extended: {chapter}              ← 仅在新增章节时包含
-
----
-# Part I: Literature Survey & Idea
-
-## Topic Overview
-
-### Topic Description
-{该研究方向是什么，解决什么问题，属于哪个领域。一段话。}
-
-### Development Timeline
-{连续散文，按时间顺序列出 ≥ 4 个关键里程碑。每个里程碑引用一篇代表性论文。格式：Author et al. [n] proposed ..., solving ...}
-
-### Key Works Worth Noting
-{值得学习的工作——不一定是 SOTA。包括在方法论上有启发性的工作。
-每篇论文一个小节。}
-
-#### {简称} ({Venue} {Year})
-{核心贡献，学术风格，1–2 句话}
-
->> Borrowing value: {对本想法的具体帮助，1 句话} [n]
-
-### Candidate Idea Selection
-> 在第一阶段自动生成。被选中的想法标记 [Selected]；其他标记 [Not adopted]。
-
-#### Idea {n}: {Title} `[Selected / Not adopted]`
-- **Core**: {一句话}
-- **Angle**: method transfer / improvement / reformulation
-- **Novelty**: {High/Medium} — closest: {paper} [n], difference: {具体差异}
-- **Feasibility**: {High/Medium/Low} — main risk: {风险}
-- **Self-critique**:
-  - Novelty authenticity: {评估}
-  - Experiment validity: {评估}
-  - Baseline fairness: {评估}
+**标题语言规则（中文插件）**：
+- `## Part 1`、`## Part 2`、`## Part 3` 保持英文
+- 以下一级章节标题保持英文：`Introduction`、`Related Works`、`Method`
+- 其余所有标题（二级、三级小节）一律中文
 
 ---
 
-## Introduction
+### idea_report.md 完整模板
 
-### Research Background
-{领域重要性与应用价值。学术风格。}
-
-> {对上一段落的通俗解释}
-
-### Limitations of Existing Methods
-{要点列表，每条涵盖一类方法并给出具体引用。}
-
-> {这些局限在实践中为何重要}
-
-### Contributions
-The main contributions of this paper are as follows:
-- We propose ... （方法层面）
-- We design ... （技术层面）
-- We demonstrate on ... datasets, achieving ...
-
-> 注：第三条在第一阶段为占位符；实验完成后填入实际数字。
+````markdown
+# {研究方向} Idea Report
+> 生成时间：{YYYY-MM-DD} | 状态：PENDING_REVIEW
 
 ---
 
-## Related Work
+## Part 1 Topic Overview
 
-### Development Timeline
-| Year | Work | Venue | Core Contribution | Limitation |
-|------|------|-------|-----------------|-----------|
-| {year} | {Author} et al. [n] | {Venue} | {≤ 15 字} | {≤ 10 字} |
+### 1 Motivation
+{说明这个研究方向的背景：为什么这个问题重要，现有方法存在什么核心局限，研究这个方向的意义是什么。
+连续段落，学术风格，引用关键论文。}
 
-### Recent Progress (last 2 years)
-{每篇论文一段：Title (Venue Year) [n]：方法描述。关键指标结果。}
+> {对上述内容的直白补充：从实际应用角度说明为什么现有方法不够好}
 
->> {与本想法的关系：启发了哪个设计，或是超越的目标} [n]
+### 2 Development Timeline
+{按时间顺序叙述该领域的演化过程，不少于 5 个关键节点。
+每个节点格式：Author et al. [n]（Venue Year）提出了……，解决了……的问题，但仍存在……。
+使用连续段落，不使用列表。}
 
-### Research Gap
-{现有方法的共同弱点，引出本文的动机。学术风格。}
+>> {若某个节点的叙述直接借鉴了某篇综述或论文，在此标注来源} [n]
 
-> {一句话通俗概括：现有方法卡在哪里}
+### 3 Key Works
+{列举 5–8 篇值得借鉴的工作，不局限于 SOTA，包括方法有启发性的工作。
+每篇一个小节，标题格式：#### 3.x {论文简称}（{Venue} {Year}）}
+
+#### 3.1 {论文简称}（{Venue} {Year}）
+{核心贡献描述，学术风格，2–3 句话}
+
+>> 借鉴价值：{对本 idea 的具体帮助} [n]
 
 ---
 
-## Proposed Method
+## Part 2 Idea Design
 
-### Overview
-{方法做什么，然后怎么做。学术风格。}
+### 1 Introduction
+{严格按照论文风格写 Introduction。
+不允许有小标题。
+结构：从大方向（领域重要性）→ 现有方法局限性（逐条，引用论文）→ 本文动机 → 本文方法概述 → 贡献分点列出。
+长度：600–1000 字。}
 
-> {直觉：用类比或日常语言解释}
+贡献如下：
+- 提出了……（方法层面）
+- 设计了……（技术层面）
+- 在……数据集上验证了……，取得了……的性能提升
+
+> 注：第三条贡献为占位内容，完成实验后用真实数据填写。
+
+### 2 Related Works
+
+#### 2.1 {相关方向一}
+{归纳该方向的主要做法，引用代表性论文，指出共性局限。不需要逐篇介绍，重在归纳。}
+
+>> {若某个归纳结论直接来自某篇综述，标注来源} [n]
+
+#### 2.2 {相关方向二}
+{同上}
+
+#### 2.3 研究空白
+{综合以上各方向的不足，明确指出本文要填补的研究空白。
+这是 Related Works 的最后一节，固定存在。
+格式：先列举现有方法的共性问题，再说明本文从哪个角度切入。}
+
+> {用一句话总结：现有方法"卡在哪里"，本文从哪里突破}
+
+### 3 Method
+
+#### 3.1 {方法整体框架}
+{方法的整体思路，先说"做什么"再说"怎么做"。学术风格，3–5 句。}
+
+> {方法的直觉解释：用类比或日常语言说明核心思想}
 
 ```text
-Input → [Module A: role] → [Module B: role] → Output
+输入 → [模块A：作用] → [模块B：作用] → [模块C：作用] → 输出
 ```
 
-> 数据流：{对每个箭头的文字说明}
+> 数据流说明：{对上图每个箭头的文字解释}
 
-### {Component Name}
-{输入/输出定义，步骤，公式}
+#### 3.2 {核心模块名称}
+{模块详细描述：输入输出定义、操作步骤、公式推导。学术风格。}
 
 $$
-{equation}
+{公式}
 $$
 
-> {对每个符号直觉的通俗解释}
+> 公式含义：{每个符号的直觉解释；为什么这样设计；这个设计的理论依据}
 
->> {来源}：This design is inspired by [n], which ... This work extends it by ... [n]
->> Source text: "{PDF 中的逐字原句}" (Section {X.X})
+>> 本模块的设计受 [n] 启发，原文中……，本文在此基础上……。[n]
+>> 原文依据："{PDF 中的支撑句}" (Section {X.X})
 
-### Novelty Summary
-1. **{创新点 1}**: {一句话}
-2. **{创新点 2}**: {一句话}
+#### 3.3 {其他模块……}
+{同上，视方法复杂度增减小节}
 
-### Feasibility Assessment
-| Dimension | Rating | Notes |
-|-----------|--------|-------|
-| Compute | Low/Medium/High | 预计 {N}GB 显存，约 {N}h/epoch |
-| Implementation | {1wk/2wk/1mo} | 主要复杂度：{module} |
-| Innovation risk | Low/Medium/High | {例如：平行工作可能重叠} |
+#### 3.x Baseline 参考与评价指标
+{本节固定存在，位于 Method 最后一节。
+说明选择哪些 baseline，为什么选这些，以及选择哪些评价指标，为什么。
+每个 baseline 和每个指标都必须有论文依据。}
 
----
+| Baseline | 来源 [n] | 选择理由 |
+|---------|---------|---------|
+| {名称} | {作者} et al. [n]（{Venue Year}）| {理由} |
 
-## Baseline Plan
+> {说明为什么这些 baseline 是公平且有代表性的对比对象}
 
-| Baseline | Source [n] | Venue/Year | Why chosen | Expected advantage of ours |
-|---------|-----------|-----------|-----------|--------------------------|
+| 评价指标 | 定义 | 选择依据 [n] |
+|---------|------|------------|
+| {指标名} | {计算方式} | {引用使用该指标的论文} |
 
----
-
-## References
-
-> IEEE 格式。所有条目通过 web_search 验证。无法验证的条目标注 [to verify]。
-
-1. {Last, F.}, et al., "{Full Title}," in *{Full Venue Name}*, vol. {v}, no. {n}, pp. {pp}, {year}.
-
-> **Main work**: {论文做了什么，≤ 20 字}
-> **Why cited**: {对本想法的具体帮助，≤ 20 字}
-> **PDF**: `docs/papers/{full title}.pdf` / `[PDF unavailable]`
-> **Verified text**: "{逐字支撑句}" (Section {X.X}) / `⚠️ [low confidence: ...]`
+> {说明为什么这些指标能准确反映本方法的创新点}
 
 ---
 
-## Pending Verification
-> 自动维护。手动验证后打勾。
+## Part 3 Experiment Design
 
-- [ ] {论断}（Section {n} — 原因：{PDF unavailable / no supporting text found / conflicting sources}）
+### 1 数据集
+
+#### 1.1 可用数据集
+
+| 数据集 | 类型 | 规模 | 下载路径 | 用途 |
+|-------|------|------|---------|------|
+| {名称} | {分类/回归/序列等} | {样本数 / 大小} | {官方链接} | 主实验 / 备用 |
+
+> {说明为什么选这个数据集：它在该领域的标准地位，引用使用它的论文}
+
+#### 1.2 备用数据集
+
+| 数据集 | 类型 | 规模 | 下载路径 | 备用原因 |
+|-------|------|------|---------|---------|
+| {名称} | {类型} | {规模} | {链接} | {说明} |
+
+#### 1.3 数据预处理
+{若该领域有统一的数据预处理项目或工具，必须在此指出，包括项目链接。
+若无统一工具，说明标准预处理流程。}
+
+> {说明为什么采用这种预处理方式，有没有论文依据}
+
+### 2 主实验
+
+#### 2.1 实验数据集划分
+
+| 数据集 | 训练集 | 验证集 | 测试集 | 划分方式 | 划分理由 |
+|-------|-------|-------|-------|---------|---------|
+| {名称} | {比例或数量} | {比例或数量} | {比例或数量} | {随机/官方划分/交叉验证} | {理由} |
+
+> {说明为什么这样划分：是否遵循该数据集的官方划分，引用相关论文的做法}
+
+#### 2.2 对比模型
+
+| 模型 | 来源 [n] | 类型 | 代码链接 |
+|-----|---------|------|---------|
+| **Ours** | — | 本文方法 | — |
+| {Baseline 1} | {作者} et al. [n] | {类型} | {repo 或 N/A} |
+| {Baseline 2} | {作者} et al. [n] | {类型} | {repo 或 N/A} |
+
+> {说明为什么选这些 baseline：覆盖哪些方法类别，是否包含当前 SOTA}
+
+#### 2.3 实验参数
+
+| 参数 | 值 | 说明 |
+|-----|---|------|
+| 学习率 | {值} | {说明} |
+| Batch size | {值} | {说明} |
+| Optimizer | {名称} | {说明} |
+| Epochs | {值} | {说明} |
+| 随机种子 | 42 | 所有实验统一 |
+| {其他关键参数} | {值} | {说明} |
+
+> {说明超参数选择依据：是否参考 baseline 论文的设置，引用论文}
+
+#### 2.4 预期结果表（占位）
+
+| 模型 | {数据集} | {指标1} | {指标2} | {指标3} |
+|-----|---------|--------|--------|--------|
+| {Baseline 1} | — | — | — | — |
+| {Baseline 2} | — | — | — | — |
+| **Ours** | — | **?** | **?** | **?** |
+
+### 3 消融实验
+
+#### 3.1 实验数据集划分
+{同主实验格式，若与主实验相同可直接引用}
+
+#### 3.2 消融对比模型
+
+| 变体 | 修改内容 | 目的 |
+|-----|---------|------|
+| **Full model** | 完整模型 | — |
+| w/o {模块A} | 去掉 {模块A}，替换为 {基线做法} | 验证 {模块A} 有效性 |
+| w/o {模块B} | 去掉 {模块B} | 验证 {模块B} 有效性 |
+
+> {说明为什么选这些消融：每个消融对应一个创新点，覆盖所有核心设计}
+
+#### 3.3 消融实验参数
+{同主实验，通常与主实验参数一致}
+
+#### 3.4 预期结果表（占位）
+
+| 变体 | {指标1} | {指标2} | 说明 |
+|-----|--------|--------|------|
+| Full model | **?** | **?** | — |
+| w/o {模块A} | ? | ? | 预期下降 |
+
+### 4 其他实验（可选）
+
+> 仅在方法特性需要时包含此节。常见类型：可视化分析、鲁棒性测试、效率对比（FLOPs / 推理延迟）、跨数据集泛化。
+
+#### 4.x {实验名称}
+
+**数据集**：{同上格式的数据集划分表}
+
+**对比模型**：{同上格式的对比模型表}
+
+> {说明为什么需要这个额外实验：它验证了什么主实验无法验证的性质}
 
 ---
 
-> ⚠️ **Phase 1 Review Checkpoint**
-> - /research step2  — 确认后进入实验设计
-> - /research revise "feedback"  — 重新生成第一部分
-```
+## 参考文献
 
-### 第二部分模板
+> 格式：IEEE。所有条目必须经 web_search 验证为真实存在。无法确认的加 `[待核实]`。
 
-在第一阶段审阅检查点之后追加：
+1. {姓, 名首字母.}, et al., "{论文完整标题}," in *{期刊/会议全称}*, vol. {卷}, no. {期}, pp. {页码}, {年份}.
 
-```markdown
----
-# Part II: Experiment Design
-> Updated: {YYYY-MM-DD} | Phase: 2 | Status: PENDING_REVIEW
-> User experiment requirements: see docs/user_requirements.md → ## Phase 2
-
-### Feasibility Verification Summary
-| Item | Status | Notes |
-|------|--------|-------|
-| Dataset {name} | ✅ Available / ⚠️ Requires application / ❌ Unavailable | {link} |
-| Baseline {name} code | ✅ Available / ⚠️ Needs self-impl / ❌ Unavailable | {repo} |
-| GPU memory | ✅ OK / ⚠️ Needs adjustment | 预计 {N}GB，用户有 {M}GB |
+> **主要工作**：{该论文做了什么，20 字内}
+> **引用原因**：{对本 idea 的具体帮助，20 字内}
+> **PDF**：`docs/papers/{论文完整标题}.pdf` / `[PDF 不可用]`
+> **核验原文**："{PDF 中的支撑句，英文原文}" (Section {X.X}) / `⚠️ [低置信度：...]`
 
 ---
 
-## Experiment Overview
+## 待核实清单
+> 由 Claude 自动维护。人工核实后逐一打勾。
 
-### Experiment Goals
-{要验证的核心假设。每条对应一个创新组件。}
-
-### Implementation Strategy
-- [x] From scratch / [ ] Based on: {project/link}
-  - 如基于现有项目：所需修改：{list}
-
-### Environment
-| Item | Config |
-|------|--------|
-| Python | {x.x} |
-| Framework | {PyTorch x.x / TF x.x} |
-| Hardware | {GPU model}, VRAM ≥ {N}GB |
-| Estimated training | {N}h/epoch × {M} epochs |
-
-### Reproducibility
-所有实验在 `torch`、`numpy`、`random` 中统一使用随机种子 `42`。
-
-### Datasets
-| Dataset | Source | Size | Split | Preprocessing |
-|---------|--------|------|-------|--------------|
-| {name} | {link} | {N samples} | {ratio} | {steps} |
+- [ ] {论断内容}（位置：{Section}，原因：{PDF 不可用 / 未找到支撑原文 / 数据来自二手引用}）
 
 ---
 
-## Main Experiments
-
-### Experiment Procedure
-{步骤说明：数据准备 → 模型初始化（lr、bs、optimizer、scheduler）→
-训练（epochs、early stopping）→ 评估 → 结果记录}
-
-### Baseline Configuration
-| Baseline | Code source | Key hyperparams | Metrics | Est. train time | VRAM |
-|---------|-------------|----------------|---------|----------------|------|
-
-### Evaluation Metrics
-| Metric | Formula | Expected (ours) | Expected (SOTA) | Direction |
-|--------|---------|----------------|----------------|---------|
-| {name} | {formula} | {estimate} | {lit value} | higher/lower is better |
-
-### Expected Results（占位符——通过 /research log-results 填入）
-| Method | {Dataset} | {Metric1} | {Metric2} |
-|--------|-----------|-----------|-----------|
-| {Baseline} | — | — | — |
-| **Ours** | — | **?** | **?** |
-
----
-
-## Ablation Study
-
-> 目的：独立验证每个创新组件。
-
-| ID | Variant | Modification | Purpose | Dependency | Expected direction |
-|----|---------|-------------|---------|-----------|-------------------|
-| A1 | w/o {module} | 移除 {module}，替换为 {fallback} | 验证 {module} | 在主实验之后 | {metric} 下降 |
-
----
-
-## Additional Analysis
-{可视化、鲁棒性测试、效率对比——仅在有意义时包含}
-
----
-
-> ⚠️ **Phase 2 Review Checkpoint**
-> - /research step3  — 确认后进入编码
-> - /research revise "feedback"  — 重新生成第二部分
-```
+> ⚠️ **阶段 B 完成节点**
+> 请审查 Part 1 和 Part 2 后告知 Claude 是否可以进入实验设计阶段。
+> - 可以继续 → 直接告知 Claude，进入阶段 C
+> - 需要修改 → 提出修改意见，Claude 迭代更新后再次询问确认
+````
 
 ---
 
 ## dev_log.md
 
 ```markdown
-# Dev Log — {project_name}
-> Created: {YYYY-MM-DD} | Last Updated: {YYYY-MM-DD}
-> Linked design: docs/idea_report.md (Phase 2, updated {date})
+# 开发日志 — {topic}
+> 创建时间：{YYYY-MM-DD} | 最后更新：{YYYY-MM-DD}
+> 关联实验设计：`docs/idea_report.md`（Part 3，{更新日期}版本）
 
-## Project Overview
-| Item | Value |
-|------|-------|
-| Research direction | {topic} |
-| Strategy | From scratch / Based on {project} |
-| Code root | code/ |
-| Design version | {Part II Updated date} |
-| Language | Python |
-| Framework | {PyTorch / TF / JAX} |
-| User coding requirements | see docs/user_requirements.md → ## Phase 3 |
+## 项目概览
+| 项目 | 内容 |
+|------|------|
+| 研究方向 | {topic} |
+| 实现策略 | 从头开始 / 基于 {项目名} |
+| 代码根目录 | `code/` |
+| 实验设计版本 | {Part 3 更新日期} |
+| 语言 | Python |
+| 框架 | {PyTorch / TF / JAX} |
+| 用户编码要求 | {从对话中收集的要求} |
 
-## Project Architecture
+## 项目架构
 
 ```text
 code/
-└── ...（与已确认的结构完全一致）
+└── ...（与用户确认的结构完全一致）
 ```
 
-### Module Responsibilities
-| File/Dir | Responsibility | Input | Output | Key deps |
-|----------|---------------|-------|--------|---------|
+### 各模块职责
+| 文件/目录 | 职责 | 输入 | 输出 | 核心依赖 |
+|----------|------|------|------|---------|
 
-## Model Architecture（可选——无自定义模型时省略）
+## 模型架构（可选）
 
-### Overall Structure
+### 整体结构
 ```text
-Input [B, L, D] → [Module A: role] → [Module B: role] → Output [B, 1]
+输入 → [模块A] → [模块B] → 输出
 ```
 
-### Core Module Pseudocode
+### 核心模块伪代码
 ```python
 class {ModelName}(nn.Module):
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         ...
 ```
 
-## Project Logic
+## 项目逻辑
 
-### Data Flow
+### 数据流
 ```text
-Raw files → Dataset.__getitem__ → DataLoader(batch) → transforms → model input tensor
+原始文件 → Dataset → DataLoader → transforms → 模型输入
 ```
 
-### Training Flow
+### 训练流程
 ```text
-load config → init model/optimizer/scheduler → epoch loop:
-  → train_one_epoch → validate → early_stopping check → save best_ckpt
+加载 config → 初始化 → epoch 循环 → early stopping → 保存 ckpt
 ```
 
-### Inference Flow
+### 推理流程
 ```text
-load best_ckpt → test DataLoader → forward → postprocess → compute metrics → save csv
+加载 ckpt → 测试集 → forward → 后处理 → 计算指标 → 保存结果
 ```
 
-## Progress
+## 实现进度
 
-| Module | File | Status | Completed | Notes |
-|--------|------|--------|-----------|-------|
-| Init | README.md, requirements.txt, configs/ | ✅ Done | {date} | |
-| Data loading | src/data/ | ⬜ TODO | — | |
-| Main model | src/models/{model}.py | ⬜ TODO | — | |
-| Train loop | src/trainers/trainer.py | ⬜ TODO | — | |
-| Utils | src/utils/ | ⬜ TODO | — | |
-| Scripts | scripts/ | ⬜ TODO | — | |
-| Baselines | baselines/ | ⬜ TODO | — | |
+| 模块 | 文件 | 状态 | 完成时间 | 备注 |
+|------|------|------|---------|------|
+| 初始化 | README.md, requirements.txt, configs/ | ✅ Done | {日期} | |
+| 数据加载 | src/data/ | ⬜ TODO | — | |
+| 主模型 | src/models/{model}.py | ⬜ TODO | — | |
+| 训练循环 | src/trainers/trainer.py | ⬜ TODO | — | |
+| 工具函数 | src/utils/ | ⬜ TODO | — | |
+| 运行脚本 | scripts/ | ⬜ TODO | — | |
+| Baseline | baselines/ | ⬜ TODO | — | |
 
-状态说明：⬜ TODO / 🔄 WIP / ✅ Done（运行验证通过）/ ❌ Blocked
+状态：⬜ TODO / 🔄 WIP / ✅ Done（已运行验证）/ ❌ Blocked
 
-## Dev Log Entries
+## 开发日志
 
-### {YYYY-MM-DD} — {操作摘要}
-- **Completed**: {完成的内容}
-- **Issues**: {遇到的问题，或"none"}
-- **Solutions**: {解决方式，或"none"}
+### {YYYY-MM-DD} — {动作简述}
+- **完成内容**：{具体内容}
+- **遇到的问题**：{问题描述，或"无"}
+- **解决方案**：{解决方法，或"无"}
 
-## Known Issues & TODO（可选——出现问题时添加）
-- [ ] {问题}
+## 已知问题（可选）
+- [ ] {问题描述}
 
 ---
 
-> 如需修改实验设计：/research back-to-step2 "reason"
-> 本 dev_log 将被加上 [ARCHIVED] 前缀，历史记录得以保留。
+> 如需回到实验设计阶段修改：告知 Claude 原因，Claude 将归档当前开发日志并回到阶段 C。
 ```
 
----
-
-## code_guide.md
-
-```markdown
-# Project Implementation Guide — {Topic}
-> Project: {project_name} | Created: {YYYY-MM-DD} | Last Updated: {YYYY-MM-DD}
-> Linked design: docs/idea_report.md | Change log: docs/dev_log.md
-> Omitted: {chapter} — {reason}    ← 仅在省略章节时包含
-
----
-
-## Project Origin
-
-### Strategy
-{From scratch / Based on open-source project}
-
-> {选择该策略的原因}
-
-### Original Project Info（仅策略 A）
-- **Name**: {name}
-- **URL**: {GitHub URL}
-- **Commit**: {hash — 固定所用版本}
-- **Scope of changes**: NEW: {list} | MODIFIED: {list} | KEPT: {list}
-
----
-
-## Project Structure
-
-### Full Directory Tree
-```text
-code/
-└── ...（精确的已确认结构，每个文件附一行注释）
-```
-
-### File Responsibilities
-| File/Dir | Responsibility | Called by |
-|----------|---------------|-----------|
-
----
-
-## Launch Guide
-
-### Train Main Model
-```bash
-bash scripts/train.sh
-```
-
-**可调参数**（在 scripts/train.sh 中修改）：
-| Param | Default | Description |
-|-------|---------|-------------|
-| --config | configs/default.yaml | 配置文件路径 |
-| --seed | 42 | 随机种子 |
-| --gpu | 0 | GPU 索引 |
-
-**输出文件**：
-| File | Path | Content | How to read |
-|------|------|---------|------------|
-| Best weights | results/checkpoints/best.pth | 最佳验证轮次参数 | `torch.load(path)` |
-| Training curve | logs/train_{ts}.csv | 每轮 loss/metric | CSV，第一列 = epoch |
-
-> {如何解读训练曲线：正常收敛的样子，以及需要警惕的信号}
-
-### Evaluate
-```bash
-bash scripts/evaluate.sh --ckpt results/checkpoints/best.pth
-```
-
-**输出文件**：{包含路径、内容、格式和字段级说明的表格}
-
-> {如何读取评估 JSON/CSV：每个字段的含义、单位、取值范围}
-
-### Ablation Experiments
-```bash
-bash scripts/ablation.sh
-```
-
-输出：`results/ablation/summary.csv` — 每个变体一行，可直接用于论文表格。
-
-### Run Baseline
-```bash
-bash scripts/evaluate.sh --baseline {name} --ckpt {path}
-```
-
----
-
-## Each File Explained
-
-> 阅读顺序：数据加载 → 模型 → 训练循环 → 工具函数 → 脚本
-
-### src/data/{dataset}_dataset.py
-
-**Role**: {该文件的功能，一句话}
-
-**Key class**: `{ClassName}(torch.utils.data.Dataset)`
-
-**Input**: {原始数据文件路径和格式}
-**Output**: `(x, y)` — x: `[seq_len, feature_dim]`, y: `[1]`
-
-**Core logic**:
-```python
-def __getitem__(self, idx):
-    ...  # 仅展示不显而易见的部分
-```
-
-> {对任何不显而易见的设计决策的解释}
-
----
-
-### src/models/{model_name}.py
-
-**Role**: {该文件的功能}
-
-**Input**: `x: Tensor [{batch}, {seq_len}, {feature_dim}]`
-**Output**: `pred: Tensor [{batch}, 1]`
-
-**Structure**:
-```text
-Input → [Module A: role] → [Module B: role] → Output
-```
-
-**Core logic**:
-```python
-def forward(self, x):
-    ...
-```
-
-> {对不显而易见部分的通俗解释}
-
----
-
-{其余每个文件各一个小节，格式相同}
-
----
-
-## Data Format（可选）
-
-### Input Data
-
-**Raw files**: `data/{dataset}/`
-
-| Field | Type | Unit | Meaning | Normal range |
-|-------|------|------|---------|-------------|
-
-> {非专业人员需要了解的领域特定概念}
-
-### Output Data
-
-**Predictions** `results/predictions_{ts}.csv`:
-```text
-sample_id, true_val, pred_val, abs_error
-0,         0.823,    0.817,    0.006
-```
-
-> {每列的含义以及如何发现规律}
-
----
-
-## FAQ（可选——在实现过程中遇到问题时添加条目）
-
-### Q: {问题标题}
-**Cause**: {根本原因}
-**Fix**: {具体步骤}
-
----
-
-> 在子阶段 3a 开始时创建。随每个完成的模块同步更新。
-```

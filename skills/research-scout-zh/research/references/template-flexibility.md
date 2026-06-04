@@ -28,59 +28,80 @@
 小节数量跟随内容，而非模板槽位数量。
 
 - `Proposed Method` 每个创新组件对应一个小节——方法需要几个组件就有几个小节
-- code_guide.md 中的 `Each File Explained` 每个 py 文件对应一个小节——项目有几个文件就有几个小节
+- `implementation.md` 中的各文件详细实现说明，每个 py 文件对应一个小节——项目有几个文件就有几个小节
 - dev_log.md 中的 `Dev Log Entries` 随每个完成的模块增长——没有上限
 
 小节标题使用语义化名称，绝不使用 `{Module Name}` 或 `{Core Component}` 等占位文本。
 
 ## 各文档章节分类
 
-### idea_report.md 第一部分
+### idea_report.md Part 1 + Part 2（阶段 B 产出）
 
 | 章节 | 类型 | 省略条件 |
 |------|------|---------|
-| Topic Overview | 必选 | — |
-| Candidate Idea Selection | 必选 | — |
-| Introduction | 必选 | — |
-| Related Work | 必选 | — |
-| Proposed Method | 必选 | — |
-| Feasibility Assessment | 必选 | — |
-| Baseline Plan | 必选 | — |
-| References | 必选 | — |
-| Pending Verification | 可选 | 所有引用已验证，无低置信度内容 |
+| Part 1 — Motivation | 必选 | — |
+| Part 1 — Development Timeline | 必选 | — |
+| Part 1 — Key Works | 必选 | — |
+| Part 2 — Introduction | 必选 | — |
+| Part 2 — Related Works | 必选 | — |
+| Part 2 — Method | 必选 | — |
+| 参考文献 | 必选 | — |
+| 待核实清单 | 可选 | 所有引用已核验，无低置信度内容 |
 
-### idea_report.md 第二部分
+### idea_report.md Part 3（阶段 C 产出）
 
 | 章节 | 类型 | 省略条件 |
 |------|------|---------|
-| Feasibility Verification Summary | 必选 | — |
-| Experiment Overview | 必选 | — |
-| Main Experiments | 必选 | — |
-| Ablation Study | 必选 | — |
-| Additional Analysis | 可选 | 方法不涉及可视化、效率或鲁棒性分析 |
+| 可行性核实摘要 | 必选 | — |
+| 数据集 | 必选 | — |
+| 主实验 | 必选 | — |
+| 消融实验 | 必选 | — |
+| 其他实验 | 可选 | 方法不涉及可视化、效率或鲁棒性分析 |
+
+### implementation.md（阶段 D 产出）
+
+> 详细格式见 `references/phase-implementation.md`。有两种格式，根据是否使用强 baseline 选择：
+
+**格式 A：强 Baseline 改写**
+
+| 章节 | 类型 | 省略条件 |
+|------|------|---------|
+| 原始项目信息 | 必选 | — |
+| 改写范围总览 | 必选 | — |
+| 改写后完整目录树 | 必选 | — |
+| 现有文件详解与改写方案 | 必选 | 精确到每个需要修改的函数 |
+| 数据下载与准备 | 必选 | — |
+| results 文件格式规范 | 必选 | — |
+| 实现顺序 | 必选 | — |
+
+**格式 B：从头构建**
+
+| 章节 | 类型 | 省略条件 |
+|------|------|---------|
+| 完整目录树 | 必选 | — |
+| 各目录/文件职责 | 必选 | — |
+| 各文件详细实现说明 | 必选 | 精确到每个函数的签名、参数、返回值、逻辑 |
+| 数据下载与准备 | 必选 | — |
+| results 文件格式规范 | 必选 | — |
+| 实现顺序 | 必选 | — |
+| 数据格式说明 | 可选 | 纯算法工作，无自定义数据格式 |
+| 实现顺序 | 必选 | — |
+| code/README.md 结构 | 必选 | — |
+
+### dev_log.md（阶段 E 维护）
+
+| 章节 | 类型 | 省略条件 |
+|------|------|---------|
+| 项目概览 | 必选 | — |
+| 实现进度 | 必选 | — |
+| 开发日志 | 必选 | — |
+| 已知问题 | 可选 | 初始省略；出现问题时添加 |
 
 ### code_guide.md
 
-| 章节 | 类型 | 省略条件 |
-|------|------|---------|
-| Project Origin | 必选 | — |
-| Project Structure | 必选 | — |
-| Launch Guide | 必选 | — |
-| Each File Explained | 必选 | — |
-| Data Format | 可选 | 纯算法工作，无自定义数据格式 |
-| FAQ | 可选 | 初始为空；在实现过程中遇到问题时添加条目 |
-
-### dev_log.md
-
-| 章节 | 类型 | 省略条件 |
-|------|------|---------|
-| Project Overview | 必选 | — |
-| Project Architecture | 必选 | — |
-| Model Architecture | 可选 | 无自定义模型（例如纯数据流水线项目） |
-| Project Logic | 必选 | — |
-| Progress Table | 必选 | — |
-| Dev Log Entries | 必选 | — |
-| Known Issues | 可选 | 初始省略；出现问题时添加 |
+> **已废弃**。原内容拆分为：
+> - 实现逻辑 → `docs/implementation.md`
+> - 安装/运行说明 → `code/README.md`
 
 ## 用户文档偏好
 

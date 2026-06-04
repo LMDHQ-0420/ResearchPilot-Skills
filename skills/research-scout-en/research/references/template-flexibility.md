@@ -28,47 +28,45 @@ The standard: write as much as needed to fully convey the information — no mor
 Sub-section count follows content, not template slot count.
 
 - `Proposed Method` gets one sub-section per innovation component — components have as many as the method requires
-- `Each File Explained` in code_guide.md gets one sub-section per py file — files have as many as the project requires
+- `Per-File Implementation Details` in implementation.md gets one sub-section per py file — files have as many as the project requires
 - `Dev Log Entries` in dev_log.md grows with each completed module — no cap
 
 Sub-section titles use semantic names, never placeholder text like `{Module Name}` or `{Core Component}`.
 
 ## Chapter Classification Per Document
 
-### idea_report.md Part I
+### idea_report.md Part 1 + Part 2 (Phase B output)
 
 | Chapter | Type | Omit condition |
 |---------|------|---------------|
-| Topic Overview | REQUIRED | — |
-| Candidate Idea Selection | REQUIRED | — |
-| Introduction | REQUIRED | — |
-| Related Work | REQUIRED | — |
-| Proposed Method | REQUIRED | — |
-| Feasibility Assessment | REQUIRED | — |
-| Baseline Plan | REQUIRED | — |
+| Part 1 — Motivation | REQUIRED | — |
+| Part 1 — Development Timeline | REQUIRED | — |
+| Part 1 — Key Works | REQUIRED | — |
+| Part 2 — Introduction | REQUIRED | — |
+| Part 2 — Related Works | REQUIRED | — |
+| Part 2 — Method | REQUIRED | — |
 | References | REQUIRED | — |
 | Pending Verification | OPTIONAL | All citations verified, no low-confidence content |
 
-### idea_report.md Part II
+### idea_report.md Part 3 (Phase C output)
 
 | Chapter | Type | Omit condition |
 |---------|------|---------------|
 | Feasibility Verification Summary | REQUIRED | — |
-| Experiment Overview | REQUIRED | — |
+| Datasets | REQUIRED | — |
 | Main Experiments | REQUIRED | — |
 | Ablation Study | REQUIRED | — |
-| Additional Analysis | OPTIONAL | Method does not involve visualization, efficiency, or robustness analysis |
+| Additional Experiments | OPTIONAL | Method does not involve visualization, efficiency, or robustness analysis |
 
-### code_guide.md
+### implementation.md (Phase D output)
 
 | Chapter | Type | Omit condition |
 |---------|------|---------------|
 | Project Origin | REQUIRED | — |
 | Project Structure | REQUIRED | — |
-| Launch Guide | REQUIRED | — |
-| Each File Explained | REQUIRED | — |
+| Per-File Implementation Details | REQUIRED | — |
 | Data Format | OPTIONAL | Pure algorithm work with no custom data format |
-| FAQ | OPTIONAL | Created empty; add entries as issues arise during implementation |
+| Implementation Order | REQUIRED | — |
 
 ### dev_log.md
 
