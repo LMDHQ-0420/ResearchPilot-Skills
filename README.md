@@ -42,7 +42,7 @@ cd research-scout
 ### 安装中文版
 
 ```bash
-cp -r skills/research-scout-zh/* ~/.claude/skills/
+cp -r skills/research-scout-zh/research/* ~/.claude/skills/research/
 ```
 
 ### 验证安装

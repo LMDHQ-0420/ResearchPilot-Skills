@@ -1,5 +1,5 @@
 ---
-name: research-scout-zh
+name: research
 description: >
   当用户想要开展学术研究时使用此 skill：包括从研究方向或论文生成 idea、设计实验、或实现研究代码。
   在以下情况触发：/research 后跟研究方向字符串、--papers 参数、或子命令（step2、step3、

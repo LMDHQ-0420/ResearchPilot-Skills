@@ -1,5 +1,5 @@
 ---
-name: research-scout-en
+name: research
 description: >
   This skill should be used when the user wants to conduct academic research:
   generating ideas from a topic or papers, designing experiments, or implementing
