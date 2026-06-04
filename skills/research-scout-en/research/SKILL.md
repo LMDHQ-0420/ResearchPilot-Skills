@@ -3,7 +3,9 @@ name: research
 description: >
   Use this skill when the user wants to conduct academic research: generating
   ideas from a research direction or papers, deepening an idea, designing
-  experiments, or implementing research code.
+  experiments, or implementing research code. The trigger format requires a
+  research description after /research — /research alone with no content is
+  not accepted.
 version: 2.0.0
 license: LICENSE
 ---
@@ -21,10 +23,9 @@ are needed to switch phases.
 
 | Command | Description |
 |---------|-------------|
-| `/research "research direction description"` | Start the full research flow |
+| `/research research direction description` | Start the full research flow (no quotes needed) |
 | `/research --papers <pdf/name/description>` | Start the flow with reference papers |
-| `/research download-paper "description" [--to "path"]` | Standalone single-paper download (independent of flow, usable at any time) |
-| `/research` | Prompt user to provide a research description |
+| `/research download-paper description [--to "path"]` | Standalone single-paper download (independent of flow, usable at any time) |
 
 > **`/research download-paper`** is a standalone command that does not depend
 > on any flow state. It can be used at any time; specify a paper description
@@ -91,7 +92,7 @@ On every invocation, determine the current state in this order:
 ```
 /research download-paper → execute standalone download, do not enter the flow
 
-/research (no content) → prompt user to provide a research description
+/research (no content) → refuse, respond: "Please provide a research direction, e.g.: /research I want to improve battery SOH prediction"
 
 docs/idea_report.md does not exist
   → Phase A: Direction Exploration
