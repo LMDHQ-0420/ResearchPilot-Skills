@@ -38,7 +38,7 @@ cp -r code/skills/research-scout-zh ~/.claude/skills/research
 
 | 命令 | 说明 |
 |------|------|
-| `/research 研究方向描述` | 启动完整研究流程（描述不需要引号）|
+| `/research 研究方向描述` | 启动完整研究流程|
 | `/research --papers <pdf/名称/描述>` | 带参考论文启动流程 |
 | `/research download-paper 描述 [--to "路径"]` | 独立下载单篇论文（随时可用，与研究流程无关）|
 

@@ -38,7 +38,7 @@ If Claude starts asking about your research direction, installation succeeded.
 
 | Command | Description |
 |---------|-------------|
-| `/research research direction` | Start the full research workflow (no quotes needed) |
+| `/research research direction` | Start the full research workflow |
 | `/research --papers <pdf/name/description>` | Start with seed papers |
 | `/research download-paper description [--to "path"]` | Download a single paper (standalone, works anytime) |
 
