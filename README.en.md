@@ -62,29 +62,27 @@ Once started, the workflow proceeds through conversation. After each phase, Clau
 
 ## Five-Phase Workflow
 
-### Phase A: Direction Exploration
+### Phase A: Direction Exploration & Literature Review
 
-Claude searches the literature and proposes 5 research directions for you to choose from.
+Claude conducts a deep, iterative literature review across four rounds, producing `idea_report.md` Part 1.
 
-1. Parses input; if information is insufficient, asks clarifying questions in a single turn (preferred directions, exclusions)
-2. Retrieves papers from top venues, targeting 15+; if fewer found, explains why and waits for confirmation
-3. Presents a download list with a one-line summary and relevance note per paper; batch-downloads to `docs/papers/`
-   - Tries arXiv first; falls back to OpenReview automatically; saves abstract TXT if both fail
-4. Proposes 5 directions, each with: core idea, literature support, innovation angle, main challenges, novelty assessment
-5. You select or request changes; Claude iterates with additional retrieval
+**Problem domain scoping**: Initial retrieval of 10–15 representative papers; Claude reports across three dimensions (what problems the field addresses, major method families, most active sub-directions in the past two years). You confirm the scope and areas of interest.
+
+**Deep literature coverage**: Downloads and reads papers within the confirmed scope; for each method family, outputs a structured analysis of what it can and cannot solve — every gap claim must be supported by a specific passage from a paper. You can add papers or challenge gap judgments; this step iterates until coverage is satisfactory.
+
+**RQ formulation and validation**: Derives 3–5 candidate RQs from the confirmed gaps; each RQ is annotated with its corresponding gap, a novelty check (targeted search), and an answerability assessment. You select the primary RQ and secondary RQs.
+
+**Necessity argument**: Writes a structured necessity argument for the selected RQs (application necessity / theoretical necessity / timing necessity), each point backed by citations. Once you confirm the argument holds, Part 1 is assembled.
 
 ---
 
 ### Phase B: Idea Development
 
-Claude builds the selected direction into a fully structured idea, generating `idea_report.md` Parts 1 and 2.
+After Part 1 is confirmed, Claude generates `idea_report.md` Part 2 independently.
 
-- **Part 1**: Motivation, development timeline, Key Works
-- **Part 2**: Introduction, Related Works (including research gap), Method
-  - Method has three layers: overall framework (3.1), plain-language walkthrough (3.2), theoretical derivation (3.3+)
-- **References**: MLA format, all Part 1+2 citations consolidated, each entry annotated with main work and citation reason
+**Part 2 — Idea design**: Introduction, Related Works (including research gap analysis), Method (overall framework 3.1 → plain-language walkthrough 3.2 → theoretical derivation 3.3+).
 
-All citations verified via `web_search`; unverifiable claims marked `[to verify]`.
+**References**: MLA format, all Part 1+2 citations consolidated, each entry annotated with main work and citation reason; all citations verified via `web_search`, unverifiable claims marked `[to verify]`.
 
 ---
 
@@ -92,33 +90,27 @@ All citations verified via `web_search`; unverifiable claims marked `[to verify]
 
 Claude designs a complete experimental plan based on domain conventions, appended to `idea_report.md` Part 3.
 
-1. Asks for GPU constraint and max training time per run (saved to `user_requirements.md`)
-2. Searches recent papers for standard datasets, metrics, and ablation patterns
-3. **Feasibility verification**: dataset links accessible, baseline repos accessible, GPU memory sufficient
-4. Generates experiment design at top-venue workload standard:
-   - Main experiment: 3–5 datasets, 5–8 baselines
-   - Ablation study: systematically covers all innovation modules, 3–6 variants
-   - Additional experiments: 2–3 types (generalization / efficiency / robustness / visualization)
-   - All results reported as mean ± std over at least 3 random seeds
+**Constraint collection**: Asks for GPU spec and max training time per run, saved to `user_requirements.md`.
 
-Each experiment specifies: purpose, dataset splits and rationale, evaluation metrics and meaning, expected outcome, and a model table with one-line description per model.
+**Baseline deep-read**: Presents a reading plan listing each baseline's paper and GitHub repo (with a one-line reason for reading it); after you confirm, Claude reads each one and extracts datasets used, split strategies, experiment designs, comparison models, evaluation metrics, and key hyperparameters — compiled into Part 3 Section 0.
+
+**Domain convention synthesis**: Aggregates the deep-read results to identify the standard benchmarks, evaluation metrics, ablation patterns, and reporting norms shared across baselines, forming the reference baseline for experiment design.
+
+**Feasibility verification**: Confirms dataset links are accessible, baseline repos are accessible, and GPU memory is sufficient; pauses and notifies you if any check fails.
+
+**Experiment design** (top-venue workload standard): Main experiment with 3–5 datasets and 5–8 baselines; ablation study systematically covering all innovation modules (3–6 variants); 2–3 additional experiment types (generalization / efficiency / robustness / visualization); all results reported as mean ± std over at least 3 random seeds. Each experiment specifies: purpose, dataset splits and rationale, metric meanings, expected outcome, and a model table with one-line descriptions.
 
 ---
 
 ### Phase D: Implementation Design
 
-Claude generates `implementation.md` — the precise coding guide for Phase E. After every generation or revision, Claude automatically runs a validation check: experiment coverage, logical consistency, completeness.
+Claude generates `implementation.md` — the precise coding guide for Phase E. After every generation or revision, Claude automatically runs three validation checks (experiment coverage, logical consistency, completeness).
 
-**Strong baseline path** (extending an existing open-source project):
-- Clone original project → scan structure → generate rewrite plan
-- Each function to modify: what it currently does → what it will do (text steps) → parameter/return changes
+**Strong baseline path** (extending an existing open-source project): Clone original project → scan structure → generate rewrite plan; each function to modify is described as: what it currently does → what it will do (text steps) → parameter / return value changes.
 
-**Build from scratch path**:
-- Full directory tree with per-file responsibilities
-- Dedicated data flow section: raw files → parse → split → normalize → model input tensor (with shapes)
-- Each function: signature + parameter meanings + return semantics + implementation logic (text steps)
+**Build from scratch path**: Full directory tree with per-file responsibilities; dedicated data flow section (raw files → parse → split → normalize → model input tensor, with shapes); each function documented with signature, parameter meanings, return semantics, and implementation logic.
 
-After `implementation.md` is confirmed, Claude outputs data download instructions and waits for you to confirm data is ready before entering Phase E.
+**Data preparation**: After `implementation.md` is confirmed, Claude outputs data download instructions and waits for you to confirm data is ready before entering Phase E.
 
 ---
 
@@ -126,9 +118,11 @@ After `implementation.md` is confirmed, Claude outputs data download instruction
 
 Claude implements code file by file following `implementation.md`, maintaining `dev_log.md` in sync.
 
-- After completing each module, runs a validation against implementation.md (signatures, shapes, metric consistency)
-- If an error is found in implementation.md: stop → report issue and suggested fix → wait for confirmation → update implementation.md first → then update code
-- `requirements.txt`: library names only, no version pins, no `torch`/`torchvision`/`torchaudio`
+**Module validation**: After completing each module, runs a consistency check against `implementation.md` (function signatures, tensor shapes, evaluation metrics).
+
+**Error handling**: If an error is found in `implementation.md`: stop → report the issue and a suggested fix → wait for confirmation → update `implementation.md` first → then update the code.
+
+**Dependency rules**: `requirements.txt` lists library names only, no version pins, no `torch` / `torchvision` / `torchaudio`.
 
 ---
 
@@ -137,7 +131,7 @@ Claude implements code file by file following `implementation.md`, maintaining `
 ```
 docs/
   idea_report.md        # Full research report
-                        #   Part 1: Motivation, development timeline, Key Works
+                        #   Part 1: Motivation (necessity argument), Research Questions, Key Works (table + detail entries)
                         #   Part 2: Introduction, Related Works, Method
                         #   Part 3: Datasets, experiment design (main/ablation/additional)
                         #   References: MLA format, with main work and citation reason per entry
