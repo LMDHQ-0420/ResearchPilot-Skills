@@ -19,7 +19,7 @@ git clone https://github.com/YOUR_USERNAME/research-scout.git
 cd research-scout
 
 # 安装中文版
-cp -r code/skills/research-scout-zh ~/.claude/skills/research
+cp -r skills/research-scout-zh ~/.claude/skills/research
 ```
 
 > 中英文版互斥，安装后触发命令均为 `/research`。切换版本时先删除 `~/.claude/skills/research`，再安装另一版本。

@@ -19,7 +19,7 @@ git clone https://github.com/YOUR_USERNAME/research-scout.git
 cd research-scout
 
 # Install English version
-cp -r code/skills/research-scout-en ~/.claude/skills/research
+cp -r skills/research-scout-en ~/.claude/skills/research
 ```
 
 > Chinese and English versions are mutually exclusive. Both use `/research` as the trigger. To switch versions, delete `~/.claude/skills/research` and install the other version.
