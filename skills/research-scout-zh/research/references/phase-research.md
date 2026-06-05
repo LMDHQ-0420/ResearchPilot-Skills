@@ -7,24 +7,30 @@
 所有论文下载（流程内自动触发 或 `/research download-paper` 独立命令）均使用以下逻辑：
 
 ```bash
-INPUT="{论文标题、arXiv ID 或 URL}"
+INPUT="{论文标题、arXiv ID、OpenReview ID 或 URL}"
 OUTPUT_DIR="${指定路径:-./docs/papers}"
 mkdir -p "$OUTPUT_DIR"
 
-# 提取 arXiv ID
+TITLE=""
+PDF_URL=""
+
+# ── 第一步：判断输入类型，尝试 arXiv ──────────────────────────────────────
+
 if echo "$INPUT" | grep -qE '^[0-9]{4}\.[0-9]{4,5}(v[0-9]+)?$'; then
   ARXIV_ID="$INPUT"
 elif echo "$INPUT" | grep -qE 'arxiv\.org/(abs|pdf)/'; then
   ARXIV_ID=$(echo "$INPUT" | grep -oE '[0-9]{4}\.[0-9]{4,5}(v[0-9]+)?')
 else
+  # 按标题在 arXiv 搜索
   QUERY=$(python3 -c "import urllib.parse,sys; print(urllib.parse.quote(sys.argv[1]))" "$INPUT")
   API_RESULT=$(curl -s "https://export.arxiv.org/api/query?search_query=ti:${QUERY}&max_results=1")
   ARXIV_ID=$(echo "$API_RESULT" | grep -oE 'arxiv\.org/abs/[0-9]{4}\.[0-9]{4,5}' | grep -oE '[0-9]{4}\.[0-9]{4,5}' | head -1)
 fi
 
-# 获取官方标题
-META=$(curl -s "https://export.arxiv.org/api/query?id_list=${ARXIV_ID}")
-TITLE=$(echo "$META" | python3 -c "
+if [ -n "$ARXIV_ID" ]; then
+  # 获取 arXiv 官方标题
+  META=$(curl -s "https://export.arxiv.org/api/query?id_list=${ARXIV_ID}")
+  TITLE=$(echo "$META" | python3 -c "
 import sys, re, html
 c = sys.stdin.read()
 m = re.search(r'<entry>.*?<title>(.*?)</title>', c, re.DOTALL)
@@ -32,21 +38,87 @@ if m:
     t = html.unescape(m.group(1).strip().replace('\n', ' '))
     print(re.sub(r'\s+', ' ', t))
 ")
+  PDF_URL="https://arxiv.org/pdf/${ARXIV_ID}"
+fi
 
-# 生成文件名（保留空格，去除非法字符）
-FILENAME=$(echo "$TITLE" | python3 -c "
+# ── 第二步：arXiv 未找到，尝试 OpenReview ────────────────────────────────
+
+if [ -z "$PDF_URL" ]; then
+  # 判断是否直接给了 OpenReview forum ID 或 URL
+  if echo "$INPUT" | grep -qE 'openreview\.net'; then
+    OR_ID=$(echo "$INPUT" | grep -oE '[?&]id=([A-Za-z0-9_-]+)' | sed 's/[?&]id=//')
+  elif echo "$INPUT" | grep -qE '^[A-Za-z0-9_-]{8,}$'; then
+    # 看起来像 OpenReview forum ID（非纯数字、非 arXiv 格式）
+    OR_ID="$INPUT"
+  else
+    # 按标题在 OpenReview API v2 搜索
+    OR_QUERY=$(python3 -c "import urllib.parse,sys; print(urllib.parse.quote(sys.argv[1]))" "$INPUT")
+    OR_RESULT=$(curl -s "https://api2.openreview.net/notes?content.title=${OR_QUERY}&limit=1")
+    OR_ID=$(echo "$OR_RESULT" | python3 -c "
+import sys, json
+try:
+    data = json.load(sys.stdin)
+    notes = data.get('notes', [])
+    if notes:
+        print(notes[0].get('forum', ''))
+except:
+    pass
+")
+    # 若 API v2 未命中，尝试 API v1
+    if [ -z "$OR_ID" ]; then
+      OR_RESULT=$(curl -s "https://api.openreview.net/notes?content.title=${OR_QUERY}&limit=1")
+      OR_ID=$(echo "$OR_RESULT" | python3 -c "
+import sys, json
+try:
+    data = json.load(sys.stdin)
+    notes = data.get('notes', [])
+    if notes:
+        print(notes[0].get('forum', ''))
+except:
+    pass
+")
+    fi
+  fi
+
+  if [ -n "$OR_ID" ]; then
+    # 获取 OpenReview 官方标题
+    OR_META=$(curl -s "https://api2.openreview.net/notes?forum=${OR_ID}&limit=1")
+    TITLE=$(echo "$OR_META" | python3 -c "
+import sys, json
+try:
+    data = json.load(sys.stdin)
+    notes = data.get('notes', [])
+    if notes:
+        t = notes[0].get('content', {}).get('title', '')
+        if isinstance(t, dict):
+            t = t.get('value', '')
+        print(t)
+except:
+    pass
+")
+    PDF_URL="https://openreview.net/pdf?id=${OR_ID}"
+  fi
+fi
+
+# ── 第三步：执行下载 ───────────────────────────────────────────────────────
+
+if [ -z "$PDF_URL" ]; then
+  echo "❌ 下载失败：arXiv 和 OpenReview 均未找到 "$INPUT""
+else
+  # 若标题为空则回退到输入本身
+  [ -z "$TITLE" ] && TITLE="$INPUT"
+  FILENAME=$(echo "$TITLE" | python3 -c "
 import sys, re
 t = sys.stdin.read().strip()
 t = re.sub(r'[/\\\\:*?\"<>|]', '', t)
 print(t + '.pdf')
 ")
-
-curl -L --silent "https://arxiv.org/pdf/${ARXIV_ID}" -o "${OUTPUT_DIR}/${FILENAME}"
-
-if [ -s "${OUTPUT_DIR}/${FILENAME}" ]; then
-  echo "✅ 已保存：${OUTPUT_DIR}/${FILENAME}"
-else
-  echo "❌ 下载失败：$INPUT"
+  curl -L --silent "$PDF_URL" -o "${OUTPUT_DIR}/${FILENAME}"
+  if [ -s "${OUTPUT_DIR}/${FILENAME}" ]; then
+    echo "✅ 已保存：${OUTPUT_DIR}/${FILENAME}"
+  else
+    echo "❌ 下载失败：找到链接但 PDF 不可访问（$PDF_URL）"
+  fi
 fi
 ```
 
@@ -99,16 +171,23 @@ fi
 
 **搜索自反思**：检查每个 research gap 是否有 ≥2 篇论文支撑，不足则补充检索（最多 3 轮）。
 
-目标：不少于 10 篇有效文献作为初步方向探索基础。
+**目标：不少于 15 篇有效文献。**
+
+若 3 轮检索后仍不足 15 篇，在向用户展示下载清单时说明原因：
+```
+注：本方向文献较少，当前共检索到 {N} 篇（目标 15 篇），原因：{领域较新 / 跨领域交叉 / 关键词覆盖有限}。
+是否以现有 {N} 篇继续，还是希望我调整检索策略？
+```
+等待用户确认后再继续。
 
 ### A-3 向用户确认下载清单
 
 ```
 初步检索完成。以下论文建议下载（可增删）：
 
-| # | 标题 | 发表信息 | arXiv 版本 |
-|---|-----|---------|-----------|
-| 1 | {标题} | {Venue Year} | {ID 或 无} |
+| # | 标题 | 发表信息 | arXiv 版本 | 内容 | 下载原因 |
+|---|-----|---------|-----------|------|---------|
+| 1 | {标题} | {Venue Year} | {ID 或 无} | {一句话说明该论文做了什么} | {一句话说明与当前研究方向的关联} |
 ...
 
 有 arXiv 版本的将自动下载，无 arXiv 版本的需手动提供。
@@ -189,18 +268,18 @@ fi
 - `### 2 Related Works`：归纳现有做法，最后一节固定为"研究空白"
 - `### 3 Method`：详细理论框架，每个公式用 `>` 解释，最后一节固定为 Baseline 参考与评价指标（必须有论文依据）
 
-大量使用 `>` 解释每一步的设计理由和文献支撑，使用 `>>` 标注来源并附上 PDF 原文句子。
+大量使用 `>` 解释每一步的设计理由、文献支撑和来源依据。
 
 生成过程中若需要更多论文支撑：自动执行检索 → 向用户确认下载清单 → 下载 → 继续生成。
 
 ### B-2 引用内容核验
 
-对所有 `>>` 批注：
+对所有来源批注（`>` 后跟引用编号的行）：
 1. 打开 `docs/papers/{标题}.pdf`（或 `.txt`）
 2. 定位支撑段落，追加原文：
    ```
-   >> 本设计受 [3] 启发。[3]
-   >> 原文依据："..." (Section 3.1)
+   > 本设计受 [3] 启发。[3]
+   > 原文依据："..." (Section 3.1)
    ```
 3. 无法核验时追加 `⚠️ [低置信度：PDF 不可用]`，并登记待核实清单。
 
@@ -273,7 +352,7 @@ idea 的详细描述已更新。你觉得现在的 idea 够完善了吗？
 
 按 `references/document-formats.md` 中的 Part 3 模板生成，追加到 `idea_report.md` 末尾。
 
-每个实验设计决策用 `>` 说明理由，有论文依据的用 `>>` 标注。
+每个实验设计决策用 `>` 说明理由，有论文依据的同样用 `>` 标注并附引用编号。
 
 ### C-5 每次输出后询问确认
 

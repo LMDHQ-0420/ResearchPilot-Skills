@@ -20,8 +20,7 @@ Chapter presence and content volume follow `references/template-flexibility.md`.
 | `### 1` / `### 2` / `### 3` | Level-1 sections (renumbered from 1 within each Part) | Fixed section titles — see templates below |
 | `#### 1.1` / `#### 1.2` | Level-2 sub-sections | Add or remove freely; use semantic names |
 | `##### 1.1.1` | Level-3 sub-sections | Use only when necessary |
-| `>` | Explanatory annotation | Immediately after body text; plain-language gloss of formulas, design decisions, or difficult points; **use heavily** |
-| `>>` | Source annotation | Immediately after borrowed ideas; must cite `[n]`; append verified verbatim sentence from PDF |
+| `>` | Annotation | Immediately after body text; plain-language gloss of formulas, design decisions, sources, or difficult points; **use heavily** |
 | `⚠️ [low confidence: ...]` | Uncertainty marker | End of any insufficiently evidenced claim; register in Pending Verification list |
 | `` `code` `` | Inline code | File names, function names, variable names, commands |
 | ` ```text ` | Data flow / structure diagrams | |
@@ -33,7 +32,7 @@ Chapter presence and content volume follow `references/template-flexibility.md`.
 | `---` | Between Parts; before each review checkpoint | Only these two positions |
 | HTML comments | STRICTLY FORBIDDEN in final output | |
 
-**Heading language rule (English version)**: all headings in English.
+**Heading language rule (English version)**: all headings in English, including `## References`.
 
 ---
 
@@ -58,7 +57,7 @@ Continuous paragraphs, academic style, cite key papers.}
 Format for each milestone: Author et al. [n] (Venue Year) proposed ..., solving ..., but still lacking ....
 Use continuous paragraphs, not bullet lists.}
 
->> {If a milestone description directly draws from a survey or paper, annotate the source here} [n]
+> {If a milestone description directly draws from a survey or paper, annotate the source here} [n]
 
 ### 3 Key Works
 {List 5–8 works worth learning from — not limited to SOTA; include methodologically inspiring works.
@@ -67,7 +66,7 @@ One sub-section per paper, title format: #### 3.x {Short Name} ({Venue} {Year})}
 #### 3.1 {Short Name} ({Venue} {Year})
 {Core contribution, academic style, 2–3 sentences}
 
->> Borrowing value: {specific help for this idea} [n]
+> Borrowing value: {specific help for this idea} [n]
 
 ---
 
@@ -91,7 +90,7 @@ The main contributions are as follows:
 #### 2.1 {Related Direction 1}
 {Summarize the main approaches in this direction, cite representative papers, point out shared limitations. No need to introduce papers one by one — focus on synthesis.}
 
->> {If a synthesis conclusion directly draws from a survey, annotate the source} [n]
+> {If a synthesis conclusion directly draws from a survey, annotate the source} [n]
 
 #### 2.2 {Related Direction 2}
 {Same as above}
@@ -116,8 +115,16 @@ Input → [Module A: role] → [Module B: role] → [Module C: role] → Output
 
 > Data flow: {text explanation of each arrow in the diagram above}
 
-#### 3.2 {Core Module Name}
-{Detailed module description: input/output definitions, operation steps, equation derivation. Academic style.}
+#### 3.2 Step-by-Step Walkthrough
+{Describe every step of the method in plain, accessible language — no formulas, no jargon.
+Use "Step 1 … Step 2 …" structure so that a reader without domain background can follow what the method does.
+Each step here must correspond one-to-one with a sub-section in 3.3; the number of steps equals the number of 3.3 sub-sections.}
+
+> {Supplementary note: the intuitive justification for this sequence — why this order is natural and correct}
+
+#### 3.3 {Core Module Name}
+{Detailed module description: input/output definitions, operation steps, equation derivation. Academic style.
+This section corresponds one-to-one with the matching step in 3.2, providing the rigorous theoretical treatment.}
 
 $$
 {equation}
@@ -125,11 +132,11 @@ $$
 
 > Formula: {intuition behind each symbol; why designed this way; theoretical justification}
 
->> This module's design is inspired by [n], where ... This work extends it by ... [n]
->> Source text: "{verbatim supporting sentence from PDF}" (Section {X.X})
+> This module's design is inspired by [n], where ... This work extends it by ... [n]
+> Source text: "{verbatim supporting sentence from PDF}" (Section {X.X})
 
-#### 3.3 {Other Modules ...}
-{Same structure; add or remove sub-sections based on method complexity}
+#### 3.4 {Other Modules ...}
+{Same structure; add or remove sub-sections based on method complexity; each sub-section corresponds to one step in 3.2}
 
 #### 3.x Baseline Reference and Evaluation Metrics
 {This section is always present, positioned as the final sub-section of Method.
@@ -174,40 +181,59 @@ If no standard tool exists, describe the standard preprocessing pipeline.}
 
 > {Explain why this preprocessing approach is used, and whether it has paper support}
 
-### 2 Main Experiments
+### 2 Experiment Design
 
-#### 2.1 Dataset Splits
+**Workload baseline (top venue standard)**:
+
+| Dimension | Minimum | Recommended |
+|-----------|---------|-------------|
+| Main experiment datasets | 2 | 3–5 (covering different scales / domains) |
+| Baseline models compared | 4 | 5–8 (recent SOTA + classic methods) |
+| Ablation variants | 1 per innovation | 3–6 variants, systematically covering all core designs |
+| Additional experiment types | 1 | 2–3 (from: generalization / efficiency / robustness / visualization) |
+| Multiple runs required | Yes | Report mean ± std, at least 3 random seeds |
+
+**Coherence requirements**:
+- Every experiment must correspond to at least one innovation or hypothesis in the idea — no unrelated experiments
+- Ablations must systematically cover all core design modules, each validated independently
+- Additional experiments must validate properties the main experiment cannot cover (e.g., generalization, efficiency) — no redundancy with main experiments
+- All experiments use the same set of random seeds to ensure reproducibility
+
+> If an experiment cannot meet the workload baseline above, explain the reason in that experiment's "Purpose" field (e.g., scarce public datasets in the domain, compute resource constraints).
+
+Each experiment (main, ablation, additional) uses the following unified format:
+
+#### {Experiment Number} {Experiment Name}
+
+**Purpose**: {what this experiment validates — which innovation or hypothesis from the idea it tests}
+
+**Dataset and Splits**:
 
 | Dataset | Train | Val | Test | Split Method | Justification |
 |---------|-------|-----|------|-------------|--------------|
-| {Name} | {ratio or count} | {ratio or count} | {ratio or count} | {random / official / cross-val} | {reason} |
+| {Name} | {ratio or count} | {ratio or count} | {ratio or count} | {random / official / cross-val} | {reason; cite papers that use the same split} |
 
-> {Explain why this split is used: does it follow the dataset's official split, cite related papers}
+**Evaluation Metrics**:
 
-#### 2.2 Comparison Models
+| Metric | Meaning | Computation | Justification |
+|--------|---------|------------|--------------|
+| {Metric name} | {one sentence on what this metric measures} | {formula or steps} | {cite papers that use this metric} |
 
-| Model | Source [n] | Type | Code |
-|-------|-----------|------|------|
-| **Ours** | — | Proposed method | — |
-| {Baseline 1} | {Author} et al. [n] | {type} | {repo or N/A} |
-| {Baseline 2} | {Author} et al. [n] | {type} | {repo or N/A} |
+> {Explain why this set of metrics accurately reflects the purpose of this experiment}
 
-> {Explain why these baselines are chosen: which method categories they cover, whether current SOTA is included}
+**Expected Outcome**: {how much better the proposed method is expected to perform vs. baselines, and why this improvement is anticipated}
 
-#### 2.3 Hyperparameters
+**Models Under Evaluation**:
 
-| Parameter | Value | Notes |
-|-----------|-------|-------|
-| Learning rate | {value} | {notes} |
-| Batch size | {value} | {notes} |
-| Optimizer | {name} | {notes} |
-| Epochs | {value} | {notes} |
-| Random seed | 42 | Unified across all experiments |
-| {Other key params} | {value} | {notes} |
+| Model | Source [n] | Type | Code | Description |
+|-------|-----------|------|------|-------------|
+| **Ours** | — | Proposed method | — | {one sentence describing the proposed method} |
+| {Baseline 1} | {Author} et al. [n] | {type: classic / current SOTA / ablation variant} | {repo or N/A} | {one sentence on this model's core approach} |
+| {Baseline 2} | {Author} et al. [n] | {type} | {repo or N/A} | {one sentence} |
 
-> {Explain the basis for hyperparameter choices: whether they follow baseline paper settings, cite papers}
+> {Explain the selection logic: which method categories are covered, why this comparison is fair}
 
-#### 2.4 Expected Results (placeholder)
+**Expected Results (placeholder)**:
 
 | Model | {Dataset} | {Metric 1} | {Metric 2} | {Metric 3} |
 |-------|----------|-----------|-----------|-----------|
@@ -215,55 +241,37 @@ If no standard tool exists, describe the standard preprocessing pipeline.}
 | {Baseline 2} | — | — | — | — |
 | **Ours** | — | **?** | **?** | **?** |
 
-### 3 Ablation Study
+---
 
-#### 3.1 Dataset Splits
-{Same format as Main Experiments; if identical, reference that section directly}
+The specific experiments are as follows:
 
-#### 3.2 Ablation Variants
+#### 2.1 Main Experiment: Overall Performance Comparison
+{Purpose: comprehensively validate the proposed method's performance advantage over existing methods on standard benchmarks.
+Fill in using the unified format above.}
 
-| Variant | Modification | Purpose |
-|---------|-------------|---------|
-| **Full model** | Complete model | — |
-| w/o {Module A} | Remove {Module A}, replace with {fallback} | Validate effectiveness of {Module A} |
-| w/o {Module B} | Remove {Module B} | Validate effectiveness of {Module B} |
+#### 2.2 Ablation Study: Effectiveness of {Core Module}
+{Purpose: remove each innovation module one at a time to validate the necessity of each design.
+Name ablation variants as: w/o {module name}, replaced by {fallback approach}.
+Fill in using the unified format above; models under evaluation are the ablation variants.}
 
-> {Explain why these ablations are chosen: each ablation corresponds to one innovation, covering all core designs}
+#### 2.3 {Additional Experiment (optional)}
+{Include only when the method's properties require it. Common types: robustness testing, cross-dataset generalization, efficiency comparison (FLOPs / inference latency), visualization analysis.
+Fill in using the unified format above.}
 
-#### 3.3 Ablation Hyperparameters
-{Same as Main Experiments; typically identical settings}
-
-#### 3.4 Expected Results (placeholder)
-
-| Variant | {Metric 1} | {Metric 2} | Notes |
-|---------|-----------|-----------|-------|
-| Full model | **?** | **?** | — |
-| w/o {Module A} | ? | ? | Expected to drop |
-
-### 4 Additional Experiments (optional)
-
-> Include this section only when the method's properties require it. Common types: visualization analysis, robustness testing, efficiency comparison (FLOPs / inference latency), cross-dataset generalization.
-
-#### 4.x {Experiment Name}
-
-**Datasets**: {dataset split table in the same format as above}
-
-**Comparison models**: {comparison model table in the same format as above}
-
-> {Explain why this additional experiment is needed: what property it validates that the main experiments cannot}
+> {Explain why this additional experiment is needed: what property it validates that the main and ablation experiments cannot cover}
 
 ---
 
 ## References
 
-> IEEE format. All entries must be verified as real via web_search. Unverifiable entries get `[to verify]`.
+> MLA format. All entries must be verified as real via web_search. Unverifiable entries get `[to verify]`.
+> All citations from Part 1 and Part 2 are consolidated here — do not list references separately within each Part.
 
-1. {Last, F.}, et al., "{Full Title}," in *{Full Venue Name}*, vol. {v}, no. {n}, pp. {pp}, {year}.
+[1] Last, First. "Full Paper Title." *Full Venue Name*, vol. v, no. n, year, pp. start–end.
 
 > **Main work**: {what the paper does, ≤ 20 words}
 > **Why cited**: {specific help for this idea, ≤ 20 words}
 > **PDF**: `docs/papers/{full title}.pdf` / `[PDF unavailable]`
-> **Verified text**: "{verbatim supporting sentence from PDF}" (Section {X.X}) / `⚠️ [low confidence: ...]`
 
 ---
 

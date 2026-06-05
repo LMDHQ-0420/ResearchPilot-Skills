@@ -8,24 +8,30 @@ All paper downloads — whether auto-triggered within the flow or via the
 standalone `/research download-paper` command — use the following logic:
 
 ```bash
-INPUT="{paper title, arXiv ID, or URL}"
+INPUT="{paper title, arXiv ID, OpenReview ID, or URL}"
 OUTPUT_DIR="${specified_path:-./docs/papers}"
 mkdir -p "$OUTPUT_DIR"
 
-# Extract arXiv ID
+TITLE=""
+PDF_URL=""
+
+# ── Step 1: detect input type, try arXiv ─────────────────────────────────
+
 if echo "$INPUT" | grep -qE '^[0-9]{4}\.[0-9]{4,5}(v[0-9]+)?$'; then
   ARXIV_ID="$INPUT"
 elif echo "$INPUT" | grep -qE 'arxiv\.org/(abs|pdf)/'; then
   ARXIV_ID=$(echo "$INPUT" | grep -oE '[0-9]{4}\.[0-9]{4,5}(v[0-9]+)?')
 else
+  # Search arXiv by title
   QUERY=$(python3 -c "import urllib.parse,sys; print(urllib.parse.quote(sys.argv[1]))" "$INPUT")
   API_RESULT=$(curl -s "https://export.arxiv.org/api/query?search_query=ti:${QUERY}&max_results=1")
   ARXIV_ID=$(echo "$API_RESULT" | grep -oE 'arxiv\.org/abs/[0-9]{4}\.[0-9]{4,5}' | grep -oE '[0-9]{4}\.[0-9]{4,5}' | head -1)
 fi
 
-# Fetch official title
-META=$(curl -s "https://export.arxiv.org/api/query?id_list=${ARXIV_ID}")
-TITLE=$(echo "$META" | python3 -c "
+if [ -n "$ARXIV_ID" ]; then
+  # Fetch official arXiv title
+  META=$(curl -s "https://export.arxiv.org/api/query?id_list=${ARXIV_ID}")
+  TITLE=$(echo "$META" | python3 -c "
 import sys, re, html
 c = sys.stdin.read()
 m = re.search(r'<entry>.*?<title>(.*?)</title>', c, re.DOTALL)
@@ -33,21 +39,85 @@ if m:
     t = html.unescape(m.group(1).strip().replace('\n', ' '))
     print(re.sub(r'\s+', ' ', t))
 ")
+  PDF_URL="https://arxiv.org/pdf/${ARXIV_ID}"
+fi
 
-# Generate filename (preserve spaces, strip illegal characters)
-FILENAME=$(echo "$TITLE" | python3 -c "
+# ── Step 2: arXiv not found, try OpenReview ───────────────────────────────
+
+if [ -z "$PDF_URL" ]; then
+  # Check if input is an OpenReview URL or looks like a forum ID
+  if echo "$INPUT" | grep -qE 'openreview\.net'; then
+    OR_ID=$(echo "$INPUT" | grep -oE '[?&]id=([A-Za-z0-9_-]+)' | sed 's/[?&]id=//')
+  elif echo "$INPUT" | grep -qE '^[A-Za-z0-9_-]{8,}$'; then
+    OR_ID="$INPUT"
+  else
+    # Search OpenReview API v2 by title
+    OR_QUERY=$(python3 -c "import urllib.parse,sys; print(urllib.parse.quote(sys.argv[1]))" "$INPUT")
+    OR_RESULT=$(curl -s "https://api2.openreview.net/notes?content.title=${OR_QUERY}&limit=1")
+    OR_ID=$(echo "$OR_RESULT" | python3 -c "
+import sys, json
+try:
+    data = json.load(sys.stdin)
+    notes = data.get('notes', [])
+    if notes:
+        print(notes[0].get('forum', ''))
+except:
+    pass
+")
+    # Fall back to API v1 if v2 returns nothing
+    if [ -z "$OR_ID" ]; then
+      OR_RESULT=$(curl -s "https://api.openreview.net/notes?content.title=${OR_QUERY}&limit=1")
+      OR_ID=$(echo "$OR_RESULT" | python3 -c "
+import sys, json
+try:
+    data = json.load(sys.stdin)
+    notes = data.get('notes', [])
+    if notes:
+        print(notes[0].get('forum', ''))
+except:
+    pass
+")
+    fi
+  fi
+
+  if [ -n "$OR_ID" ]; then
+    # Fetch official OpenReview title
+    OR_META=$(curl -s "https://api2.openreview.net/notes?forum=${OR_ID}&limit=1")
+    TITLE=$(echo "$OR_META" | python3 -c "
+import sys, json
+try:
+    data = json.load(sys.stdin)
+    notes = data.get('notes', [])
+    if notes:
+        t = notes[0].get('content', {}).get('title', '')
+        if isinstance(t, dict):
+            t = t.get('value', '')
+        print(t)
+except:
+    pass
+")
+    PDF_URL="https://openreview.net/pdf?id=${OR_ID}"
+  fi
+fi
+
+# ── Step 3: download ──────────────────────────────────────────────────────
+
+if [ -z "$PDF_URL" ]; then
+  echo "❌ Download failed: not found on arXiv or OpenReview — \"$INPUT\""
+else
+  [ -z "$TITLE" ] && TITLE="$INPUT"
+  FILENAME=$(echo "$TITLE" | python3 -c "
 import sys, re
 t = sys.stdin.read().strip()
 t = re.sub(r'[/\\\\:*?\"<>|]', '', t)
 print(t + '.pdf')
 ")
-
-curl -L --silent "https://arxiv.org/pdf/${ARXIV_ID}" -o "${OUTPUT_DIR}/${FILENAME}"
-
-if [ -s "${OUTPUT_DIR}/${FILENAME}" ]; then
-  echo "✅ Saved: ${OUTPUT_DIR}/${FILENAME}"
-else
-  echo "❌ Download failed: $INPUT"
+  curl -L --silent "$PDF_URL" -o "${OUTPUT_DIR}/${FILENAME}"
+  if [ -s "${OUTPUT_DIR}/${FILENAME}" ]; then
+    echo "✅ Saved: ${OUTPUT_DIR}/${FILENAME}"
+  else
+    echo "❌ Download failed: URL found but PDF not accessible ($PDF_URL)"
+  fi
 fi
 ```
 
@@ -100,16 +170,24 @@ ArXiv versions may be downloaded, but use the formally published information as 
 
 **Search self-reflection**: check that each research gap is supported by ≥2 papers; if not, run additional searches (up to 3 rounds).
 
-Target: at least 10 valid references as the basis for initial direction exploration.
+**Target: at least 15 valid references.**
+
+If 15 papers have not been found after 3 rounds, explain the shortfall when presenting the download list:
+```
+Note: this direction has limited literature — only {N} papers found so far (target: 15).
+Reason: {field is nascent / cross-disciplinary intersection / limited keyword coverage}.
+Would you like to continue with the current {N} papers, or should I try a different search strategy?
+```
+Wait for user confirmation before proceeding.
 
 ### A-3 Confirm Download List with User
 
 ```
 Initial search complete. The following papers are recommended for download (you can add or remove):
 
-| # | Title | Publication | arXiv Version |
-|---|-------|------------|--------------|
-| 1 | {title} | {Venue Year} | {ID or N/A} |
+| # | Title | Publication | arXiv Version | Summary | Relevance |
+|---|-------|------------|--------------|---------|-----------|
+| 1 | {title} | {Venue Year} | {ID or N/A} | {one sentence on what the paper does} | {one sentence on why it's relevant to the current direction} |
 ...
 
 Papers with an arXiv version will be downloaded automatically; papers without one must be provided manually.
@@ -190,18 +268,18 @@ Generate the document according to the template in `references/document-formats.
 - `### 2 Related Works`: synthesize existing approaches, final sub-section is always "Research Gap"
 - `### 3 Method`: detailed theoretical framework, every formula annotated with `>`, final sub-section is always Baseline Reference and Evaluation Metrics (all entries must have paper citations)
 
-Use `>` heavily to explain the design rationale and literature support for each step. Use `>>` to mark sources and append verbatim sentences from PDFs.
+Use `>` heavily to explain the design rationale, literature support, and source annotations for each step.
 
 If more literature support is needed during generation: auto-search → confirm download list with user → download → continue generating.
 
 ### B-2 Citation Verification
 
-For all `>>` annotations:
+For all source annotations (`>` lines that include a citation number):
 1. Open `docs/papers/{title}.pdf` (or `.txt`)
 2. Locate the supporting passage, and append the verbatim text:
    ```
-   >> This design is inspired by [3]. [3]
-   >> Source text: "..." (Section 3.1)
+   > This design is inspired by [3]. [3]
+   > Source text: "..." (Section 3.1)
    ```
 3. If verification is not possible, append `⚠️ [low confidence: PDF unavailable]` and register in the Pending Verification list.
 
@@ -274,7 +352,7 @@ Write the feasibility summary at the beginning of Part 3:
 
 Generate using the Part 3 template in `references/document-formats.md`, appended to the end of `idea_report.md`.
 
-Annotate every experiment design decision with `>` to explain the rationale. Use `>>` for decisions backed by paper evidence.
+Annotate every experiment design decision with `>` to explain the rationale. For decisions backed by paper evidence, include the citation number in the same `>` annotation.
 
 ### C-5 Ask for Confirmation After Each Output
 

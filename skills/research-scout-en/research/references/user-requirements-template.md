@@ -21,11 +21,8 @@ At the start of each phase, if the user's input lacks sufficient detail, Claude 
 
 ---
 
-## Phase A: Direction Exploration Requirements
+## Phase A: Direction Preferences
 > Collected by Claude at Phase A start. Used to guide candidate idea generation.
-
-### Understanding of this topic
-{Extracted from user conversation: existing knowledge, judgment, or background}
 
 ### Preferred directions
 {Extracted from user conversation: e.g., lightweight, interpretability, cross-domain generalization}
@@ -34,50 +31,35 @@ At the start of each phase, if the user's input lacks sufficient detail, Claude 
 {Extracted from user conversation: exclusions}
 
 ### Other constraints
-{Extracted from user conversation: e.g., must run on single GPU}
+{Extracted from user conversation: other directional restrictions}
 
 ### Document preferences
 {Extracted from user conversation: language, detail level, etc. Default: Chinese body + English headings}
 
 ---
 
-## Phase C: Experiment Design Requirements
-> Collected by Claude before Phase C. Used to guide experiment design.
+## Phase C: Hardware Constraints
+> Record only hard constraints that materially affect the experiment plan. Do not record hyperparameter preferences.
 
-### Hardware
-{Extracted from user conversation: GPU model, count, VRAM limit}
+### GPU constraint
+{Extracted from user conversation: max GPU count and VRAM limit, e.g. "single A100 80G max"}
 
-### Time constraints
-{Extracted from user conversation: max training time per run}
-
-### Dataset preference
-{Extracted from user conversation: specified dataset or "let Claude recommend"}
-
-### Experiment emphasis
-{Extracted from user conversation: what aspects matter most}
-
-### Other constraints
-{Extracted from user conversation: additional experiment restrictions}
+### Max training time per run
+{Extracted from user conversation: time limit per run, leave blank if none}
 
 ---
 
-## Phase D: Implementation Design Requirements
-> Collected by Claude before Phase D. Used to guide project structure and implementation.
-
-### Programming language
-{Extracted from user conversation. Default: Python}
-
-### Framework
-{Extracted from user conversation. Default: PyTorch}
-
-### Code style
-{Extracted from user conversation: style preferences}
+## Phase D: Implementation Constraints
+> Record only hard constraints that determine code structure.
 
 ### Based on existing project
 {Extracted from user conversation: path or URL, or "from scratch"}
 
-### Other requirements
-{Extracted from user conversation: additional coding requirements}
+### Framework
+{Extracted from user conversation. Default: PyTorch}
+
+### Other hard requirements
+{Extracted from user conversation: hard coding requirements only, e.g. "must support multi-GPU DDP", "needs ONNX export". Preference-level requirements are not recorded here.}
 ```
 
 ---
@@ -85,14 +67,13 @@ At the start of each phase, if the user's input lacks sufficient detail, Claude 
 ## When Claude Collects Requirements
 
 ### Phase A (Direction Exploration)
-If the user's input (topic string, --papers, or free-form description) does not include sufficient detail, Claude asks in conversation:
+If the user's input does not include sufficient detail, Claude asks in conversation:
 
 ```
 Before starting the literature search, a few quick questions (skip any that don't apply):
-1. Do you have existing ideas or knowledge about this topic?
-2. Any preferred directions? (e.g., lightweight, interpretability, cross-domain)
-3. Anything you want to avoid?
-4. Any other constraints? (e.g., must run on a single GPU)
+1. Any preferred directions? (e.g., lightweight, interpretability, cross-domain)
+2. Anything you want to avoid?
+3. Any other constraints?
 ```
 
 If the user's input is already detailed enough, Claude extracts and writes directly — no questions asked.
@@ -101,11 +82,9 @@ If the user's input is already detailed enough, Claude extracts and writes direc
 Before generating Part 3, Claude asks in conversation:
 
 ```
-Before designing experiments, a few quick questions:
-1. What's your GPU setup? (model + VRAM)
+Before designing experiments, two quick questions:
+1. GPU constraint? (max count + VRAM, e.g. "single A100 80G")
 2. Any time limit per training run?
-3. Do you have a preferred dataset, or should I recommend based on field conventions?
-4. Any particular emphasis for the experiments? (e.g., focus on ablation A1 and A2)
 ```
 
 ### Phase D (Implementation Design)
@@ -115,5 +94,5 @@ Before generating implementation.md, Claude asks in conversation:
 Before designing the implementation, a few quick questions:
 1. PyTorch or another framework?
 2. Building on an existing open-source project? (if yes, share the link)
-3. Any special code requirements? (e.g., multi-GPU DDP, ONNX export)
+3. Any hard requirements? (e.g., multi-GPU DDP, ONNX export)
 ```
