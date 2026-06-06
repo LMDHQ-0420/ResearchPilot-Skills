@@ -56,11 +56,13 @@ Sub-section titles use semantic names, never placeholder text like `{Module Name
 |---------|------|---------------|
 | 0 Baseline Experiment Survey (per-paper detail entries) | REQUIRED | — |
 | 0 Field Convention Synthesis | REQUIRED | — |
-| Feasibility Verification Summary | REQUIRED | — |
+| Data & Code Availability Summary | REQUIRED | — |
 | 1 Datasets | REQUIRED | — |
 | 2 Main Experiments | REQUIRED | — |
 | 2 Ablation Study | REQUIRED | — |
-| 2 Additional Experiments | OPTIONAL | Method does not involve visualization, efficiency, or robustness analysis |
+| 2 Additional Experiments A: field-standard (mandatory) | REQUIRED | Omit only if the field has no recurring standard additional experiment |
+| 2 Additional Experiments B: extension (user-selected) | REQUIRED | Omit only if the user chooses to do no extension experiments |
+| 3 Resource Estimate (reference) | REQUIRED | — |
 
 ### implementation.md (Phase D output)
 

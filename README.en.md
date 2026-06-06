@@ -19,7 +19,7 @@ Research Scout is a Claude Code Skill that automates the complete academic resea
 - **Deep-read baselines before designing experiments**: before designing experiments, Claude deep-reads the papers and GitHub code of the chosen baselines, extracts their actual experimental designs, and aligns the plan with field conventions — rather than designing in a vacuum.
 - **Plain-language method exposition**: idea deepening proceeds in three layers (technical framework → detailed pipeline → Introduction polishing); the pipeline is explained as "first… then…", without piling up formulas.
 - **Anti-hallucination citation verification**: every citation is anchored to a supporting sentence in the source PDF; unverifiable ones are explicitly marked `⚠️ [low confidence]` and registered in a pending-verification list — uncertainty is never hidden.
-- **Feasibility loop + implementation validation**: dataset/code/VRAM feasibility is verified before experiment design; the implementation guide is automatically checked for experiment coverage, logical consistency, and completeness, avoiding plans that "look complete but cannot run".
+- **Effectiveness first + implementation validation**: the first purpose of experiment design is to rigorously prove the idea's effectiveness, never trimming experiments to fit resources (resources are only estimated after design); only data/code availability is verified before design; the implementation guide is automatically checked for experiment coverage, logical consistency, and completeness.
 
 > To learn exactly what Claude does at each phase and how it interacts with you, see the **[full workflow guide →](WORKFLOW.en.md)**.
 
@@ -79,7 +79,7 @@ Once started, the workflow proceeds through conversation. After each phase, Clau
 |-------|------|------------------------|--------|
 | **A** | Direction Exploration & Literature Review | Searches literature, confirms the research direction and RQs step by step, writes the necessity argument | `idea_report.md` Part 1 |
 | **B** | Idea Development | Three-layer confirmation: technical framework → plain-language pipeline → Introduction polishing | `idea_report.md` Part 2 |
-| **C** | Experiment Design | Deep-reads baseline papers and code, synthesizes field conventions, designs the full experiment plan | `idea_report.md` Part 3 |
+| **C** | Experiment Design | Deep-reads baseline papers and code, synthesizes field conventions, confirms an experiment outline with you before expanding the full plan and giving a resource estimate | `idea_report.md` Part 3 |
 | **D** | Implementation Design | Generates a function-precise coding guide, auto-checks coverage/consistency/completeness | `implementation.md` |
 | **E** | Coding | Implements file by file per the guide, maintains a dev log, validates per module | code + `dev_log.md` |
 
@@ -100,7 +100,7 @@ docs/
                         #   (includes data flow and validation records)
   dev_log.md            # Coding progress and decision log
   user_requirements.md  # Constraints collected by Claude via conversation
-                        #   (direction preferences, GPU limits, etc.)
+                        #   (direction preferences, RQ constraints, implementation constraints, etc.)
   papers/               # Downloaded PDFs or abstract TXTs
 
 code/

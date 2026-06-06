@@ -49,16 +49,7 @@ At the start of each phase, if the user's input lacks sufficient detail, Claude 
 ### Document preferences
 {Extracted from user conversation: language, detail level, etc. Default: English throughout}
 
----
-
-## Phase C: Hardware Constraints
-> Record only hard constraints that materially affect the experiment plan. Do not record hyperparameter preferences.
-
-### GPU constraint
-{Extracted from user conversation: max GPU count and VRAM limit, e.g. "single A100 80G max"}
-
-### Max training time per run
-{Extracted from user conversation: time limit per run, leave blank if none}
+> Note: Phase C (Experiment Design) does not collect resource constraints (GPU/training time). The first purpose of experiment design is to rigorously prove the effectiveness of the idea; resources are only given as an estimate after the design is complete (written into the "Resource Estimate" section of `idea_report.md` Part 3), not as a constraint.
 
 ---
 
@@ -95,13 +86,7 @@ If the user's input is already detailed enough, Claude extracts and writes direc
 Phase A uses **step-by-step confirmation**: the research direction and each RQ are locked one at a time through conversation. As each item is confirmed, immediately update the corresponding field in this file (distinguishing "Research Direction Constraints" from "RQ Constraints"), and refresh it in the confirmation card at the top of the next output (card format in `references/phase-research.md`).
 
 ### Phase C (Experiment Design)
-Before generating Part 3, Claude asks in conversation:
-
-```
-Before designing experiments, two quick questions:
-1. GPU constraint? (max count + VRAM, e.g. "single A100 80G")
-2. Any time limit per training run?
-```
+Does not collect resource constraints. After the experiment design is complete, Claude provides a resource estimate directly in `idea_report.md` Part 3 (for reference only, see `references/phase-research.md` C-6).
 
 ### Phase D (Implementation Design)
 Before generating implementation.md, Claude asks in conversation:

@@ -112,33 +112,37 @@ Once technical framework, pipeline, Method, and Introduction are all confirmed, 
 ## Phase C: Experiment Design
 
 > Goal: first deep-read the baselines' actual experiment designs, then design a complete, executable plan aligned with field conventions.
+> **Core principle**: the first purpose of experiment design is to rigorously prove the idea's effectiveness, never trimming experiments to fit resources. So resource constraints (GPU/training time) are not collected before design; instead, a resource estimate is provided for reference once the plan is complete.
 
 ### What Claude does
 
-**1. Collect experiment constraints**
-Asks for GPU model/VRAM, max training time per run, and other hard constraints; writes to `user_requirements.md`.
-
-**2. Deep-read baseline papers and code**
+**1. Deep-read baseline papers and code**
 This is the key prerequisite for experiment design:
 - First shows you a reading plan: which baselines' papers and GitHub repos it will read, their core ideas, and why each is worth reading
 - After you confirm, reads each paper PDF and code repository
 - Extracts per baseline: which datasets, how they are split, which experiments are designed, which models are compared, which metrics are used, and key hyperparameters
 - Compiles this into `idea_report.md` Part 3 Section 0
 
-**3. Synthesize field conventions**
+**2. Synthesize field conventions**
 Aggregates the deep-read results to identify the standard benchmarks, metrics, ablation patterns, and reporting norms shared across baselines, forming the reference baseline for experiment design.
 
-**4. Feasibility verification**
-Confirms item by item that dataset links are accessible, baseline repos are accessible, and GPU memory is sufficient. If any check fails, pauses and informs you — never produces a plan that "looks complete but cannot run".
+**3. Data & code availability check**
+Verifies only "whether the experiments can be carried out" — confirms dataset links are accessible and baseline repos are accessible. If either fails, pauses and informs you. **Does not check whether GPU/VRAM is sufficient.**
+
+**4. Propose an experiment outline and confirm with you**
+Before writing the full text, first presents an experiment outline for discussion: which datasets, how each experiment is designed, why designed that way, how many models participate in each, what the core baseline is and why it's chosen. It also lists several optional extension experiments for you to select. Only after the outline is confirmed does it expand into the full Part 3.
 
 **5. Generate the experiment design**
-At top-venue workload standard: main experiment with 3–5 datasets and 5–8 baselines; ablation study systematically covering all innovation modules (3–6 variants); 2–3 additional experiment types (generalization/efficiency/robustness/visualization); all results reported as mean ± std over at least 3 random seeds. Each experiment notes its purpose, dataset splits and rationale, metric meanings, expected outcome, and the models compared.
+Per the confirmed outline, at top-venue workload standard: main experiment with 3–5 datasets and 5–8 baselines; ablation study systematically covering all innovation modules (3–6 variants); additional experiments in two categories — field-standard experiments that recur across multiple papers (mandatory) + the extension experiments you selected. Each experiment explains "why designed this way and what it means for supporting the core method"; each model under evaluation is described one by one — its difference from our method, the significance of inclusion, and its source paper (display only) — with the core baseline identified. All results reported as mean ± std over at least 3 random seeds.
+
+**6. Provide a resource estimate (reference only)**
+Once the plan is complete, gives a resource estimate based on model scale and the number of experiment groups (estimated VRAM, time per run, group counts), written at the end of Part 3. **This is reference only, not a design constraint**; if resources are limited, you can run the core experiments first and run in batches.
 
 ### What you do
 
-- Provide hardware and time constraints
 - Confirm or adjust the baseline deep-read list
-- Review the experiment design and suggest changes
+- Review the experiment outline and pick which optional extension experiments to do
+- Review the full experiment design and suggest changes
 
 ---
 

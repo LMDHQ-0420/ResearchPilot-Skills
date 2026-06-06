@@ -194,7 +194,7 @@ Every baseline and every metric must have a paper citation as justification.}
 
 ### 0 Baseline Experiment Survey
 
-> This section is filled directly from the deep-read results in Phase C-2, recording each baseline's experimental design as the reference standard for the experiment design that follows.
+> This section is filled directly from the deep-read results in Phase C-1, recording each baseline's experimental design as the reference standard for the experiment design that follows.
 
 #### 0.x {Baseline Name} ({Venue} {Year}) [n]
 
@@ -223,7 +223,7 @@ Every baseline and every metric must have a paper citation as justification.}
 
 ### 0.x+1 Field Convention Synthesis
 
-> This section is synthesized in Phase C-3, aggregating all baseline deep-read results to distill the field's experimental design consensus, directly guiding the experiment design below.
+> This section is synthesized in Phase C-2, aggregating all baseline deep-read results to distill the field's experimental design consensus, directly guiding the experiment design below.
 
 **Standard benchmarks**: {List datasets commonly used across baselines, noting their status in the field}
 
@@ -233,13 +233,14 @@ Every baseline and every metric must have a paper citation as justification.}
 
 **Reporting norms**: {Whether mean ± std is reported, whether multiple random seeds are used, whether results are listed per dataset}
 
-### Feasibility Verification Summary
+### Data & Code Availability Summary
+
+> Verifies only whether the datasets and baseline code can be obtained; does not involve GPU/VRAM or other resources — resources are only estimated afterward at the end of Part 3.
 
 | Item | Status | Notes |
 |------|--------|-------|
 | Dataset {name} | ✅/⚠️/❌ | {explanation} |
 | Baseline {name} code | ✅/⚠️/❌ | {explanation} |
-| GPU memory | ✅/⚠️ | Estimated {N}GB, user has {M}GB |
 
 ---
 
@@ -274,13 +275,14 @@ If no standard tool exists, describe the standard preprocessing pipeline.}
 | Main experiment datasets | 2 | 3–5 (covering different scales / domains) |
 | Baseline models compared | 4 | 5–8 (recent SOTA + classic methods) |
 | Ablation variants | 1 per innovation | 3–6 variants, systematically covering all core designs |
-| Additional experiment types | 1 | 2–3 (from: generalization / efficiency / robustness / visualization) |
+| Additional experiment types | All field-standard ones | Beyond the standard ones, add 1–3 extension experiments |
 | Multiple runs required | Yes | Report mean ± std, at least 3 random seeds |
 
 **Coherence requirements**:
 - Every experiment must correspond to at least one innovation or hypothesis in the idea — no unrelated experiments
 - Ablations must systematically cover all core design modules, each validated independently
 - Additional experiments must validate properties the main experiment cannot cover (e.g., generalization, efficiency) — no redundancy with main experiments
+- Additional experiments that recur across multiple papers in the field are treated as standard and must be done; beyond those, propose extension experiments from multiple angles for the user to choose
 - All experiments use the same set of random seeds to ensure reproducibility
 
 > If an experiment cannot meet the workload baseline above, explain the reason in that experiment's "Purpose" field (e.g., scarce public datasets in the domain, compute resource constraints).
@@ -290,6 +292,8 @@ Each experiment (main, ablation, additional) uses the following unified format:
 #### {Experiment Number} {Experiment Name}
 
 **Purpose**: {what this experiment validates — which innovation or hypothesis from the idea it tests}
+
+**Why designed this way**: {Explain why this experiment adopts this setup (dataset choice, range of comparison models, metric combination), and what this design means for supporting the core method — i.e., "which point of the idea this experiment proves". This is the core field of this section and must not be omitted.}
 
 **Dataset and Splits**:
 
@@ -309,13 +313,18 @@ Each experiment (main, ablation, additional) uses the following unified format:
 
 **Models Under Evaluation**:
 
-| Model | Source [n] | Type | Code | Description |
-|-------|-----------|------|------|-------------|
-| **Ours** | — | Proposed method | — | {one sentence describing the proposed method} |
-| {Baseline 1} | {Author} et al. [n] | {type: classic / current SOTA / ablation variant} | {repo or N/A} | {one sentence on this model's core approach} |
-| {Baseline 2} | {Author} et al. [n] | {type} | {repo or N/A} | {one sentence} |
+> This table explains, one by one, which comparison/ablation models this experiment selects, how each differs from the proposed method, and the significance of including it for the idea.
+> The "Source paper" column is for displaying information to the user only (which paper proposed the model, or which paper used it as a baseline); it **does not participate in the baseline-selection decision**.
 
-> {Explain the selection logic: which method categories are covered, why this comparison is fair}
+| Model | Difference from our method | Significance of inclusion (support for the idea) | Type | Source paper (display only) | Code |
+|-------|---------------------------|------------------------------------------------|------|----------------------------|------|
+| **Ours** | — | Proposed method | Proposed method | — | — |
+| {Baseline 1} | {how it differs from ours — missing which innovation module, or taking a different technical route} | {what advantage of ours this comparison highlights / which design choice it proves correct} | {classic / current SOTA / ablation variant} | {Author} et al. [n] ({Venue Year}) / used as a baseline by [n] | {repo or N/A} |
+| {Baseline 2} | {...} | {...} | {type} | {source} | {repo or N/A} |
+
+> {Explain the overall selection logic of this group: which method categories are covered, why this comparison is fair and representative}
+
+**Core baseline**: {Identify which model in the table above is the core baseline (the strongest or most relevant comparison), and explain why it is the core — typically the current SOTA or the method closest to ours that best highlights the innovation.}
 
 **Expected Results (placeholder)**:
 
@@ -336,13 +345,30 @@ Fill in using the unified format above.}
 #### 2.2 Ablation Study: Effectiveness of {Core Module}
 {Purpose: remove each innovation module one at a time to validate the necessity of each design.
 Name ablation variants as: w/o {module name}, replaced by {fallback approach}.
-Fill in using the unified format above; models under evaluation are the ablation variants.}
+Fill in using the unified format above; models under evaluation are the ablation variants — the "Difference from our method" column states which module is removed, and the "Significance of inclusion" column states which design's necessity that variant validates.}
 
-#### 2.3 {Additional Experiment (optional)}
-{Include only when the method's properties require it. Common types: robustness testing, cross-dataset generalization, efficiency comparison (FLOPs / inference latency), visualization analysis.
-Fill in using the unified format above.}
+#### 2.3 Additional Experiments
+{Beyond the main and ablation experiments, every method can usually be further validated along other property dimensions. This section has two categories, both filled in using the unified format above:}
 
-> {Explain why this additional experiment is needed: what property it validates that the main and ablation experiments cannot cover}
+**A. Field-standard additional experiments (mandatory)**
+{During the C-1 deep-read of baseline papers, any additional experiment type that recurs across multiple papers (e.g., the generalization tests or efficiency comparisons that papers in this field commonly perform) is treated as the field "standard" and must be done in this work. List each, noting "this experiment appears in [n], [n], etc., and is the standard way this field validates {some property}".}
+
+**B. Extension experiments to fill out the workload (user-selected)**
+{Beyond the standard experiments, propose additional experiments from as many angles as possible to fill out the workload, for the user to choose from. For each, note the property dimension validated and the question it is expected to answer. Common angles (not limited to): interpretability (attention/feature visualization), generalization (cross-dataset/cross-domain), robustness (noise/adversarial/missing data), efficiency (FLOPs/parameters/inference latency), scalability (data scale/model scale), sensitivity (hyperparameters).}
+
+> {For each additional experiment, the "Why designed this way" field explains what property it validates that the main and ablation experiments cannot cover}
+
+### 3 Resource Estimate (reference)
+
+> Filled in Phase C-6 after the experiment plan is complete. **The resource estimate is for reference only, not a constraint on the experiment design** — the first purpose of the design is to rigorously prove the effectiveness of the idea.
+
+| Experiment | Est. VRAM | Est. time per run | # Groups |
+|-----------|-----------|-------------------|----------|
+| Main experiment | ~{N}GB | ~{N} h/dataset | {N} |
+| Ablation study | ~{N}GB | ~{N} h/variant | {N} |
+| {Additional experiment} | ~{N}GB | ~{N} h | {N} |
+
+> These are rough estimates; actual consumption depends on the specific implementation and hardware. If resources are limited, you may run the core experiments first and run in batches, without compromising the effectiveness proof.
 
 ---
 
