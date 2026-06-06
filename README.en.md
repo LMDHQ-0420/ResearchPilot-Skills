@@ -32,7 +32,7 @@ git clone https://github.com/YOUR_USERNAME/research-scout.git
 cd research-scout
 
 # Install English version
-cp -r skills/research-scout-en ~/.claude/skills/
+cp -r skills/research-scout-en/research ~/.claude/skills/
 ```
 
 > Chinese and English versions are mutually exclusive. Both use `/research` as the trigger. To switch versions, delete `~/.claude/skills/research` and install the other version.
@@ -145,7 +145,7 @@ Claude tries arXiv then OpenReview automatically. If both fail, it saves an abst
 
 ```bash
 rm -rf ~/.claude/skills/research
-cp -r code/skills/research-scout-zh ~/.claude/skills/
+cp -r code/skills/research-scout-zh/research ~/.claude/skills/
 ```
 
 ---
