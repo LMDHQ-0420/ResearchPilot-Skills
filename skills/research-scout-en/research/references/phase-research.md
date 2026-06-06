@@ -150,29 +150,28 @@ Please tell me the direction you want to research. For example:
 
 ### Confirmation Card (shared by Phases A / B)
 
-**Every output** in Phase A and Phase B must begin with a "confirmed content card", wrapped in two lines of equal signs, so the user can always see the currently locked consensus. Format:
+Every output in Phase A and Phase B begins with a "confirmed content card", so the user can always see the currently locked consensus. Format:
 
 ```
-=====================================
-**Confirmed Content**
-
-**Research direction**: {one-sentence description of the confirmed direction; "TBD" if not yet confirmed}
-
-**Research questions (RQs)**:
-- RQ1 (primary): {confirmed primary RQ; "TBD" if not confirmed}
-- RQ2 (secondary): {confirmed secondary RQ; omit this line if not confirmed}
-
-**User constraints**:
-- Direction constraints: {constraints the user placed on the research direction; "none" if none}
-- RQ constraints: {constraints the user placed on the research questions; "none" if none}
-
-**Explicit reference papers**: {papers the user explicitly named as required references; omit the whole item if none}
-=====================================
+━━━━━━━━━━ Confirmed Content ━━━━━━━━━━
+Research direction: {one-sentence description of the confirmed direction}
+Primary RQ: {confirmed primary RQ}
+Secondary RQ: {confirmed secondary RQ}
+Direction constraints: {constraints the user placed on the research direction}
+RQ constraints: {constraints the user placed on the research questions}
+Reference papers: {papers the user explicitly named as required references}
+Technical framework: {framework confirmed in Phase B, one line}
+Pipeline: {pipeline confirmed in Phase B, one line}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
 **Card rules:**
+- **Output only confirmed, non-empty field lines; omit the entire line for any unconfirmed or empty field** — do not write placeholders like "TBD" or "none"
+- If nothing has been confirmed yet (very start of the flow), do not output the card at all
+- Fields are plain text, not bold, neatly aligned; wrapped top and bottom with `━` rules
+- The "Technical framework" and "Pipeline" lines appear only in Phase B; not shown in Phase A
 - The card only holds content "confirmed by the user"; unconfirmed direction/RQ candidates do not enter the card
-- The card **excludes** the detailed literature search list (that is process content); only when the user explicitly names a paper as required reading is it listed under "Explicit reference papers"
+- The card excludes the detailed literature search list (that is process content); only when the user explicitly names a paper as required reading is it listed under "Reference papers"
 - Card content stays in sync with the Phase A section of `docs/user_requirements.md` (see `references/user-requirements-template.md`)
 - After confirming new content, update `user_requirements.md` first, then refresh the card at the top of the next output
 
