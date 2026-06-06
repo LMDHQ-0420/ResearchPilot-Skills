@@ -1,11 +1,11 @@
-# Research Scout — Full Workflow Guide
+# CCFA-Skill — Full Workflow Guide
 
-> This document details what Claude does at every step of the five phases and how it interacts with you.
+> This document details what Claude does at every step of the six phases and how it interacts with you.
 > For the overview and installation, see the [README](README.en.md).
 
 The workflow progresses naturally through conversation — no mode-switching commands to memorize. Claude proactively asks whether to continue at each key checkpoint, and never jumps to the next phase without your confirmation.
 
-The five phases and their outputs:
+The six phases and their outputs:
 
 | Phase | Name | Main Output |
 |-------|------|------------|
@@ -14,6 +14,7 @@ The five phases and their outputs:
 | C | Experiment Design | `idea_report.md` Part 3 |
 | D | Implementation Design | `docs/implementation.md` |
 | E | Coding | code + `docs/dev_log.md` |
+| F | Paper Writing | paper in `docs/manuscripts/` (archived by version) |
 
 ---
 
@@ -149,49 +150,87 @@ Once the plan is complete, gives a resource estimate based on model scale and th
 ## Phase D: Implementation Design
 
 > Goal: generate `implementation.md`, a coding guide precise down to each function, as the blueprint for Phase E.
+> `implementation.md` opens with two key parts: a **full directory tree** + a **per-file function table**.
 
 ### What Claude does
 
 **1. Choose an implementation strategy**
 - **Strong baseline path** (building on an existing open-source project): git clone the original → scan the structure → generate a rewrite plan; each function to modify is described as what it currently does → what it will do → parameter/return changes
-- **Build from scratch path**: full directory tree + per-file responsibilities; a dedicated data flow section (raw files → parse → split → normalize → model input tensor, with shapes); each function documented with signature, parameters, return value, and logic
+- **Build from scratch path**: full directory tree + per-file function table; a dedicated data flow section (raw files → parse → split → normalize → model input tensor, with shapes); each function documented with signature, parameters, return value, and logic
 
 **2. Automatic validation**
 After each generation or revision of `implementation.md`, runs three checks: experiment coverage (every Part 3 experiment has a corresponding implementation entry), logical consistency (tensor shapes align across modules), completeness (every file is documented).
 
-**3. Data preparation guidance**
-After `implementation.md` is confirmed, outputs data download instructions and waits for you to confirm data is ready before entering Phase E.
+**3. Pre-coding confirmation checklist**
+After `implementation.md` is confirmed, before coding starts, confirms with you item by item: ① which environment and its name (reuse if found, create if not); ② device-specific requirements; ③ whether datasets are downloaded — Claude downloads the quick ones, gives you commands and paths for the slow ones; ④ whether Claude should auto-run the code (advised by estimated runtime: Claude runs fast, you run slow, or mixed); ⑤ whether README goes in the project root or `code/`.
 
 ### What you do
 
 - State whether you're building from scratch or on an existing open-source project (provide the link)
 - Review the implementation plan
-- Download datasets per the instructions and confirm completion
+- Respond to the pre-coding checklist (environment, device, datasets, run strategy, README location)
 
 ---
 
 ## Phase E: Coding
 
-> Goal: implement file by file following `implementation.md`, maintaining a dev log throughout.
+> Goal: implement file by file following `implementation.md`, maintaining the dev log, README, and visualization notebooks throughout.
 
 ### What Claude does
 
-**1. File-by-file implementation**
-Codes one file at a time in the order from `implementation.md`, updating the `dev_log.md` progress table and log entry immediately after each file.
+**1. Set up README and notebooks/ first**
+Before coding, establishes two artifacts that run through the whole phase: **README.md** (project overview + env setup + detailed run commands, placed where you confirmed) and **notebooks/** (one Jupyter file per key step for visualization).
 
-**2. Module validation**
-After each module, runs a consistency check against `implementation.md` (function signatures, tensor shapes, evaluation metrics). `✅ Done` is marked only after the code is written and verified to run locally without errors.
+**2. File-by-file implementation**
+Codes one file at a time in order, updating `dev_log.md` after each file; syncs the README for anything affecting run/env, and adds the matching notebook for key steps.
 
-**3. Handling design errors**
-If a logical error or unimplementable design is found in `implementation.md`, Claude **does not silently work around it in code** — it stops → reports the issue and a suggested fix → waits for your confirmation → updates `implementation.md` first → then updates the code.
+**3. Run per the chosen strategy**
+Per your confirmed strategy: Claude auto-run / you run / mixed (Claude runs fast ones, you run slow ones). `✅ Done` is marked only after run verification passes.
 
-**4. Dependency rules**
+**4. Module validation and error handling**
+Runs a consistency check after each module (signatures, tensor shapes, metrics). If a logical error or unimplementable design is found in `implementation.md`, Claude **does not silently work around it in code** — it stops → reports → waits for your confirmation → updates `implementation.md` first → then the code.
+
+**5. Proactive code review after completion**
+Once all coding is done, Claude proactively reviews the code and reports back. This is research code for validating a paper idea, so it **does not do an engineering-grade strict review** (no fussing over naming, abstraction, performance) — it guards only two hard lines: ① the code runs end to end; ② the logic is fully correct (matches the method design, shapes self-consistent, metrics/ablation switches correct, no silent bugs). Issues touching these two must be fixed (after your confirmation); style/polish items are only flagged, not changed proactively.
+
+**6. Sync docs on improvements**
+When you request improvements, or when Claude fixes review findings, each change syncs the README (if it affects run/structure/functionality) and `dev_log.md` (a new log entry with a precise timestamp), keeping all three consistent.
+
+**7. Dependency rules**
 `requirements.txt` lists library names only, no version pins, and excludes `torch`/`torchvision`/`torchaudio` (you install these per your CUDA version).
 
 ### What you do
 
 - When a blocker arises, decide how to resolve it, or roll back to Phase C/D
-- Run the code locally and feed experiment results back to Claude (can trigger an expected-vs-actual comparison analysis)
+- Run the slow code per the run strategy and feed experiment results back to Claude (can trigger an expected-vs-actual comparison analysis)
+- Review Claude's code-review report and decide whether to fix
+- Request code improvements (Claude keeps README and dev_log in sync)
+
+---
+
+## Phase F: Paper Writing
+
+> Goal: write the paper from everything produced so far (idea_report, experiment results, literature). Papers live in `docs/manuscripts/`, and **every revision is copied to a new file** so versions are traceable.
+
+### What Claude does
+
+**1. Confirm the paper structure first (mandatory)**
+Before writing any body text, Claude confirms with you: all first-/second-level headings, what each chapter covers and its writing rationale (especially how Introduction and Related Works are written and why), the figure/table plan (where figures/tables go, what each shows, how it's designed, which are hand-drawn vs Python-generated), and any extra requirements. Drafting starts only after this is confirmed.
+
+**2. Generate the first draft**
+Generates `v1.0-first-draft.md` per the confirmed structure. Format (English version skill): the entire paper in English, at most second-level headings. Each chapter/section opens with a `>` writing-rationale note; a **blank `>`** is left at the start of each chapter/section, the end of each paragraph, and below each figure/table caption for your annotations; every figure has a caption marked hand-drawn/Python-generated; references at the end in MLA, each with `>` notes on contribution and reason for citing.
+
+**3. Revise from annotations (loop)**
+After you write notes at the blank `>` markers and say "annotations done", Claude reads your annotations in the latest version, revises point by point, and **copies to a new version file** (major/minor decided automatically by change size, named `v{major}.{minor}-{≤15-word summary}.md`), updating the version block under the title (version, time, change description). Loops until the paper is complete.
+
+**4. Guide figure/table generation**
+When the paper is nearly settled, Claude proactively guides you to approve generating Python figures/tables: figures go in `notebooks/image.ipynb` (one cell per figure, noting which Fig. / caption / how to read it, can export SVG to `notebooks/image/`, export line commented by default); tables go in `notebooks/table.ipynb` (one cell per table, format matching the paper, annotating table name and row/column meanings). Hand-drawn figures (e.g. the method framework) you draw yourself.
+
+### What you do
+
+- Confirm the paper structure (outline, writing rationale, figure/table plan, extra requirements)
+- Review the draft, write annotations in place at the blank `>` markers, then tell Claude
+- Approve Claude generating Python figures/tables; draw hand-drawn figures yourself
 
 ---
 

@@ -100,7 +100,7 @@ Content must be precise down to every function signature, parameters, return val
 
 ---
 
-### D-Final Data Download Guide + Confirmation
+### D-Final-1 implementation.md Validation and Confirmation
 
 After generating implementation.md, **immediately run one experiment requirements check** (see "Validation Rules" below), then ask for confirmation:
 
@@ -109,42 +109,66 @@ implementation.md has been generated and the experiment requirements check is co
 Check result: {passed / issues found: …}
 
 Do you think the implementation plan is detailed and complete enough?
-If so, the next step is to download the dataset and then start coding.
+If so, the next step is to confirm a few pre-coding preparations, then start coding.
 Or is there anything you'd like to add or adjust?
 ```
 
 After each user-requested revision to implementation.md, run the check again and append the result to the revised output.
 
-After the user confirms implementation.md, output the data download guide:
+### D-Final-2 Pre-Coding Confirmation Checklist
+
+After the user confirms implementation.md, **before starting to code, confirm the following 5 items with the user** (presented together; the user can respond item by item):
 
 ```
-Implementation plan confirmed. Before starting to code, please download the dataset first:
+Implementation plan confirmed. Before coding, let's confirm a few preparations:
 
----
+**1. Run environment**
+Which environment will you use? What is its name?
+  - I'll first look it up by name (e.g. `conda env list`): if found → reuse it; if not → I'll create it per requirements.txt.
 
+**2. Device-specific requirements**
+Any special requirements your device places on the environment? (e.g., CUDA version, specific cuDNN, Apple MPS, CPU-only, specific Python version)
+
+**3. Dataset preparation**
+{Per dataset} "Dataset {name}": I detect it is {already downloaded at data/{name}/ ✅ / not downloaded yet ❌}.
+  - Not downloaded and quick (small / direct link) → I'll download it directly.
+  - Not downloaded and slow (large / login / application required) → I'll give you the URL, command, and target path to download yourself:
+    URL: {link}; command: {command}; place at: `data/{name}/`
+
+**4. Auto-run the code?**
+After writing the code, should I run it automatically? I'll advise based on estimated runtime:
+  - Fast (seconds to a few minutes) → I recommend running it to verify
+  - Slow (hours to days, e.g. full training) → I recommend you run it
+  - Mixed → I run the fast scripts (minimal tests, data preprocessing), you run the slow ones (full training / all ablations)
+  Your choice?
+
+**5. README location**
+I'll maintain a README.md (project overview, env setup, detailed run commands).
+Do you want it in the {project root} or the `code/` directory?
+
+Once confirmed, I'll start coding.
+```
+
+Write the answers to the Phase D section of `docs/user_requirements.md` (environment name, device requirements, dataset handling, run strategy, README location).
+
+**Dataset handling:**
+- Detect whether each dataset already exists under `data/`
+- Not downloaded and quick → Claude downloads it
+- Not downloaded and slow → output the download guide below and wait for the user:
+```
 **Dataset: {dataset_name}**
 Download URL: {official link}
-Download method:
-  {specific commands or steps, e.g.:}
-  wget {url} -O data/{filename}
-  # or
-  kaggle datasets download {dataset_id} -p data/
-
-After extraction, place at: data/{dataset_name}/
-Expected directory structure:
+Download command: {specific wget/kaggle command}
+Place at: `data/{dataset_name}/`
+Expected structure:
   data/{dataset_name}/
   ├── {file1}    # {description}
-  ├── {file2}    # {description}
   └── ...
-
-{If the field has a standard preprocessing tool, mention it here:}
-Preprocessing tool: {project_name} {link}
-Preprocessing command: {specific command}
-
-Once the data download is complete, let me know and we'll start the coding phase.
+{If a standard preprocessing tool exists: tool {link}, command {command}}
+Let me know once the download is complete.
 ```
 
-Wait for the user to confirm data download is complete, then proceed to Phase E.
+Once environment, dataset, run strategy, and README location are all confirmed, proceed to Phase E.
 
 ---
 
@@ -214,6 +238,32 @@ Fix any failing items directly in implementation.md, then re-output the check re
 | `{file3.py}` | `[KEEP]` | No changes needed |
 
 > {Explain the rewrite boundary: reuse as much as possible, only modify what is directly tied to the innovation}
+
+### 1.3 Full Directory Tree After Rewrite
+
+> This is one of the two key parts at the start of implementation.md: the complete tree of the project after the rewrite (including retained and new files).
+
+```text
+code/
+├── {existing dir}/
+│   ├── {file1.py}              # [MODIFIED] {one-line responsibility}
+│   └── {file2.py}              # [KEEP] {one-line responsibility}
+├── {new dir}/
+│   └── {file3.py}              # [NEW] {one-line responsibility}
+├── notebooks/                  # [NEW] visualization of key steps (see Phase E)
+├── README.md                   # [NEW/MODIFIED] project overview, env setup, run commands
+└── ...
+```
+
+### 1.4 Per-File Function Table
+
+> This is the second key part at the start of implementation.md: a table describing each file's function.
+
+| File | Action | Function | Called by |
+|------|--------|----------|-----------|
+| `{file1.py}` | MODIFIED | {responsibility} | {caller} |
+| `{file2.py}` | KEEP | {responsibility} | {caller} |
+| `{file3.py}` | NEW | {responsibility} | {caller} |
 
 ---
 
@@ -396,9 +446,10 @@ data/
 3. Integrate all rewrites, run full training
 4. Add baseline implementations in baselines/ (if any)
 5. Add results/ output and logs/ logging
+6. Add notebooks/ visualizations for each key step; maintain README.md (env setup + run commands)
 ```
 
-After completing each file, immediately update progress and add a log entry in `docs/dev_log.md`.
+After completing each file, immediately update progress and add a log entry in `docs/dev_log.md`; sync `README.md` for anything affecting run/env, and add the matching `notebooks/` cell for key steps.
 ````
 
 ---
@@ -413,6 +464,8 @@ After completing each file, immediately update progress and add a log entry in `
 ---
 
 ## 1 Project Structure
+
+> This chapter is the key opening part of implementation.md: first the full directory tree (1.1), then a per-file function table (1.2).
 
 ### 1.1 Full Directory Tree
 
@@ -434,6 +487,8 @@ code/
 │   ├── train.sh                    # Launch training
 │   ├── evaluate.sh                 # Evaluate a checkpoint
 │   └── ablation.sh                 # Batch ablation runs
+├── notebooks/                      # Key-step visualization (one .ipynb per key step, see Phase E)
+│   └── {step}_demo.ipynb           # {which step it visualizes}
 ├── configs/
 │   └── default.yaml                # All hyperparameters here
 ├── baselines/
@@ -441,21 +496,35 @@ code/
 ├── data/                           # gitignored
 ├── results/                        # gitignored
 ├── logs/                           # gitignored
-├── README.md
+├── README.md                       # Project overview, env setup, run commands (location confirmed by user, see Phase E)
 └── requirements.txt
 ```
 
-### 1.2 Directory/File Responsibilities
+### 1.2 Per-File Function Table
 
-| Path | Contents | Key Constraint |
-|------|---------|---------------|
-| `src/data/` | Dataset classes and preprocessing | Data only — no model logic |
-| `src/models/` | Model definitions and loss functions | Structure only — no training loop |
-| `src/trainers/` | Training and validation loop | Receives model as parameter |
-| `src/utils/` | Metric computation and logging | Stateless utility functions |
-| `scripts/` | Shell launch scripts | No business logic — only calls Python modules |
-| `configs/` | Hyperparameter configs | YAML format; copy per experiment |
-| `baselines/` | Baseline reimplementations | Identical interface to main model |
+> Describe each file (not just each directory) in a table. One row per file.
+
+| File | Function | Input | Output | Called by |
+|------|----------|-------|--------|-----------|
+| `src/data/{dataset}_dataset.py` | {responsibility} | {input} | {output} | `trainers/trainer.py` |
+| `src/models/{model_name}.py` | {responsibility} | {input} | {output} | `trainers/trainer.py` |
+| `src/trainers/trainer.py` | {responsibility} | {input} | {output} | `scripts/train.sh` |
+| `src/utils/metrics.py` | {responsibility} | {input} | {output} | `trainer.py`, `evaluate.sh` |
+| `configs/default.yaml` | Centralized hyperparameters | — | — | All modules via config |
+| `notebooks/{step}_demo.ipynb` | {which step it visualizes} | — | charts | Manual review |
+| ... | ... | ... | ... | ... |
+
+**Directory-level constraints:**
+
+| Path | Key Constraint |
+|------|---------------|
+| `src/data/` | Data only — no model logic |
+| `src/models/` | Structure only — no training loop |
+| `src/trainers/` | Receives model as parameter |
+| `src/utils/` | Stateless utility functions |
+| `scripts/` | No business logic — only calls Python modules |
+| `notebooks/` | Key-step visualization; not depended on by production code |
+| `baselines/` | Identical interface to main model |
 
 ---
 
@@ -762,27 +831,48 @@ data/
 ```
 requirements.txt
   → configs/default.yaml
-  → README.md (draft; run commands as placeholders)
+  → README.md (draft: project overview + env setup; run commands as placeholders)
   → src/data/{dataset}_dataset.py
   → src/data/transforms.py
+  → notebooks/01_data_demo.ipynb (after data loading: visualize preprocessing and model input)
   → src/models/{model_name}.py (implement core innovation module first, then assemble full model)
   → src/models/losses.py
+  → notebooks/02_model_demo.ipynb (after model: visualize structure and intermediate representations)
   → src/trainers/trainer.py
   → src/utils/metrics.py
   → src/utils/logger.py
   → scripts/ (finalize README.md run commands after scripts are done)
   → baselines/{baseline_name}.py
+  → notebooks/03_results_demo.ipynb (after training/eval: visualize curves, predictions, ablation results)
 ```
 
-After completing each file, immediately update progress and add a log entry in `docs/dev_log.md`.
-`✅ Done` can only be marked after the file is written AND verified to run without errors locally.
+After completing each file, immediately update progress and add a log entry in `docs/dev_log.md`; sync `README.md` for anything affecting run/env, and add the matching `notebooks/` cell for key steps.
+`✅ Done` can only be marked after the file is written AND verified to run without errors locally (under the user-run strategy, mark it after the user reports a successful run).
 ````
 
 ## Phase E: Coding
 
 ### Trigger
 
-Entered automatically after the user confirms `implementation.md` and completes the data download in Phase D.
+Entered automatically after the user confirms `implementation.md` and completes the pre-coding checklist (environment / device / dataset / run strategy / README location) in Phase D.
+
+### E-0 Create README.md and notebooks/
+
+Before coding formally begins, set up two artifacts that run through the whole phase:
+
+**README.md** (placed where confirmed in D-Final-2 — project root or `code/`): must include
+- **Project overview**: one paragraph on what the project does (from idea_report.md topic)
+- **Environment setup**: based on the environment name and device requirements confirmed in D-Final-2, give create/activate commands; install PyTorch per the official guide (by CUDA version), the rest via `pip install -r requirements.txt`
+- **Detailed run commands**: each command for training/evaluation/ablation/visualization (finalized once scripts are done)
+
+> README is updated as coding progresses; env and run commands are filled in as soon as the matching code is done — no placeholders left behind.
+
+**notebooks/ directory**: create one Jupyter file per **key step** of the project for visualization, e.g.:
+- `notebooks/01_data_demo.ipynb`: raw data → preprocessing → model input
+- `notebooks/02_model_demo.ipynb`: model structure / key intermediate representations
+- `notebooks/03_results_demo.ipynb`: training curves, prediction comparison, ablation results
+
+> As each key step's code is finished, add the matching notebook cell so every key step is visually inspectable.
 
 ### E-1 Create dev_log.md
 
@@ -810,12 +900,13 @@ Entered automatically after the user confirms `implementation.md` and completes 
 | Utils | src/utils/ | ⬜ TODO | — | |
 | Scripts | scripts/ | ⬜ TODO | — | |
 | Baselines | baselines/ | ⬜ TODO | — | |
+| Visualization notebooks | notebooks/ | ⬜ TODO | — | one per key step |
 
 Status: ⬜ TODO / 🔄 WIP / ✅ Done (run-verified) / ❌ Blocked
 
 ## Dev Log
 
-### {YYYY-MM-DD} — Project initialized
+### {YYYY-MM-DD HH:MM} — Project initialized
 - **Completed**: {specific content}
 - **Issues encountered**: {description, or "none"}
 - **Solutions**: {description, or "none"}
@@ -829,11 +920,18 @@ Status: ⬜ TODO / 🔄 WIP / ✅ Done (run-verified) / ❌ Blocked
 After completing each file, immediately sync:
 1. Update the progress table in `dev_log.md` (`✅ Done`, fill in completion time)
 2. Add a log entry in `dev_log.md`
+3. If the file affects how the project runs or its environment, **sync `README.md`** (run commands / env notes)
+4. If the file corresponds to a key step, **add the matching visualization cell in `notebooks/`**
 
 **After completing each module (data / model / training loop / utils / scripts), run one validation against implementation.md**:
 - Check that implemented function signatures, parameters, and return values match the descriptions in implementation.md
 - Check that tensor shapes in the data flow are as expected
 - If any discrepancy is found, enter the "implementation.md error found" flow (see E-5)
+
+**Follow the confirmed run strategy** (D-Final-2 item 4):
+- "Claude auto-run" → run to verify right after writing; `✅ Done` only after a clean run
+- "User runs" → do static checks (imports / syntax / shape reasoning), hand the run command to the user, mark `🔄 WIP`, and mark `✅ Done` only after the user reports a successful run
+- "Mixed" → Claude runs fast scripts (minimal tests, data preprocessing); the user runs slow ones (full training, all ablations)
 
 ### E-3 requirements.txt Rules
 
@@ -871,3 +969,41 @@ If a logic error, description mismatch, or unimplementable design is found in im
 3. Wait for user confirmation
 4. After confirmation, **update implementation.md first**, then run the validation check (see "Validation Rules")
 5. Once the check passes, update the code to match the revised implementation.md and resume coding
+
+### E-6 When the User Requests Code Improvements
+
+When the user requests code improvements (after or during coding), every change must **keep two documents in sync**:
+1. **`README.md`**: if the change affects run commands, dependencies, project structure, or functionality, update the relevant section immediately
+2. **`docs/dev_log.md`**: add a log entry recording the improvement's completed content, reason, and impact
+
+> Never change code without updating README and dev_log — all three must stay consistent. If the improvement adds a key step, also add the matching `notebooks/` visualization.
+
+### E-7 Code Review (proactively, after all coding is complete)
+
+Once all files are coded, Claude **proactively** reviews the entire codebase and reports to the user.
+
+> **Review scope**: this is research code for **validating a paper idea**, not production engineering, so it **does not pursue engineering-grade strictness** (no fussing over naming style, over-abstraction, defensive edge cases, or micro-optimization). The review targets only two **hard lines**:
+> 1. **The code runs** — dependencies, imports, paths, and entry scripts are correct; the main chain from data loading to training to evaluation runs end to end
+> 2. **The logic is fully correct** — the implementation matches the method/experiment design in `idea_report.md`; tensor-flow shapes are self-consistent; loss/metric computation is correct; ablation switches actually take effect; no silent bugs
+
+**Review checklist** (go through each, report real issues only):
+- **Runnability**: imports complete, `requirements.txt` covers all libraries used, file paths match the config, script entries can invoke the right modules
+- **Logical correctness**: the core innovation module's implementation matches the Method description; tensor shapes are self-consistent across the whole chain; loss inputs/outputs match; metric computation matches Part 3; each ablation variant's switch genuinely changes behavior
+- **Data-flow closure**: data loading → preprocessing → model → loss → evaluation → results persistence — the whole chain connects
+- **Consistency with design**: every Part 3 experiment has a runnable entry; results output fields are complete
+
+**Report format after review**:
+```
+Code review complete (criteria: runnable + logically correct; not an engineering-grade strict review).
+
+✅ Passed: {runnability / logical correctness / data-flow closure / consistency with design}
+⚠️ Issues found:
+1. {location}: {issue — why it breaks running or correctness} → suggestion: {fix}
+2. ...
+
+Shall I fix these as suggested? (dev_log will be synced after fixing)
+```
+
+- If an issue falls on either hard line — "won't run" or "logic error" → **must fix**; after user confirmation, fix it and sync README/dev_log per E-6
+- If it's only style / engineering polish that doesn't affect running or correctness → do not change proactively; mention it in one line at most and leave it to the user
+- When there are no issues, report honestly "review passed, code runs and logic matches the design" — do not fabricate issues

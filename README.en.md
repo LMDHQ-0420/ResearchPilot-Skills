@@ -1,4 +1,4 @@
-# Research Scout
+# CCFA-Skill
 
 **Automated Academic Research Workflow for Claude Code**
 
@@ -8,7 +8,7 @@
 
 ## Overview
 
-Research Scout is a Claude Code Skill that automates the complete academic research pipeline: direction exploration, literature retrieval, idea development, experiment design, implementation design, and code implementation. The workflow progresses naturally through conversation — Claude asks for confirmation at each key checkpoint, so you never need to remember mode-switching commands.
+CCFA-Skill is a Claude Code Skill that automates the complete academic research pipeline: direction exploration, literature retrieval, idea development, experiment design, code implementation, and paper writing. The workflow progresses naturally through conversation — Claude asks for confirmation at each key checkpoint, so you never need to remember mode-switching commands.
 
 ---
 
@@ -20,6 +20,7 @@ Research Scout is a Claude Code Skill that automates the complete academic resea
 - **Plain-language method exposition**: idea deepening proceeds in three layers (technical framework → detailed pipeline → Introduction polishing); the pipeline is explained as "first… then…", without piling up formulas.
 - **Anti-hallucination citation verification**: every citation is anchored to a supporting sentence in the source PDF; unverifiable ones are explicitly marked `⚠️ [low confidence]` and registered in a pending-verification list — uncertainty is never hidden.
 - **Effectiveness first + implementation validation**: the first purpose of experiment design is to rigorously prove the idea's effectiveness, never trimming experiments to fit resources (resources are only estimated after design); only data/code availability is verified before design; the implementation guide is automatically checked for experiment coverage, logical consistency, and completeness.
+- **Paper writing with versioning and annotations**: confirm the paper structure before drafting; the body leaves blank `>` markers for you to annotate in place, and Claude revises from your notes; every revision is archived as a separate file (`v{major}.{minor}-{summary}`), with figures/tables Python-generated to match the paper format.
 
 > To learn exactly what Claude does at each phase and how it interacts with you, see the **[full workflow guide →](WORKFLOW.en.md)**.
 
@@ -32,7 +33,7 @@ git clone https://github.com/YOUR_USERNAME/research-scout.git
 cd research-scout
 
 # Install English version
-cp -r skills/research-scout-en/research ~/.claude/skills/research
+cp -r skills/CCFA-Skill-en/research ~/.claude/skills/research
 ```
 
 > Chinese and English versions are mutually exclusive. Both use `/research` as the trigger. To switch versions, delete `~/.claude/skills/research` and install the other version.
@@ -73,7 +74,7 @@ Once started, the workflow proceeds through conversation. After each phase, Clau
 
 ---
 
-## Five-Phase Workflow
+## Six-Phase Workflow
 
 | Phase | Name | What Claude mainly does | Output |
 |-------|------|------------------------|--------|
@@ -81,7 +82,8 @@ Once started, the workflow proceeds through conversation. After each phase, Clau
 | **B** | Idea Development | Three-layer confirmation: technical framework → plain-language pipeline → Introduction polishing | `idea_report.md` Part 2 |
 | **C** | Experiment Design | Deep-reads baseline papers and code, synthesizes field conventions, confirms an experiment outline with you before expanding the full plan and giving a resource estimate | `idea_report.md` Part 3 |
 | **D** | Implementation Design | Generates a function-precise coding guide, auto-checks coverage/consistency/completeness | `implementation.md` |
-| **E** | Coding | Implements file by file per the guide, maintains a dev log, validates per module | code + `dev_log.md` |
+| **E** | Coding | Implements file by file per the guide, maintains a dev log, validates per module, reviews code on completion | code + `dev_log.md` |
+| **F** | Paper Writing | Confirms the paper structure, drafts it, revises version by version from your annotations (each archived separately), guides figure/table generation | papers in `docs/manuscripts/` |
 
 Every phase boundary is a mandatory human checkpoint — Claude never jumps to the next phase without your confirmation. For exactly what Claude does at each phase and how it interacts with you, see the **[full workflow guide →](WORKFLOW.en.md)**.
 
@@ -97,19 +99,21 @@ docs/
                         #   Part 3: Datasets, experiment design (main/ablation/additional)
                         #   References: MLA format, with main work and citation reason per entry
   implementation.md     # File-by-file, function-by-function implementation guide
-                        #   (includes data flow and validation records)
+                        #   (opens with directory tree + per-file function table; includes data flow and validation records)
   dev_log.md            # Coding progress and decision log
   user_requirements.md  # Constraints collected by Claude via conversation
                         #   (direction preferences, RQ constraints, implementation constraints, etc.)
   papers/               # Downloaded PDFs or abstract TXTs
+  manuscripts/          # Phase F paper; each revision archived separately v{major}.{minor}-{summary}.md
 
 code/
-  README.md             # Environment setup, data preparation, run commands
+  README.md             # Project overview, env setup, detailed run commands (location: project root or code/)
   requirements.txt
   src/                  # Core model and training code
   scripts/              # Data processing and experiment scripts
   configs/              # Hyperparameter configs
   baselines/            # Baseline implementations
+  notebooks/            # Key-step visualization; paper figures/tables via image.ipynb / table.ipynb
   data/                 # gitignored
   results/              # gitignored
   logs/                 # gitignored
@@ -145,7 +149,7 @@ Claude tries arXiv then OpenReview automatically. If both fail, it saves an abst
 
 ```bash
 rm -rf ~/.claude/skills/research
-cp -r code/skills/research-scout-zh/research ~/.claude/skills/research
+cp -r code/skills/CCFA-Skill-zh/research ~/.claude/skills/research
 ```
 
 ---

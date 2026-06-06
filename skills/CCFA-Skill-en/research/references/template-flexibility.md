@@ -66,11 +66,30 @@ Sub-section titles use semantic names, never placeholder text like `{Module Name
 
 ### implementation.md (Phase D output)
 
+> See `references/phase-implementation.md` for the detailed format. There are two formats, chosen by whether a strong baseline is used:
+
+**Format A: Strong Baseline Rewrite**
+
 | Chapter | Type | Omit condition |
 |---------|------|---------------|
-| Project Origin | REQUIRED | — |
-| Project Structure | REQUIRED | — |
-| Per-File Implementation Details | REQUIRED | — |
+| Original Project Info | REQUIRED | — |
+| Rewrite Scope Summary | REQUIRED | — |
+| Full Directory Tree After Rewrite | REQUIRED | First key opening part |
+| Per-File Function Table | REQUIRED | Second key opening part, per file |
+| Existing Files: Rewrite Plans | REQUIRED | Precise to every function to modify |
+| Data Download and Preparation | REQUIRED | — |
+| Results File Format | REQUIRED | — |
+| Implementation Order | REQUIRED | — |
+
+**Format B: Build from Scratch**
+
+| Chapter | Type | Omit condition |
+|---------|------|---------------|
+| Full Directory Tree | REQUIRED | First key opening part, includes notebooks/ |
+| Per-File Function Table | REQUIRED | Second key opening part, per file (not just per directory) |
+| Per-File Implementation Details | REQUIRED | Precise to each function's signature, parameters, return, logic |
+| Data Download and Preparation | REQUIRED | — |
+| Results File Format | REQUIRED | — |
 | Data Format | OPTIONAL | Pure algorithm work with no custom data format |
 | Implementation Order | REQUIRED | — |
 
@@ -91,7 +110,7 @@ Sub-section titles use semantic names, never placeholder text like `{Module Name
 Always read the `### Document Preferences` field in user_requirements.md before generating
 any document. Honor these preferences:
 
-- **Language**: Chinese body + English headings (default) / full English / full Chinese
+- **Language**: full English (default) / full Chinese
 - **Introduction detail**: placeholder draft (default) / publication-ready detailed version
 - **Data format chapter**: generate (default) / omit
 - **Ablation table format**: single table (default) / split by dimension

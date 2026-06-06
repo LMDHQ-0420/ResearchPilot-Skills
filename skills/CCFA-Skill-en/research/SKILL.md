@@ -10,7 +10,7 @@ version: 2.0.0
 license: LICENSE
 ---
 
-# Research Scout
+# CCFA-Skill
 
 Automated academic research workflow, from direction exploration to code
 implementation. The flow advances naturally through conversation — Claude
@@ -34,12 +34,11 @@ are needed to switch phases.
 
 ---
 
-## Five-Phase Flow
+## Six-Phase Flow
 
 ```
 Phase A: Direction Exploration (iterative)
-  Describe direction → search papers → download → propose 5 idea directions
-  → user selects/modifies → re-search → re-download → refine
+  Describe direction → search papers → download → confirm direction and RQs step by step
   → Claude asks for confirmation → loop until direction is settled
 
 Phase B: Idea Deepening (iterative)
@@ -57,8 +56,13 @@ Phase D: Implementation Design (iterative)
   → loop until implementation plan is complete
 
 Phase E: Coding
-  Code according to implementation.md
-  Maintain dev_log.md in sync
+  Code according to implementation.md → maintain dev_log.md in sync
+  → proactive code review on completion (runnable + logically correct)
+
+Phase F: Paper Writing (iterative)
+  Confirm paper structure → draft into docs/manuscripts/ → user annotates at blank > markers
+  → Claude reads annotations and revises (each revision copied to a new file v{major}.{minor}-{summary})
+  → guide generation of Python figures/tables (notebooks/image.ipynb, table.ipynb)
 ```
 
 Phase transitions are all driven by Claude proactively asking, for example:
@@ -73,12 +77,14 @@ Phase transitions are all driven by Claude proactively asking, for example:
 docs/
   idea_report.md        # Phase B output: Part 1+2; Phase C appends Part 3
   implementation.md     # Phase D output, detailed implementation guide
-  dev_log.md            # Phase E coding log
+  dev_log.md            # Phase E coding log (entries timestamped YYYY-MM-DD HH:MM)
   user_requirements.md  # Collected by Claude through conversation, auto-maintained
   papers/               # Downloaded paper PDFs / abstract TXTs
+  manuscripts/          # Phase F paper; each revision copied to a new file v{major}.{minor}-{summary}.md
 code/
-  README.md             # Environment setup, data prep, run commands (generated early in Phase E)
+  README.md             # Project overview, env setup, run commands (generated early in Phase E)
   src/ scripts/ configs/ baselines/
+  notebooks/            # Key-step visualization; Phase F image.ipynb / table.ipynb generate paper figures/tables
   data/ results/ logs/  # gitignored
   requirements.txt      # Library names only, no versions, no torch/torchvision/torchaudio
 ```
@@ -106,8 +112,11 @@ idea_report.md contains "## Part 3", docs/implementation.md does not exist
 implementation.md exists, docs/dev_log.md does not exist
   → Phase D complete, ready to enter Phase E
 
-dev_log.md exists
-  → Phase E: Coding in progress
+dev_log.md exists, docs/manuscripts/ does not exist
+  → Phase E: Coding in progress (Phase F available on completion)
+
+docs/manuscripts/ exists
+  → Phase F: Paper writing in progress (the highest-version md is the current draft)
 ```
 
 ---
@@ -118,7 +127,9 @@ Full step-by-step instructions are in `references/`:
 
 - Phases A+B+C: see `references/phase-research.md`
 - Phases D+E: see `references/phase-implementation.md`
+- Phase F (paper writing): see `references/phase-paper.md`
 - Document format specs: see `references/document-formats.md`
+- idea_report.md blank template: see `references/idea_report-template.md`
 - Template flexibility rules: see `references/template-flexibility.md`
 - User requirements collection: see `references/user-requirements-template.md`
 
@@ -149,3 +160,7 @@ section of `references/phase-research.md`.
    specific template instruction.
 8. After a `download-paper` command completes, Claude must output the full
    file path.
+9. Every Phase F paper revision must be copied to a new version file
+   (`v{major}.{minor}-{summary}.md`) — never overwrite an older version.
+10. Python generation of paper figures/tables (`notebooks/image.ipynb`,
+    `table.ipynb`) must be done only after the user approves.

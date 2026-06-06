@@ -54,13 +54,28 @@ At the start of each phase, if the user's input lacks sufficient detail, Claude 
 ---
 
 ## Phase D: Implementation Constraints
-> Record only hard constraints that determine code structure.
+> Record hard constraints that determine code structure, plus the results of the pre-coding checklist.
 
 ### Based on existing project
 {Extracted from user conversation: path or URL, or "from scratch"}
 
 ### Framework
 {Extracted from user conversation. Default: PyTorch}
+
+### Run environment
+{Environment name confirmed before coding; and whether that name already exists (reuse) or needs to be created}
+
+### Device-specific requirements
+{Special requirements on the environment, e.g. CUDA version, cuDNN, Apple MPS, CPU-only, Python version}
+
+### Dataset handling
+{For each dataset: already downloaded / Claude downloads (quick) / user downloads (slow)}
+
+### Code run strategy
+{Claude auto-run / user runs / mixed (Claude runs fast ones, user runs slow ones)}
+
+### README location
+{project root / `code/` directory}
 
 ### Other hard requirements
 {Extracted from user conversation: hard coding requirements only, e.g. "must support multi-GPU DDP", "needs ONNX export". Preference-level requirements are not recorded here.}
@@ -89,11 +104,14 @@ Phase A uses **step-by-step confirmation**: the research direction and each RQ a
 Does not collect resource constraints. After the experiment design is complete, Claude provides a resource estimate directly in `idea_report.md` Part 3 (for reference only, see `references/phase-research.md` C-6).
 
 ### Phase D (Implementation Design)
-Before generating implementation.md, Claude asks in conversation:
+Collected in two passes:
 
+**Before generating implementation.md:**
 ```
 Before designing the implementation, a few quick questions:
 1. PyTorch or another framework?
 2. Building on an existing open-source project? (if yes, share the link)
 3. Any hard requirements? (e.g., multi-GPU DDP, ONNX export)
 ```
+
+**Before coding starts (pre-coding checklist, see `references/phase-implementation.md` D-Final-2):** environment name, device-specific requirements, dataset download method, code run strategy, README location. Write each into the Phase D section of this file after confirmation.

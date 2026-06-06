@@ -38,6 +38,9 @@ Chapter presence and content volume follow `references/template-flexibility.md`.
 
 ### idea_report.md Full Template
 
+> **Pure blank template** (copy directly to `docs/idea_report.md` to start filling in): see `references/idea_report-template.md`.
+> This section documents the format spec (symbol semantics, required/optional chapters); the blank template contains only the skeleton without explanatory text.
+
 ````markdown
 # {Research Direction} Idea Report
 > Generated: {YYYY-MM-DD} | Status: PENDING_REVIEW
@@ -475,7 +478,7 @@ Status legend: ⬜ TODO / 🔄 WIP / ✅ Done (run-verified) / ❌ Blocked
 
 ## Dev Log Entries
 
-### {YYYY-MM-DD} — {action summary}
+### {YYYY-MM-DD HH:MM} — {action summary}
 - **Completed**: {what was done}
 - **Issues**: {problems encountered, or "none"}
 - **Solutions**: {how resolved, or "none"}

@@ -13,6 +13,9 @@
 
 ## idea_report.md
 
+> **纯净空白模板**（可直接复制为 `docs/idea_report.md` 开始填写）见 `references/idea_report-template.md`。
+> 本节说明格式规范（符号语义、必选/可选章节），空模板只含骨架不含说明文字。
+
 ### Markdown 符号语义
 
 | 符号 | 含义 | 约束 |
@@ -482,7 +485,7 @@ class {ModelName}(nn.Module):
 
 ## 开发日志
 
-### {YYYY-MM-DD} — {动作简述}
+### {YYYY-MM-DD HH:MM} — {动作简述}
 - **完成内容**：{具体内容}
 - **遇到的问题**：{问题描述，或"无"}
 - **解决方案**：{解决方法，或"无"}
