@@ -40,8 +40,10 @@ Sub-section titles use semantic names, never placeholder text like `{Module Name
 | Chapter | Type | Omit condition |
 |---------|------|---------------|
 | Part 1 — Motivation | REQUIRED | — |
-| Part 1 — Development Timeline | REQUIRED | — |
-| Part 1 — Key Works | REQUIRED | — |
+| Part 1 — Motivation necessity points | REQUIRED | Application/theoretical/timing — mark low-confidence if evidence insufficient, cannot omit |
+| Part 1 — Research Questions | REQUIRED | At least 1 primary RQ; secondary RQs optional |
+| Part 1 — Key Works summary table | REQUIRED | — |
+| Part 1 — Key Works detail entries | REQUIRED | — |
 | Part 2 — Introduction | REQUIRED | — |
 | Part 2 — Related Works | REQUIRED | — |
 | Part 2 — Method | REQUIRED | — |
@@ -52,11 +54,13 @@ Sub-section titles use semantic names, never placeholder text like `{Module Name
 
 | Chapter | Type | Omit condition |
 |---------|------|---------------|
+| 0 Baseline Experiment Survey (per-paper detail entries) | REQUIRED | — |
+| 0 Field Convention Synthesis | REQUIRED | — |
 | Feasibility Verification Summary | REQUIRED | — |
-| Datasets | REQUIRED | — |
-| Main Experiments | REQUIRED | — |
-| Ablation Study | REQUIRED | — |
-| Additional Experiments | OPTIONAL | Method does not involve visualization, efficiency, or robustness analysis |
+| 1 Datasets | REQUIRED | — |
+| 2 Main Experiments | REQUIRED | — |
+| 2 Ablation Study | REQUIRED | — |
+| 2 Additional Experiments | OPTIONAL | Method does not involve visualization, efficiency, or robustness analysis |
 
 ### implementation.md (Phase D output)
 

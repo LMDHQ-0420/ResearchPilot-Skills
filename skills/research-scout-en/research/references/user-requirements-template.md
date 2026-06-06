@@ -21,20 +21,33 @@ At the start of each phase, if the user's input lacks sufficient detail, Claude 
 
 ---
 
-## Phase A: Direction Preferences
-> Collected by Claude at Phase A start. Used to guide candidate idea generation.
+## Phase A: Direction & RQ Constraints
+> Collected by Claude through conversation during Phase A. Distinguishes two categories — "constraints on the research direction" and "constraints on the research questions (RQs)" — guiding direction anchoring and RQ distillation respectively.
 
-### Preferred directions
+### Research Direction Constraints
+
+**Preferred directions**
 {Extracted from user conversation: e.g., lightweight, interpretability, cross-domain generalization}
 
-### Directions to avoid
+**Directions to avoid**
 {Extracted from user conversation: exclusions}
 
-### Other constraints
-{Extracted from user conversation: other directional restrictions}
+**Confirmed research direction**
+{The research direction locked after step-by-step interactive confirmation, one sentence; "TBD" if not confirmed}
+
+### Research Question (RQ) Constraints
+
+**Requirements on RQs**
+{Extracted from user conversation: constraints on the research questions, e.g. "must be verifiable on a single GPU", "focus on theoretical analysis rather than pure experiments"}
+
+**Confirmed RQs**
+{RQs locked after one-by-one confirmation; primary RQ required, secondary RQs as applicable; "TBD" if not confirmed}
+
+### Explicit reference papers
+{Papers the user explicitly required as references; "none" if none. Excludes Claude's self-retrieved literature list}
 
 ### Document preferences
-{Extracted from user conversation: language, detail level, etc. Default: Chinese body + English headings}
+{Extracted from user conversation: language, detail level, etc. Default: English throughout}
 
 ---
 
@@ -73,10 +86,13 @@ If the user's input does not include sufficient detail, Claude asks in conversat
 Before starting the literature search, a few quick questions (skip any that don't apply):
 1. Any preferred directions? (e.g., lightweight, interpretability, cross-domain)
 2. Anything you want to avoid?
-3. Any other constraints?
+3. Any requirements on the research questions (RQs)? (e.g., must be single-GPU verifiable)
+4. Any papers you particularly want to reference?
 ```
 
 If the user's input is already detailed enough, Claude extracts and writes directly — no questions asked.
+
+Phase A uses **step-by-step confirmation**: the research direction and each RQ are locked one at a time through conversation. As each item is confirmed, immediately update the corresponding field in this file (distinguishing "Research Direction Constraints" from "RQ Constraints"), and refresh it in the confirmation card at the top of the next output (card format in `references/phase-research.md`).
 
 ### Phase C (Experiment Design)
 Before generating Part 3, Claude asks in conversation:

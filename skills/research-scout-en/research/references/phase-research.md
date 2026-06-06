@@ -148,9 +148,37 @@ Please tell me the direction you want to research. For example:
 /research "I want to work on battery SOH prediction; existing Transformer methods don't exploit local features"
 ```
 
+### Confirmation Card (shared by Phases A / B)
+
+**Every output** in Phase A and Phase B must begin with a "confirmed content card", wrapped in two lines of equal signs, so the user can always see the currently locked consensus. Format:
+
+```
+=====================================
+**Confirmed Content**
+
+**Research direction**: {one-sentence description of the confirmed direction; "TBD" if not yet confirmed}
+
+**Research questions (RQs)**:
+- RQ1 (primary): {confirmed primary RQ; "TBD" if not confirmed}
+- RQ2 (secondary): {confirmed secondary RQ; omit this line if not confirmed}
+
+**User constraints**:
+- Direction constraints: {constraints the user placed on the research direction; "none" if none}
+- RQ constraints: {constraints the user placed on the research questions; "none" if none}
+
+**Explicit reference papers**: {papers the user explicitly named as required references; omit the whole item if none}
+=====================================
+```
+
+**Card rules:**
+- The card only holds content "confirmed by the user"; unconfirmed direction/RQ candidates do not enter the card
+- The card **excludes** the detailed literature search list (that is process content); only when the user explicitly names a paper as required reading is it listed under "Explicit reference papers"
+- Card content stays in sync with the Phase A section of `docs/user_requirements.md` (see `references/user-requirements-template.md`)
+- After confirming new content, update `user_requirements.md` first, then refresh the card at the top of the next output
+
 ### A-1 Parse Input, Collect Requirements
 
-Extract from user input: research direction, existing ideas, reference papers.
+Extract from user input: research direction, existing ideas, reference papers, constraints.
 
 If the input lacks sufficient detail, ask all questions in a single turn (not across multiple rounds):
 ```
@@ -161,7 +189,7 @@ Before starting the search, a few quick questions:
 4. Any other constraints? (e.g., must run on a single GPU)
 ```
 
-Write collected information to `docs/user_requirements.md`.
+Write collected information to the Phase A section of `docs/user_requirements.md` (distinguishing direction constraints / RQ constraints).
 
 ### A-2 Initial Literature Search
 
@@ -207,44 +235,56 @@ Download results:
 
 If any downloads fail, ask the user whether to fill them in manually, then continue.
 
-### A-5 Propose 5 Idea Directions
+### A-5 Anchor the Problem Domain, Confirm the Research Direction Step by Step
 
-Based on downloaded papers, propose 5 broad idea directions. Each direction should be substantive:
+> Goal of this step: interact thoroughly with the user and converge step by step to one clear research direction. Do not dump 5 directions at once for the user to pick; instead, guide the user to confirm progressively.
 
+**Step 1: Problem domain report**. Based on the downloaded literature, report to the user across three dimensions to help build a global picture:
 ```
-Based on the literature analysis, here are 5 research directions for consideration:
+{confirmation card}
 
-### Direction 1: {title}
-**Core idea**: {2–3 sentences describing what problem this direction addresses and what approach it takes}
-**Literature basis**: {key papers supporting this direction and their core findings}
-**Innovation angle**: {method transfer / improvement of existing methods / task reframing}
-**Main challenges**: {core difficulties in realizing this direction}
-**Novelty assessment**: {key differences from existing work; similarity: high / medium / low}
+I have read through the retrieved literature. Here is the full picture of this direction:
 
-### Direction 2: ...
-...
-```
+**① What problem it mainly addresses**: {the core task and goal of this direction}
+**② Major method families**: {breakdown of method categories, one sentence each}
+**③ Most active sub-directions in the past two years**: {2–3 heating-up sub-directions}
 
-Then ask:
-```
-Which direction interests you? Or do you have other ideas?
-You can select a direction, or tell me what you'd like to adjust.
+Which part interests you most / do you most want to dig into? Or do you already have a more specific entry point in mind?
 ```
 
-### A-6 Iterative Refinement (loop)
+**Step 2: Discuss candidate directions one at a time**. Based on the user's interest, focus on 1–2 candidate directions at a time for in-depth discussion (core idea, literature basis, innovation angle, main challenges, novelty assessment), going back and forth with the user until they clearly settle on one direction.
 
-After the user selects or requests changes:
-1. If more literature support is needed: re-search → confirm download list → download → update direction descriptions
-2. If the direction needs adjustment: revise direction content per user feedback
-3. After each output, proactively ask:
+**Step 3: Lock the direction**. After the user confirms, write the direction into `user_requirements.md` and fill the "Research direction" field of the confirmation card in the next output.
 
+### A-6 Distill and Confirm RQs One by One
+
+> After the research direction is locked, move to RQ distillation. Likewise confirm one at a time, not all RQs at once.
+
+**Step 1: gap → RQ derivation**. Based on the confirmed direction, derive candidate RQs from the literature gaps, **proposing one primary RQ candidate at a time**, with:
+- Which specific gap it corresponds to (with supporting citation)
+- Novelty check (targeted search result: existing / partial / open)
+- Answerability (whether it can be answered within the experimental scope of a single paper)
+
+Discuss this primary RQ with the user, allowing rewrite / merge / replace, until they confirm the primary RQ.
+
+**Step 2: Add secondary RQs**. Once the primary RQ is confirmed, propose secondary RQs (1–3) one by one in the same manner, confirming each with the user.
+
+**Step 3: Lock RQs**. As each RQ is confirmed, immediately write it into `user_requirements.md` and refresh the confirmation card.
+
+**Step 4: Necessity argument**. Once all RQs are confirmed, write a necessity argument for the selected RQs (application / theoretical / timing, itemized, each backed by citations), and confirm with the user that the argument holds.
+
+### A-7 Proceed to Phase B
+
+Once the research direction, all RQs, and the necessity argument are confirmed, proactively ask:
 ```
-Is the direction description complete enough now?
-If so, we can move to the next phase and start building a detailed idea.
-Or is there anything you'd like to add or change?
+{confirmation card}
+
+The research direction and RQs are now locked, and the necessity argument holds.
+I can now assemble Part 1 (Motivation / Research Questions / Key Works) and move into the idea-deepening phase.
+Shall we continue? Or is there anything to add?
 ```
 
-4. Once the user confirms, proceed to Phase B.
+Once the user confirms, assemble Part 1 (see B-0) and proceed to Phase B.
 
 ---
 
@@ -254,25 +294,68 @@ Or is there anything you'd like to add or change?
 
 Entered automatically after the user confirms a direction in Phase A.
 
-### B-1 Build idea_report.md Part 1 + Part 2
+> Phase B has already established the research direction and RQs; the goal is to deepen the "research question" into an "implementable method". **Every output likewise begins with the confirmation card** (in Phase B the card adds two more fields on top of Phase A: "Confirmed technical framework" and "Confirmed pipeline"). Deepening proceeds through three layers of step-by-step confirmation: technical framework → detailed pipeline → Introduction polishing.
 
-Generate the document according to the template in `references/document-formats.md`.
+### B-0 Assemble Part 1
 
-**Part 1 Topic Overview:**
-- `### 1 Motivation`: direction background and research motivation, citing key papers
-- `### 2 Development Timeline`: field evolution, ≥5 key milestones, in continuous paragraphs
-- `### 3 Key Works`: 5–8 works worth learning from, one sub-section per paper, including borrowing value
+The content confirmed in Phase A is assembled directly into `idea_report.md` Part 1, not regenerated:
+- `### 1 Motivation`: direction background and research motivation, citing key papers; **must end with a "Why this research is necessary" itemized paragraph** (application/theoretical/timing, each backed by citations)
+- `### 2 Research Questions`: introductory statement + primary RQ (1) + secondary RQs (1–3); each RQ annotated with its corresponding gap, novelty, and answerability
+- `### 3 Key Works`: **output the summary table first** (short name / venue·journal / year / one-line core contribution / borrowing value), then per-paper detail entries; 5–8 works, not limited to SOTA
 
-**Part 2 Idea Design:**
-- `### 1 Introduction`: strict academic paper style, no sub-headings, broad-to-narrow structure, contributions listed as bullet points at the end
+After assembly, present Part 1 for the user's review; proceed to B-1 only after they confirm it.
+
+### B-1 Confirm the Technical Framework (Layer 1)
+
+> Goal: first align with the user on "what broad technical approach will answer the RQs", without implementation details.
+
+Propose the overall technical framework to the user:
+```
+{confirmation card}
+
+For the confirmed RQs, here is the technical framework I envision:
+
+**Overall approach**: {one paragraph on what core technique answers the RQs and which innovation point it corresponds to}
+**Framework sketch**:
+{Input → [Module A: role] → [Module B: role] → Output —— as a text flow diagram}
+**What each module solves**:
+- Module A: {which part of the RQ it addresses}
+- Module B: {...}
+
+Is this technical framework heading in the right direction? Which modules need adjustment?
+```
+
+Go back and forth with the user until the framework is confirmed. Then write it into the "Confirmed technical framework" field of the card.
+
+### B-2 Confirm the Detailed Pipeline (Layer 2, plain language)
+
+> Goal: refine the framework into an executable, complete workflow. **The output must be in plain language, walking through what each step does as "first… then…", without piling up formulas.**
+
+```
+{confirmation card}
+
+With the framework confirmed, here is how the complete pipeline operates (the flow first; formulas come later when writing the document):
+
+**Step 1**: {what the input is, how it's processed, what it produces — in everyday language}
+**Step 2**: {...}
+**Step 3**: {...}
+...
+
+Why each step is designed this way: {the corresponding intuition}
+
+Are there any gaps or unreasonable parts in this workflow?
+```
+
+Go back and forth with the user until the pipeline is confirmed. Then write it into the "Confirmed pipeline" field of the card.
+
+Only after that, write Part 2's Method section:
+- `### 1 Introduction`: leave as a placeholder for now, polished in B-4
 - `### 2 Related Works`: synthesize existing approaches, final sub-section is always "Research Gap"
-- `### 3 Method`: detailed theoretical framework, every formula annotated with `>`, final sub-section is always Baseline Reference and Evaluation Metrics (all entries must have paper citations)
+- `### 3 Method`: write the detailed theoretical framework based on the confirmed pipeline; 3.2 is the plain-language walkthrough (consistent with the confirmed pipeline), 3.3+ are the corresponding theoretical/formula expressions, every formula annotated with `>`, final sub-section is always Baseline Reference and Evaluation Metrics (all entries must have paper citations)
 
-Use `>` heavily to explain the design rationale, literature support, and source annotations for each step.
+Use `>` heavily to explain the design rationale, literature support, and source annotations for each step. If more literature support is needed during generation: search → confirm download list → download → continue.
 
-If more literature support is needed during generation: auto-search → confirm download list with user → download → continue generating.
-
-### B-2 Citation Verification
+### B-3 Citation Verification
 
 For all source annotations (`>` lines that include a citation number):
 1. Open `docs/papers/{title}.pdf` (or `.txt`)
@@ -283,21 +366,29 @@ For all source annotations (`>` lines that include a citation number):
    ```
 3. If verification is not possible, append `⚠️ [low confidence: PDF unavailable]` and register in the Pending Verification list.
 
-### B-3 Ask for Confirmation After Each Output
+### B-4 Introduction Polishing (Layer 3)
 
-After each generation or revision:
+> After the Method is confirmed, finally polish the Introduction to submission quality.
+
+Write the Introduction in academic paper style (no sub-headings, from field importance → itemized limitations of existing methods with citations → motivation of this paper → method overview → itemized contributions), then ask:
 ```
-The detailed idea description has been updated. Is the idea complete enough now?
-If so, we can move into the experiment design phase.
-Or is there anything you'd like to adjust?
+{confirmation card}
+
+The Introduction has been polished in academic paper style. Does the logic and force of this opening land well?
+Which part should be strengthened (background setup / limitation argument / contribution framing)?
 ```
 
-### B-4 Iterative Refinement (loop)
+Go back and forth with the user until the Introduction is confirmed.
 
-After the user proposes revisions:
-1. If new papers are needed: search → confirm download list → download → update document
-2. If only content changes are needed: revise directly and re-output the relevant sections
-3. Ask for confirmation again
+### B-5 Proceed to Phase C
+
+Once the technical framework, pipeline, Method, and Introduction are all confirmed, proactively ask:
+```
+{confirmation card}
+
+The idea is now fully deepened (technical framework → pipeline → Method → Introduction all confirmed).
+Shall we move into the experiment design phase? Or is there anything to adjust?
+```
 
 Once the user confirms, proceed to Phase C.
 
@@ -322,23 +413,52 @@ Before designing experiments, a few quick questions:
 
 Write to `docs/user_requirements.md`.
 
-### C-2 Search Field Experiment Conventions
+### C-2 Deep-Read Baseline Papers and Code
 
-Search papers from the same field in the past 3 years and extract:
-- Common datasets and their standard split ratios
-- Standard evaluation metrics and how they are computed
-- Typical ablation design patterns
-- Standard baseline hyperparameter configurations
-- Result table formatting conventions
+Extract all selected baselines from the Method section of `idea_report.md` Part 2, present a deep-read plan to the user, and request confirmation:
 
-### C-3 Feasibility Verification
+```
+Before designing experiments, I plan to deep-read the following baselines' papers and code repositories,
+to understand how they design experiments and avoid an experiment design disconnected from field conventions:
+
+| # | Baseline | Paper | GitHub | Purpose of deep-read |
+|---|---------|-------|--------|---------------------|
+| 1 | {name} | {title} [n] | {repo link or not found yet} | {one sentence: why read this — which method category it represents, or what's worth referencing in its experiment design} |
+| 2 | {name} | ... | ... | ... |
+
+Once confirmed, I will read each one and compile them into Part 3 Section 0.
+```
+
+Wait for user confirmation (they may add or remove items).
+
+After confirmation, for each baseline:
+1. Download the paper PDF (read directly if already in `docs/papers/`, otherwise fetch via the paper download logic)
+2. Read the GitHub README and core training scripts (if the repo is accessible)
+3. Extract from the paper and code:
+   - Which datasets are used, and how they are split (ratio / official split / cross-validation)
+   - Which experiments are designed (main, ablation, additional), and the purpose of each
+   - Which models are compared, and the model-selection logic
+   - Which evaluation metrics are used, and how they are computed
+   - Key hyperparameter settings (batch size, lr, training epochs, etc.)
+
+After extraction, present a summary to the user for confirmation, then proceed to C-3.
+
+### C-3 Synthesize Field Experiment Conventions
+
+Search papers from the same field in the past 3 years and, combined with the C-2 deep-read results, synthesize:
+- Datasets commonly used across baselines (treated as the field's standard benchmarks)
+- Evaluation metrics commonly used across baselines (treated as the field's standard metrics)
+- Typical ablation design patterns (which components usually need ablation)
+- Result table conventions (whether std is reported, whether results are averaged over multiple runs)
+
+### C-4 Feasibility Verification
 
 Check three items (if any fail, pause and inform the user):
 - **Dataset**: download link is accessible, data is publicly available, scale is appropriate
 - **Baseline code**: repository is accessible, framework is compatible; if no code exists, note "needs self-implementation"
 - **Hardware**: estimate VRAM requirement; if it exceeds the user's GPU, suggest adjustments
 
-Write the feasibility summary at the beginning of Part 3:
+Write the feasibility summary at the end of Part 3 Section 0:
 ```markdown
 ### Feasibility Verification Summary
 | Item | Status | Notes |
@@ -348,13 +468,13 @@ Write the feasibility summary at the beginning of Part 3:
 | GPU VRAM | ✅/⚠️ | Estimated {N}GB, user has {M}GB |
 ```
 
-### C-4 Generate idea_report.md Part 3
+### C-5 Generate idea_report.md Part 3
 
 Generate using the Part 3 template in `references/document-formats.md`, appended to the end of `idea_report.md`.
 
-Annotate every experiment design decision with `>` to explain the rationale. For decisions backed by paper evidence, include the citation number in the same `>` annotation.
+Section 0 (Baseline Experiment Survey) is filled directly from the C-2 deep-read results; the experiment design from Section 1 onward builds on the field conventions synthesized in Section 0. Annotate every experiment design decision with `>` to explain the rationale, including the citation number for decisions backed by paper evidence.
 
-### C-5 Ask for Confirmation After Each Output
+### C-6 Ask for Confirmation After Each Output
 
 ```
 Experiment design generated. Is the experiment plan complete enough now?
@@ -362,7 +482,7 @@ If so, we can move into the implementation design phase and generate a detailed 
 Or is there anything you'd like to adjust?
 ```
 
-### C-6 Iterative Refinement (loop)
+### C-7 Iterative Refinement (loop)
 
 After the user proposes revisions, update Part 3 content and ask for confirmation again.
 Once the user confirms, proceed to Phase D (see `references/phase-implementation.md`).

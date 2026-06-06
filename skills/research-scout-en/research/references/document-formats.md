@@ -52,21 +52,54 @@ Continuous paragraphs, academic style, cite key papers.}
 
 > {Plain-language supplement: from a practical application perspective, explain why existing methods fall short}
 
-### 2 Development Timeline
-{Narrate the evolution of the field in chronological order, at least 5 key milestones.
-Format for each milestone: Author et al. [n] (Venue Year) proposed ..., solving ..., but still lacking ....
-Use continuous paragraphs, not bullet lists.}
+**Why this research is necessary:**
 
-> {If a milestone description directly draws from a survey or paper, annotate the source here} [n]
+- **Application necessity**: {From a real application scenario, explain what concrete impact the limitations of existing methods have on downstream tasks or deployment, with supporting citations}
+- **Theoretical necessity**: {Point out the cognitive gap left by existing work — what problem remains under-studied or unexplained, with supporting citations}
+- **Timing necessity**: {Explain why now is the right time to study this problem — e.g., emergence of new datasets, maturity of enabling techniques, new application demands}
+
+> Note: all three points must be backed by literature, not asserted subjectively. If a point lacks sufficient evidence in the current review, mark it ⚠️ [low confidence: evidence pending].
+
+### 2 Research Questions
+
+{An introductory statement explaining which core gaps from Section 1 these RQs are derived from. 2–3 sentences, under 100 words.}
+
+#### Primary RQ
+
+**RQ1: {State as a complete question ending with a question mark}**
+
+- **Corresponding gap**: {Which limitation in Section 1 it targets, with supporting citation [n]}
+- **Novelty**: {Whether existing work has partially answered this question, and how this research differs from it}
+- **Answerability**: {Explain that this RQ can be answered within the experimental scope of a single paper, and through what experiments}
+
+#### Secondary RQs
+
+**RQ2: {Complete question}**
+
+- **Corresponding gap**: {Supporting citation [n]}
+- **Relation to RQ1**: {Whether this RQ extends, precedes, or complements RQ1}
+
+**RQ3: {Complete question}** (optional, add or remove based on research scope)
+
+- **Corresponding gap**: {Supporting citation [n]}
+- **Relation to RQ1**: {State the relation}
+
+> Note: the number of RQs follows the research scope, typically 1 primary + 1–3 secondary. Each RQ must be specific, concrete, and answerable by experiment; do not write generic research-direction descriptions.
 
 ### 3 Key Works
-{List 5–8 works worth learning from — not limited to SOTA; include methodologically inspiring works.
-One sub-section per paper, title format: #### 3.x {Short Name} ({Venue} {Year})}
 
-#### 3.1 {Short Name} ({Venue} {Year})
-{Core contribution, academic style, 2–3 sentences}
+{An introductory statement describing the selection logic of these works: which method categories are covered and why they are valuable references for this research. 2–3 sentences.}
 
-> Borrowing value: {specific help for this idea} [n]
+| Short Name | Venue | Year | Core Contribution (one line) | Borrowing Value for This Research |
+|-----------|-------|------|---------------------------|--------------------------------|
+| {short name} | {Venue} | {year} | {what the paper does, ≤15 words} | {what specifically can be borrowed, ≤15 words} |
+
+> Each row corresponds to one detailed entry below; keep the short name consistent with the heading below.
+
+#### {Short Name} ({Venue} {Year}) [n]
+{Core contribution, academic style, 2–3 sentences. Describe the method's core idea and main experimental findings.}
+
+> Borrowing value: {specific help for this research — what is borrowed: method design / experimental paradigm / evaluation metrics / data processing, etc.} [n]
 
 ---
 
@@ -158,6 +191,57 @@ Every baseline and every metric must have a paper citation as justification.}
 ---
 
 ## Part 3 Experiment Design
+
+### 0 Baseline Experiment Survey
+
+> This section is filled directly from the deep-read results in Phase C-2, recording each baseline's experimental design as the reference standard for the experiment design that follows.
+
+#### 0.x {Baseline Name} ({Venue} {Year}) [n]
+
+**Paper**: {full title} | **Code**: {GitHub link or `[code unavailable]`}
+
+**Core idea**: {One sentence on the baseline's core method and its relation to this research}
+
+**Datasets**:
+
+| Dataset | Scale | Split Strategy | Ratio / Notes |
+|---------|-------|---------------|--------------|
+| {name} | {# samples / size} | {random / official / chronological / cross-validation} | {specific ratio or notes} |
+
+**Experiment design**:
+
+| Experiment | Purpose | Comparison Models | Evaluation Metrics |
+|-----------|---------|------------------|-------------------|
+| {main experiment name} | {what it validates} | {all comparison models, comma-separated} | {metric list} |
+| {ablation name} | {which component it validates} | {ablation variant names} | {metric list} |
+
+**Key hyperparameters**: batch size = {N}, lr = {float}, epochs = {N}, {other key hyperparameters}
+
+> {Noteworthy experimental design details observed from the code / paper, worth borrowing or watching out for}
+
+---
+
+### 0.x+1 Field Convention Synthesis
+
+> This section is synthesized in Phase C-3, aggregating all baseline deep-read results to distill the field's experimental design consensus, directly guiding the experiment design below.
+
+**Standard benchmarks**: {List datasets commonly used across baselines, noting their status in the field}
+
+**Standard evaluation metrics**: {List metrics commonly used across baselines, noting computation and direction (higher / lower is better)}
+
+**Ablation conventions**: {Describe which components the field typically ablates, and common ablation variant naming}
+
+**Reporting norms**: {Whether mean ± std is reported, whether multiple random seeds are used, whether results are listed per dataset}
+
+### Feasibility Verification Summary
+
+| Item | Status | Notes |
+|------|--------|-------|
+| Dataset {name} | ✅/⚠️/❌ | {explanation} |
+| Baseline {name} code | ✅/⚠️/❌ | {explanation} |
+| GPU memory | ✅/⚠️ | Estimated {N}GB, user has {M}GB |
+
+---
 
 ### 1 Datasets
 
