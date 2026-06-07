@@ -93,16 +93,24 @@ Continuous paragraphs, academic style, cite key papers.}
 
 {An introductory statement describing the selection logic of these works: which method categories are covered and why they are valuable references for this research. 2–3 sentences.}
 
+<!-- Summary table: key works only (5–8). -->
 | Short Name | Venue | Year | Core Contribution (one line) | Borrowing Value for This Research |
 |-----------|-------|------|---------------------------|--------------------------------|
 | {short name} | {Venue} | {year} | {what the paper does, ≤15 words} | {what specifically can be borrowed, ≤15 words} |
 
-> Each row corresponds to one detailed entry below; keep the short name consistent with the heading below.
+> The table lists key works only; the per-paper entries below include **every downloaded paper** (not just key works), with short names consistent with the headings.
 
+<!-- Per-paper entries: include every downloaded paper. Whether to write the four-point detailed introduction depends on the user's Phase A choice (see phase-research.md A-4.5). -->
 #### {Short Name} ({Venue} {Year}) [n]
-{Core contribution, academic style, 2–3 sentences. Describe the method's core idea and main experimental findings.}
+{When the user chose detailed introductions, expand into four points, academic style:
+1. What research problem it solves;
+2. What method it uses and why designed that way;
+3. How well the method performs;
+4. What this paper means for this research.
+When the user chose not to, write only a one-sentence core contribution.}
 
 > Borrowing value: {specific help for this research — what is borrowed: method design / experimental paradigm / evaluation metrics / data processing, etc.} [n]
+> Key work: {yes / no}, because {one-sentence reason — whether it appears in the key-works table above, and why}
 
 ---
 

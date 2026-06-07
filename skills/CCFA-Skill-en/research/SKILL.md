@@ -164,3 +164,12 @@ section of `references/phase-research.md`.
    (`v{major}.{minor}-{summary}.md`) — never overwrite an older version.
 10. Python generation of paper figures/tables (`notebooks/image.ipynb`,
     `table.ipynb`) must be done only after the user approves.
+11. If the idea / experiment design needs adjusting during Phase E coding or
+    after experiments run, first confirm the backtracking scope with the user,
+    then re-walk the corresponding Phase B/C/D flow to update
+    `idea_report.md` / `implementation.md` — never patch around it in code
+    (see `phase-implementation.md` E-8).
+12. Before every idea generation or adjustment, read literature extensively:
+    read closely the papers already in `docs/papers/` first, and re-run the
+    download flow only when the existing literature cannot solve the problem
+    (see the "Literature Reading Principle" in `phase-research.md`).

@@ -946,9 +946,12 @@ Stop immediately and prompt:
 
 Options:
 - Tell me how to resolve it → fix directly and continue
-- Need to revise the experiment design → we go back to Phase C
-- Need to revise the implementation plan → we go back to Phase D
+- Need to revise the idea → we go back to Phase B (see the E-8 backtracking flow)
+- Need to revise the experiment design → we go back to Phase C (see the E-8 backtracking flow)
+- Need to revise the implementation plan → we go back to Phase D (see the E-8 backtracking flow)
 ```
+
+> Any option that involves revising the idea / experiment design / implementation plan goes through the **E-8 backtracking flow** — never alter the design ad hoc at the coding site.
 
 ### E-5 Implementation Error Found in implementation.md
 
@@ -1007,3 +1010,43 @@ Shall I fix these as suggested? (dev_log will be synced after fixing)
 - If an issue falls on either hard line — "won't run" or "logic error" → **must fix**; after user confirmation, fix it and sync README/dev_log per E-6
 - If it's only style / engineering polish that doesn't affect running or correctness → do not change proactively; mention it in one line at most and leave it to the user
 - When there are no issues, report honestly "review passed, code runs and logic matches the design" — do not fabricate issues
+
+### E-8 Poor Experiment Results → Backtrack to Adjust the Idea / Experiment Design (full B/C/D chain)
+
+> When it applies: **a design is found unworkable during coding** (E-4 / E-5), or **the experiment results are poor after the code runs**. Either case may require going back to adjust the idea and experiment design, which in turn touches both design documents `idea_report.md` and `implementation.md`. **Never patch around a design problem in code.**
+
+**Step 1: Diagnose and confirm backtracking with the user (mandatory — confirm before acting)**
+
+First report the experiment results / blocking situation honestly, give a diagnosis and a proposed backtracking scope, and wait for the user to confirm:
+```
+Current experiment results / blocking situation: {describe honestly, with key data from dev_log / results}
+
+Diagnosis: {likely cause of poor results / unworkability}
+
+Design documents to adjust and the corresponding phases to revisit (please confirm):
+- [ ] The idea itself needs adjustment → back to Phase B, revise idea_report.md Part 2 (Method / pipeline / technical framework)
+- [ ] The experiment design needs adjustment → back to Phase C, revise idea_report.md Part 3 (datasets / experiment list / baselines / metrics)
+- [ ] The implementation plan needs adjustment → back to Phase D, revise implementation.md
+
+Shall we backtrack with the scope above? You may add or remove parts to adjust.
+```
+
+**Step 2: Re-walk the full flow of the corresponding phase per the confirmed scope (not an in-place patch)**
+
+After the user confirms, **re-run the existing flow of the corresponding phase** per the mapping below, still confirming with the user at each step:
+
+| What to adjust | Phase to revisit | Document | Key requirement |
+|---------------|------------------|----------|-----------------|
+| Idea (technical framework / pipeline / Method) | Phase B (see `phase-research.md` B-1–B-4) | `idea_report.md` Part 2 | **Read literature extensively first** (see "Literature Reading Principle") before adjusting |
+| Experiment design (data/experiments/baselines/metrics) | Phase C (see `phase-research.md` C-1–C-8) | `idea_report.md` Part 3 | Re-verify data and code availability, re-confirm the experiment outline |
+| Implementation plan | Phase D (see D-0–D-final in this file) | `implementation.md` | Re-run the implementation.md verification rules |
+
+> **Chain dependency**: adjustments usually propagate top-down — changing the idea (B) generally requires updating the experiment design (C) and implementation plan (D); changing the experiment design (C) generally requires updating the implementation plan (D). After backtracking to the topmost affected layer, **sync the affected downstream documents in order B→C→D** — do not change only the upstream and leave the downstream contradicting it.
+
+**Step 3: Literature requirement (mandatory for every idea adjustment)**
+
+Every idea adjustment must follow the "Literature Reading Principle": first read closely the literature already in `docs/papers/`; only when the existing literature cannot solve the current problem, re-run the paper download flow to add new papers.
+
+**Step 4: Return to Phase E and continue coding**
+
+After all design documents (`idea_report.md` / `implementation.md` as needed) are updated and confirmed by the user, return to Phase E, revise the code per the updated implementation.md, and add a backtracking entry to `dev_log.md` (reason, which documents were adjusted, which phases).

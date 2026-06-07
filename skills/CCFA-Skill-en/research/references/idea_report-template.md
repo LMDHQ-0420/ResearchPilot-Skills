@@ -48,15 +48,24 @@
 
 {Selection logic: which method categories are covered and why they are valuable}
 
+<!-- Summary table: key works only -->
 | Short Name | Venue | Year | Core Contribution (one line) | Borrowing Value |
 |-----------|-------|------|---------------------------|----------------|
 | {short name} | {Venue} | {year} | {} | {} |
 
+<!-- Per-paper entries: include EVERY downloaded paper (not just key works).
+     If the user chose detailed introductions, write the four points; otherwise a one-line core contribution. -->
 #### {Short Name} ({Venue} {Year}) [n]
 
-{Core contribution, 2–3 sentences}
+{If detailed introduction is needed, expand into four points:
+1. What research problem it solves: {}
+2. What method it uses and why designed that way: {}
+3. How well the method performs: {}
+4. What this paper means for this research: {}
+If not needed, write only a one-sentence core contribution.}
 
 > Borrowing value: {} [n]
+> Key work: {yes / no}, because {}
 
 ---
 

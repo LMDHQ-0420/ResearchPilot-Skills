@@ -46,6 +46,9 @@ At the start of each phase, if the user's input lacks sufficient detail, Claude 
 ### Explicit reference papers
 {Papers the user explicitly required as references; "none" if none. Excludes Claude's self-retrieved literature list}
 
+### Per-paper detailed introduction
+{The user's A-4.5 choice: yes / no to a four-point detailed introduction for each downloaded paper. Regardless of the choice, the Key Works per-paper entries include every downloaded paper.}
+
 ### Document preferences
 {Extracted from user conversation: language, detail level, etc. Default: English throughout}
 

@@ -136,6 +136,18 @@ fi
 
 ---
 
+## Literature Reading Principle (applies to idea generation and every adjustment)
+
+> This principle applies to **the initial idea generation** as well as **any later adjustment of the idea** (including adjustments triggered by backtracking from Phase D/E — see the backtracking flow in `phase-implementation.md`).
+
+Before writing or revising the idea each time, you must **read existing literature extensively**:
+
+- **Read what is already downloaded first; do not rush to download new papers**: first read closely the relevant papers already in `docs/papers/`, mastering them as the basis for design.
+- **Download more only when needed**: when you find the existing literature **cannot support the current design decision, or cannot answer a newly surfaced question**, then re-run the "paper download logic" (search → confirm the download list with the user → download → read closely) and add the new papers to `docs/papers/`.
+- Every key design decision should have literature support, with the source annotated via `>` and a citation number; unsupported claims go on the to-verify list or are marked low-confidence.
+
+---
+
 ## Phase A: Direction Exploration
 
 ### Trigger
@@ -234,6 +246,23 @@ Download results:
 
 If any downloads fail, ask the user whether to fill them in manually, then continue.
 
+### A-4.5 Ask Whether to Introduce Each Paper in Detail
+
+After all downloads complete (including papers the user filled in manually), recognizing that the user may not have read some of these papers, proactively ask whether Claude should give a detailed introduction to each paper:
+```
+All papers are downloaded. You may not have read some of them yet.
+Would you like me to give a detailed introduction to each paper? If so, I will cover four points per paper:
+1. What research problem it solves;
+2. What method it uses and why it is designed that way;
+3. How well the method performs;
+4. What this paper means for our research.
+
+(Regardless of your choice, the per-paper entries under Part 1 Key Works will include **every** paper you downloaded, each marked as to whether it is a key work.)
+
+Reply "yes" or "no".
+```
+Record the user's choice (yes / no to per-paper detailed introductions) in the Phase A section of `docs/user_requirements.md`, for use when assembling Key Works in B-0.
+
 ### A-5 Anchor the Problem Domain, Confirm the Research Direction Step by Step
 
 > Goal of this step: interact thoroughly with the user and converge step by step to one clear research direction. Do not dump 5 directions at once for the user to pick; instead, guide the user to confirm progressively.
@@ -295,12 +324,18 @@ Entered automatically after the user confirms a direction in Phase A.
 
 > Phase B has already established the research direction and RQs; the goal is to deepen the "research question" into an "implementable method". **Every output likewise begins with the confirmation card** (in Phase B the card adds two more fields on top of Phase A: "Confirmed technical framework" and "Confirmed pipeline"). Deepening proceeds through three layers of step-by-step confirmation: technical framework → detailed pipeline → Introduction polishing.
 
+> **Literature first**: before each generation or adjustment of the idea (technical framework / pipeline / Method) in this phase, you must follow the "Literature Reading Principle" above — first read closely the literature already in `docs/papers/`, and re-run the download flow only when the existing literature is insufficient to support a design decision. This applies to the initial deepening and to every later adjustment (including those backtracked from Phase D/E).
+
 ### B-0 Assemble Part 1
 
 The content confirmed in Phase A is assembled directly into `idea_report.md` Part 1, not regenerated:
 - `### 1 Motivation`: direction background and research motivation, citing key papers; **must end with a "Why this research is necessary" itemized paragraph** (application/theoretical/timing, each backed by citations)
 - `### 2 Research Questions`: introductory statement + primary RQ (1) + secondary RQs (1–3); each RQ annotated with its corresponding gap, novelty, and answerability
-- `### 3 Key Works`: **output the summary table first** (short name / venue·journal / year / one-line core contribution / borrowing value), then per-paper detail entries; 5–8 works, not limited to SOTA
+- `### 3 Key Works`: two parts, **following the user's A-4.5 choice on "detailed introduction per paper"**:
+  - **① Summary table**: always includes **only the key works** (5–8 works, not limited to SOTA), columns: short name / venue·journal / year / one-line core contribution / borrowing value. The table stays focused on key works.
+  - **② Per-paper entries**: regardless of the user's choice, include **every paper downloaded in A-4** (not just the key works); each with a citation and a `>` line stating **why it is / is not a key work**.
+    - If the user chose **yes** in A-4.5: write each paper's body as a four-point detailed introduction — ① what research problem it solves; ② what method it uses and why designed that way; ③ how well the method performs; ④ what this paper means for this research.
+    - If the user chose **no**: write a one-sentence core contribution per paper, but still **include every downloaded paper** and keep the "why it is / is not a key work" `>` line.
 
 After assembly, present Part 1 for the user's review; proceed to B-1 only after they confirm it.
 

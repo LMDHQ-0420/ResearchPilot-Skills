@@ -146,3 +146,5 @@ docs/manuscripts/ 存在
 8. `download-paper` 命令完成后必须输出文件完整路径。
 9. 阶段 F 论文每次改稿必须复制为新版本文件（`v{大}.{小}-{简述}.md`），不得覆盖旧版本。
 10. 论文图/表的 Python 生成（`notebooks/image.ipynb`、`table.ipynb`）须经用户同意后才进行。
+11. 阶段 E 编码中或实验跑完后若需调整 idea / 实验设计，必须先与用户确认回溯范围，再按 B/C/D 全链路重走对应阶段流程更新 `idea_report.md` / `implementation.md`，不得只在代码里打补丁绕过（见 `phase-implementation.md` E-8）。
+12. 每一次 idea 生成或调整前都必须大量阅读文献：优先精读 `docs/papers/` 已有论文，现有文献无法解决问题时再重新走下载流程（见 `phase-research.md`"文献阅读原则"）。
