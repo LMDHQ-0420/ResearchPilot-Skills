@@ -77,7 +77,7 @@ Phase transitions are all driven by Claude proactively asking, for example:
 docs/
   idea_report.md        # Phase B output: Part 1+2; Phase C appends Part 3
   implementation.md     # Phase D output, detailed implementation guide
-  dev_log.md            # Phase E coding log (entries timestamped YYYY-MM-DD HH:MM)
+  dev_log.md            # Phase E coding log (entries timestamped YYYY-MM-DD HH:MM); fixed "How to Run" chapter at the bottom (all run commands + parameter meanings + what happens + what it outputs)
   user_requirements.md  # Collected by Claude through conversation, auto-maintained
   papers/               # Downloaded paper PDFs / abstract TXTs
   manuscripts/          # Phase F paper; each revision copied to a new file v{major}.{minor}-{summary}.md
@@ -155,7 +155,7 @@ section of `references/phase-research.md`.
 5. user_requirements.md is collected and maintained by Claude through
    conversation — users never need to manually edit it. Main docs show
    results only.
-6. dev_log.md is updated in sync with each completed file — no batch updates.
+6. dev_log.md is updated in sync with each completed file — no batch updates; it has a fixed "How to Run" chapter at the bottom, and every code change must automatically judge whether that chapter needs syncing (update it whenever a run command/parameter/output changes).
 7. Rules in `references/template-flexibility.md` take precedence over any
    specific template instruction.
 8. After a `download-paper` command completes, Claude must output the full

@@ -913,6 +913,37 @@ Status: ⬜ TODO / 🔄 WIP / ✅ Done (run-verified) / ❌ Blocked
 
 ## Known Issues
 - [ ] {issue description}
+
+## How to Run
+
+> This chapter is fixed at the very bottom of dev_log.md and is the "run manual" for this code. List **every run command**; for each command, explain: the meaning of every parameter, what happens when it runs, and what it outputs (to which file/directory, in what format). Commands are filled in as the code progresses, and **every time the code changes, judge per E-2/E-6 whether this chapter needs syncing**.
+
+### Environment setup
+```bash
+{commands to create/activate the environment}
+```
+> Note: {what this command does; prerequisites, e.g. PyTorch with matching CUDA already installed}
+
+### {Command 1: e.g. Train}
+```bash
+{full run command, e.g. bash scripts/train.sh --config configs/default.yaml --gpu 0}
+```
+- **Parameters**:
+  - `{--paramA}`: {meaning, range, default}
+  - `{--paramB}`: {meaning, range, default}
+- **What happens when it runs**: {step by step: what is read → what is done → training/eval process}
+- **What it outputs**: {files/dirs produced and their formats, e.g. `results/checkpoints/best.pth` (best weights), `logs/train_{timestamp}.csv` (training curve)}
+
+### {Command 2: e.g. Evaluate}
+```bash
+{full run command}
+```
+- **Parameters**: {meaning of each parameter}
+- **What happens when it runs**: {}
+- **What it outputs**: {}
+
+### {Command 3: e.g. Ablation / Visualization …}
+> Fill in every command in the format above: all training / evaluation / ablation / data preprocessing / notebook run commands must be covered.
 ```
 
 ### E-2 Code Files in the Implementation Order from implementation.md
@@ -922,6 +953,7 @@ After completing each file, immediately sync:
 2. Add a log entry in `dev_log.md`
 3. If the file affects how the project runs or its environment, **sync `README.md`** (run commands / env notes)
 4. If the file corresponds to a key step, **add the matching visualization cell in `notebooks/`**
+5. **Automatically judge whether the "How to Run" chapter at the bottom of `dev_log.md` needs updating**: if this file adds/changes a run command, parameter, output file, or output format, immediately fill in or revise the corresponding entry in "How to Run" (command, meaning of each parameter, what happens when it runs, what it outputs); skip if not applicable
 
 **After completing each module (data / model / training loop / utils / scripts), run one validation against implementation.md**:
 - Check that implemented function signatures, parameters, and return values match the descriptions in implementation.md
@@ -977,9 +1009,9 @@ If a logic error, description mismatch, or unimplementable design is found in im
 
 When the user requests code improvements (after or during coding), every change must **keep two documents in sync**:
 1. **`README.md`**: if the change affects run commands, dependencies, project structure, or functionality, update the relevant section immediately
-2. **`docs/dev_log.md`**: add a log entry recording the improvement's completed content, reason, and impact
+2. **`docs/dev_log.md`**: add a log entry recording the improvement's completed content, reason, and impact; and **automatically judge whether the "How to Run" chapter at the bottom needs updating** — if this change adds/modifies a run command, parameter, output file, or output format, revise the corresponding entry immediately; skip if not applicable
 
-> Never change code without updating README and dev_log — all three must stay consistent. If the improvement adds a key step, also add the matching `notebooks/` visualization.
+> Never change code without updating README and dev_log — all three must stay consistent. If the improvement adds a key step, also add the matching `notebooks/` visualization. **Every code change must judge whether the "How to Run" chapter of dev_log.md needs syncing.**
 
 ### E-7 Code Review (proactively, after all coding is complete)
 
