@@ -29,8 +29,8 @@ CCFA-Skill 是一个 Claude Code Skill，将完整的学术研究流程自动化
 ## 安装
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/research-scout.git
-cd research-scout
+git clone https://github.com/YOUR_USERNAME/CCFA-Skill.git
+cd CCFA-Skill
 
 # 安装中文版
 cp -r skills/CCFA-Skill-zh/research ~/.claude/skills/research
