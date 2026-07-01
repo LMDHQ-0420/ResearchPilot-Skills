@@ -10,7 +10,7 @@ version: 2.0.0
 license: LICENSE
 ---
 
-# CCFA-Skill
+# ResearchPilot-Skills
 
 Automated academic research workflow, from direction exploration to code
 implementation. The flow advances naturally through conversation — Claude

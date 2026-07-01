@@ -1,4 +1,4 @@
-# CCFA-Skill
+# ResearchPilot-Skills
 
 **Automated Academic Research Workflow for Claude Code**
 
@@ -8,7 +8,7 @@
 
 ## Overview
 
-CCFA-Skill is a Claude Code Skill that automates the complete academic research pipeline: direction exploration, literature retrieval, idea development, experiment design, code implementation, and paper writing. The workflow progresses naturally through conversation — Claude asks for confirmation at each key checkpoint, so you never need to remember mode-switching commands.
+ResearchPilot-Skills is a Claude Code Skill that automates the complete academic research pipeline: direction exploration, literature retrieval, idea development, experiment design, code implementation, and paper writing. The workflow progresses naturally through conversation — Claude asks for confirmation at each key checkpoint, so you never need to remember mode-switching commands.
 
 ---
 
@@ -29,22 +29,36 @@ CCFA-Skill is a Claude Code Skill that automates the complete academic research 
 ## Installation
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/CCFA-Skill.git
-cd CCFA-Skill
+git clone https://github.com/YOUR_USERNAME/ResearchPilot-Skills.git
+cd ResearchPilot-Skills
 
-# Install English version
-cp -r skills/CCFA-Skill-en/research ~/.claude/skills/research
+# Install English version (all 7 skills)
+cp -r skills/ResearchPilot-Skills-en/research[START]           ~/.claude/skills/
+cp -r skills/ResearchPilot-Skills-en/research[A]-exploration   ~/.claude/skills/
+cp -r skills/ResearchPilot-Skills-en/research[B]-idea          ~/.claude/skills/
+cp -r skills/ResearchPilot-Skills-en/research[C]-experiment    ~/.claude/skills/
+cp -r skills/ResearchPilot-Skills-en/research[D]-implementation ~/.claude/skills/
+cp -r skills/ResearchPilot-Skills-en/research[E]-coding        ~/.claude/skills/
+cp -r skills/ResearchPilot-Skills-en/research[F]-paper         ~/.claude/skills/
 ```
 
-> Chinese and English versions are mutually exclusive. Both use `/research` as the trigger. To switch versions, delete `~/.claude/skills/research` and install the other version.
+> Each phase is an independent skill — all 7 must be installed for the full workflow. Chinese and English versions are mutually exclusive; do not mix them.
 
 Verify installation:
 
 ```bash
-/research test installation
+ls ~/.claude/skills/ | grep research
 ```
 
-If Claude starts asking about your research direction, installation succeeded.
+You should see 7 directories: `research[START]`, `research[A]-exploration`, `research[B]-idea`, `research[C]-experiment`, `research[D]-implementation`, `research[E]-coding`, `research[F]-paper`.
+
+Then run in Claude Code:
+
+```bash
+/research[START] test installation
+```
+
+If Claude shows a phase detection result, installation succeeded.
 
 ---
 
@@ -52,25 +66,38 @@ If Claude starts asking about your research direction, installation succeeded.
 
 | Command | Description |
 |---------|-------------|
-| `/research research direction` | Start the full research workflow |
-| `/research --papers <pdf/name/description>` | Start with seed papers |
-| `/research download-paper description [--to "path"]` | Download a single paper (standalone, works anytime) |
+| `/research[START] research direction` | Detect current phase and route to the correct skill |
+| `/research[A]-exploration research direction` | Start direction exploration (use this for a brand-new project) |
+| `/research[B]-idea` | Enter Idea Deepening |
+| `/research[C]-experiment` | Enter Experiment Design |
+| `/research[D]-implementation` | Enter Implementation Design |
+| `/research[E]-coding` | Enter Coding |
+| `/research[F]-paper` | Enter Paper Writing |
+| `/research[A]-exploration download-paper description [--to "path"]` | Download a single paper (standalone, works anytime) |
+
+> `/research description` is a backward-compatible alias for `/research[START] description`.
 
 ### Examples
 
 ```bash
-# Start from a research direction
-/research I want to improve battery SOH prediction — existing Transformer methods don't exploit local temporal features
+# New project — go straight to direction exploration
+/research[A]-exploration I want to improve battery SOH prediction — existing Transformer methods don't exploit local temporal features
+
+# Not sure which phase you're in — use the router
+/research[START]
 
 # Start with seed papers (PDF filename, arXiv ID, or paper title)
-/research time series forecasting --papers 2310.06625 "Informer 2021" paper.pdf
+/research[A]-exploration time series forecasting --papers 2310.06625 "Informer 2021" paper.pdf
 
 # Download a paper without starting the research workflow
-/research download-paper Attention Is All You Need
-/research download-paper 2310.06625 --to ./my-papers
+/research[A]-exploration download-paper Attention Is All You Need
+/research[A]-exploration download-paper 2310.06625 --to ./my-papers
 ```
 
-Once started, the workflow proceeds through conversation. After each phase, Claude asks: "Is this complete enough? We can move on to the next phase."
+At the end of each phase, Claude prompts the next command, e.g.:
+```
+Phase A complete. → Use `/research[B]-idea` to enter the Idea Deepening phase.
+```
 
 ---
 
@@ -148,8 +175,23 @@ Claude tries arXiv then OpenReview automatically. If both fail, it saves an abst
 **How to switch to the Chinese version?**
 
 ```bash
-rm -rf ~/.claude/skills/research
-cp -r code/skills/CCFA-Skill-zh/research ~/.claude/skills/research
+# Remove installed English skills
+rm -rf ~/.claude/skills/research[START]
+rm -rf ~/.claude/skills/research[A]-exploration
+rm -rf ~/.claude/skills/research[B]-idea
+rm -rf ~/.claude/skills/research[C]-experiment
+rm -rf ~/.claude/skills/research[D]-implementation
+rm -rf ~/.claude/skills/research[E]-coding
+rm -rf ~/.claude/skills/research[F]-paper
+
+# Install Chinese version
+cp -r skills/ResearchPilot-Skills-zh/research[START]           ~/.claude/skills/
+cp -r skills/ResearchPilot-Skills-zh/research[A]-exploration   ~/.claude/skills/
+cp -r skills/ResearchPilot-Skills-zh/research[B]-idea          ~/.claude/skills/
+cp -r skills/ResearchPilot-Skills-zh/research[C]-experiment    ~/.claude/skills/
+cp -r skills/ResearchPilot-Skills-zh/research[D]-implementation ~/.claude/skills/
+cp -r skills/ResearchPilot-Skills-zh/research[E]-coding        ~/.claude/skills/
+cp -r skills/ResearchPilot-Skills-zh/research[F]-paper         ~/.claude/skills/
 ```
 
 ---

@@ -1,0 +1,133 @@
+---
+name: research[B]-idea
+description: >
+  ResearchPilot 学术研究阶段 B：Idea 深化。在阶段 A 确认研究方向和 RQ 之后使用。
+  分三层逐步确认：技术框架 → 详细 pipeline → Introduction 精修，
+  生成 idea_report.md Part 2。触发格式：/research[B]-idea
+version: 2.0.0
+license: LICENSE
+---
+
+# 阶段 B：Idea 深化
+
+在已确认的研究方向和 RQ 基础上，把"研究问题"深化为"可实现的方法"。
+分三层逐步确认，完成后生成 `docs/idea_report.md` Part 2，进入阶段 C。
+
+**前置条件**：`docs/idea_report.md` 已存在且含 Part 1（阶段 A 已完成）。
+
+## 整体流程与产物
+
+ResearchPilot-Skills 将完整学术研究拆分为六个阶段，每个阶段是独立的 skill。当前 skill 是其中一环。
+
+### 六阶段链条
+
+| Skill | 阶段 | 主要产物 |
+|-------|------|---------|
+| `/research[A]-exploration` | 方向探索与调研 | `docs/idea_report.md` Part 1 |
+| `/research[B]-idea` | Idea 深化 | `docs/idea_report.md` Part 2 |
+| `/research[C]-experiment` | 实验设计 | `docs/idea_report.md` Part 3 |
+| `/research[D]-implementation` | 实现设计 | `docs/implementation.md` |
+| `/research[E]-coding` | 编码 | `code/` 代码 + `docs/dev_log.md` |
+| `/research[F]-paper` | 论文撰写 | `docs/manuscripts/v*.md` |
+
+### 项目目录结构
+
+```
+docs/
+  idea_report.md        # 研究报告，分三部分：
+                        #   Part 1：研究动机、研究问题（RQ）、关键文献（阶段 A 产出）
+                        #   Part 2：Introduction、Related Works、Method（阶段 B 产出）
+                        #   Part 3：数据集、实验设计、资源预估（阶段 C 产出）
+  implementation.md     # 编码指南：精确到每个文件/函数的实现说明（阶段 D 产出）
+  dev_log.md            # 开发日志：进度、决策记录、运行说明（阶段 E 维护）
+  user_requirements.md  # 用户约束：由 Claude 通过对话收集，自动维护
+  papers/               # 下载的论文 PDF 或摘要 TXT
+  manuscripts/          # 论文稿件，每版独立存档（v1.0-初稿.md、v1.1-修订.md 等）
+
+code/
+  src/                  # 核心模型与训练代码
+  scripts/              # 运行脚本（train.sh、evaluate.sh、ablation.sh）
+  configs/              # 超参数配置文件
+  baselines/            # Baseline 模型实现
+  notebooks/            # 可视化 notebook；论文图表生成脚本
+  data/                 # 数据集（gitignored）
+  results/              # 实验结果（gitignored）
+  logs/                 # 训练日志（gitignored）
+  README.md             # 环境配置与运行命令
+  requirements.txt      # 依赖库（只写库名，不含 torch 系）
+```
+
+---
+
+## 命令
+
+```
+/research[B]-idea
+```
+
+---
+
+## 阶段 B 流程概览
+
+```
+B-0 汇编 Part 1（从阶段 A 已确认内容直接汇编，不重新生成）
+B-1 确认技术框架（第一层）
+B-2 确认详细 pipeline（第二层，大白话逐步讲清）
+    → 落笔 Part 2：Related Works + Method
+B-3 引用内容核验（逐条从 PDF 定位支撑句）
+B-4 Introduction 精修（第三层）
+B-5 询问用户是否进入阶段 C
+```
+
+详细执行步骤见 `references/phase-B.md`。
+
+---
+
+## 确认卡片
+
+本阶段每次输出开头都带已确认内容卡片：
+
+```
+━━━━━━━━━━ 已确认内容 ━━━━━━━━━━
+研究方向：{已确认}
+主 RQ：{已确认}
+次 RQ：{已确认}
+方向约束：{用户约束}
+RQ 约束：{用户约束}
+参考论文：{用户指定}
+技术框架：{已确认技术框架，一句话}
+Pipeline：{已确认 pipeline，一句话}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+仅输出已确认且非空的字段，未确认或空字段整行省略。
+
+---
+
+## 硬性约束
+
+1. 阶段 B 未经用户确认，不得自动进入阶段 C。
+2. 不得捏造引用。无法核验的加 `⚠️ [低置信度：原因]` 并登记待核实清单。
+3. 每次动笔或改写 idea 前，必须先大量精读 `docs/papers/` 已有文献（见 `references/phase-B.md` 文献阅读原则）。
+4. pipeline 输出必须用大白话"第一步…第二步…"逐步讲清，不堆砌公式。
+5. `references/template-flexibility.md` 中的规则优先于任何具体模板指令。
+
+---
+
+## 本阶段完成后
+
+Part 2 全部确认后，提示用户：
+
+```
+阶段 B 完成。idea_report.md Part 2 已生成。
+
+→ 请使用 `/research[C]-experiment` 进入实验设计阶段。
+```
+
+---
+
+## 参考文件
+
+- 详细流程：`references/phase-B.md`
+- 文档格式规范：`references/document-formats.md`
+- 模板灵活性规则：`references/template-flexibility.md`

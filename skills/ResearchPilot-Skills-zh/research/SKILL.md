@@ -8,7 +8,7 @@ version: 2.0.0
 license: LICENSE
 ---
 
-# CCFA-Skill（中文版）
+# ResearchPilot-Skills（中文版）
 
 自动化学术研究工作流，从方向探索到代码实现。流程通过对话自然推进，
 Claude 在每个节点主动询问用户是否继续，无需记忆命令切换阶段。

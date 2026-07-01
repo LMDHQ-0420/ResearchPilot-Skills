@@ -1,6 +1,6 @@
-# CCFA-Skill 完整流程详解
+# ResearchPilot-Skills 完整流程详解
 
-> 本文档详细介绍 CCFA-Skill 六个阶段中，Claude 在每一步会做什么、如何与你交互。
+> 本文档详细介绍 ResearchPilot-Skills 六个阶段中，Claude 在每一步会做什么、如何与你交互。
 > 概览和安装见 [README](README.md)。
 
 整个流程通过对话自然推进，无需记忆切换命令。Claude 在每个关键节点主动询问你是否继续，未经你确认绝不跳到下一阶段。

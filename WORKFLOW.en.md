@@ -1,4 +1,4 @@
-# CCFA-Skill — Full Workflow Guide
+# ResearchPilot-Skills — Full Workflow Guide
 
 > This document details what Claude does at every step of the six phases and how it interacts with you.
 > For the overview and installation, see the [README](README.en.md).
