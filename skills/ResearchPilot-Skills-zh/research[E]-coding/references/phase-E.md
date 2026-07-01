@@ -40,11 +40,11 @@
 | 初始化 | requirements.txt, configs/, README.md | ⬜ TODO | — | |
 | 数据加载 | src/data/ | ⬜ TODO | — | |
 | 主模型 | src/models/{model}.py | ⬜ TODO | — | |
-| 损失函数 | src/models/losses.py | ⬜ TODO | — | |
-| 训练循环 | src/trainers/trainer.py | ⬜ TODO | — | |
+| Baseline | src/models/baseline/ | ⬜ TODO | — | |
+| 训练逻辑 | src/train.py（或 src/train/） | ⬜ TODO | — | |
+| 评估逻辑 | src/evaluate.py（或 src/evaluate/） | ⬜ TODO | — | |
 | 工具函数 | src/utils/ | ⬜ TODO | — | |
 | 运行脚本 | scripts/ | ⬜ TODO | — | |
-| Baseline | baselines/ | ⬜ TODO | — | |
 
 状态：⬜ TODO / 🔄 WIP / ✅ Done（已运行验证）/ ❌ Blocked
 

@@ -65,29 +65,34 @@ Continuous paragraphs, academic style, cite key papers.}
 
 ### 2 Research Questions
 
-{An introductory statement explaining which core gaps from Section 1 these RQs are derived from. 2–3 sentences, under 100 words.}
+{A 2–3 sentence lead-in (≤100 words) explaining how the three-layer RQs are derived from the core gaps in Section 1, and how they relate to each other.}
 
-#### Primary RQ
+> RQs form three layers: RQ1 defines the research goal, RQ2 reveals the core bottleneck (direct motivation for Method design), RQ3 questions the scope of applicability (optional). The three layers map to: main experiment → ablation experiments → additional experiments.
 
-**RQ1: {State as a complete question ending with a question mark}**
+#### RQ1: Core Question (Research Goal)
 
-- **Corresponding gap**: {Which limitation in Section 1 it targets, with supporting citation [n]}
-- **Novelty**: {Whether existing work has partially answered this question, and how this research differs from it}
-- **Answerability**: {Explain that this RQ can be answered within the experimental scope of a single paper, and through what experiments}
+**RQ1: {A broad question directly describing the field pain point, e.g. "How can battery SOH prediction accuracy be improved?"}**
 
-#### Secondary RQs
+- **Corresponding gap**: {Which core limitation in Section 1 it targets; cite supporting paper [n]}
+- **Novelty**: {Has existing work fully answered this? How this research differs}
+- **Corresponding experiment**: {Verified by the main experiment; what specifically is validated}
 
-**RQ2: {Complete question}**
+#### RQ2: Mechanism Question (Method Design Rationale)
 
-- **Corresponding gap**: {Supporting citation [n]}
-- **Relation to RQ1**: {Whether this RQ extends, precedes, or complements RQ1}
+**RQ2: {A mechanistic analysis question about why existing methods fall short, e.g. "Are local temporal features the key bottleneck for SOH prediction accuracy?"}**
 
-**RQ3: {Complete question}** (optional, add or remove based on research scope)
+- **Relationship to RQ1**: {How answering RQ2 provides the design rationale for solving RQ1 — it reveals the core obstacle in RQ1}
+- **Corresponding gap**: {Has existing work analyzed this mechanism? Cite supporting paper [n]}
+- **Corresponding experiment**: {Verified by ablation; what is ablated}
 
-- **Corresponding gap**: {Supporting citation [n]}
-- **Relation to RQ1**: {State the relation}
+#### RQ3: Boundary Question (Scope of Applicability, optional)
 
-> Note: the number of RQs follows the research scope, typically 1 primary + 1–3 secondary. Each RQ must be specific, concrete, and answerable by experiment; do not write generic research-direction descriptions.
+**RQ3: {A scope/generalization question, e.g. "Does the proposed module generalize across different battery chemistries?"}** (optional; omit if scope is already focused)
+
+- **Relationship to RQ1/RQ2**: {Questions the scope of conclusions, making the overall argument more rigorous}
+- **Corresponding experiment**: {Verified by additional experiments}
+
+> Note: RQ3 may be omitted. If omitted, state the reason here (e.g. "scope is focused; RQ1+RQ2 provide sufficient proof"). Every RQ must be specific, concrete, and answerable by experiment; do not write generic research-direction descriptions.
 
 ### 3 Key Works
 

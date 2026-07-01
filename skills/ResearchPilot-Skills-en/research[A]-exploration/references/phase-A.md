@@ -286,16 +286,96 @@ Which part interests you most / do you most want to dig into? Or do you already 
 
 **Step 3: Lock the direction**. After the user confirms, write the direction into `user_requirements.md` and fill the "Research direction" field of the confirmation card in the next output.
 
-### A-6 Distill and Confirm RQs One by One
+### A-6 Refine and Confirm RQs Layer by Layer
 
-> After the research direction is locked, move to RQ distillation. Likewise confirm one at a time, not all RQs at once.
+> After the research direction is locked, refine RQs in three layers — confirm each in order, never dump all at once.
 
-**Step 1: gap → RQ derivation**. Based on the confirmed direction, derive candidate RQs from the literature gaps, **proposing one primary RQ candidate at a time**, with:
-- Which specific gap it corresponds to (with supporting citation)
-- Novelty check (targeted search result: existing / partial / open)
-- Answerability (whether it can be answered within the experimental scope of a single paper)
+**Three-Layer RQ Structure**:
 
-Discuss this primary RQ with the user, allowing rewrite / merge / replace, until they confirm the primary RQ.
+| Layer | Name | What it answers | Corresponding experiments |
+|-------|------|----------------|--------------------------|
+| RQ1 | Core Question | What big problem am I solving (field pain point) | Main experiment |
+| RQ2 | Mechanism Question | Why do existing methods fall short (key bottleneck) | Ablation experiments |
+| RQ3 | Boundary Question | Under what conditions does the method work; its limits | Additional experiments (optional) |
+
+> RQ1 defines the research goal. RQ2 directly motivates the Method design — answering it explains why the proposed approach solves RQ1. RQ3 makes the argument more rigorous. Without all three layers, the proof chain is incomplete.
+
+---
+
+**Step 1: Confirm RQ1 (Core Question)**
+
+RQ1 is a broad question that defines the entire research goal. Form: one complete broad question corresponding to a field pain point.
+
+```
+{Confirmation card}
+
+Based on the confirmed research direction, I propose the following core question (RQ1):
+
+**RQ1: {A broad question directly describing the field pain point, e.g.
+"How can battery SOH prediction accuracy be improved?"
+"How can retrieval precision in RAG systems be enhanced?"}**
+
+- Corresponding gap: {points to which specific limitation in Section 1, cite supporting paper [n]}
+- Novelty: {targeted search result — has existing work fully answered this question?}
+- Corresponding experiment: {verified by the main experiment; what specifically is validated}
+
+Is this framing of the core question accurate?
+```
+
+Iterate with the user until RQ1 is confirmed. Write to `user_requirements.md` and refresh the confirmation card.
+
+---
+
+**Step 2: Confirm RQ2 (Mechanism Question)**
+
+RQ2 is a deep analysis of RQ1: **why do existing methods fall short** — which specific mechanism or property is the bottleneck. RQ2 directly determines the Method design logic.
+
+```
+{Confirmation card}
+
+With RQ1 confirmed, let's dig deeper: why can't existing methods answer RQ1 well? I propose the mechanism question (RQ2):
+
+**RQ2: {A mechanistic analysis question, e.g.
+"Are local temporal features the key bottleneck for SOH prediction accuracy?"
+"How much does the semantic gap between queries and documents affect retrieval precision?"}**
+
+- Relationship to RQ1: {how RQ2 explains the core obstacle in RQ1 — answering RQ2 provides the design rationale for solving RQ1}
+- Corresponding gap: {has existing work analyzed this mechanism? cite supporting paper [n]}
+- Corresponding experiment: {what ablation study verifies this}
+
+Does this mechanism question accurately identify the core bottleneck in existing methods?
+```
+
+Iterate until RQ2 is confirmed. Write to `user_requirements.md` and refresh the card.
+
+---
+
+**Step 3: Confirm RQ3 (Boundary Question, optional)**
+
+RQ3 asks about the method's applicable scope or generalizability. May be omitted if scope is already focused.
+
+```
+{Confirmation card}
+
+Optional: should we add a boundary question (RQ3)?
+
+**RQ3 candidate: {A scope/generalization question, e.g.
+"Does the proposed local feature module generalize across different battery chemistries?"
+"Is the query rewriting strategy stable across different domain knowledge bases?"}**
+
+- Relationship to RQ1/RQ2: {questions the scope of conclusions, making the overall argument more rigorous}
+- Corresponding experiment: {what additional experiment verifies this}
+
+Is RQ3 needed? If the research is already focused enough, it can be omitted.
+```
+
+Confirm with the user whether to include RQ3. If yes, write to `user_requirements.md`; if no, skip.
+
+---
+
+**Step 4: Necessity Argument**
+
+After all RQs are confirmed, write the necessity argument (application / theoretical / timing — three points, each backed by a paper citation). Confirm with the user that the argument holds.
 
 **Step 2: Add secondary RQs**. Once the primary RQ is confirmed, propose secondary RQs (1–3) one by one in the same manner, confirming each with the user.
 
