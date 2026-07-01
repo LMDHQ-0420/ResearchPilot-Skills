@@ -22,10 +22,10 @@ before coding begins. Produces `docs/implementation.md`, then moves to Phase E.
 
 ## Workflow Overview & Outputs
 
-ResearchPilot-Skills splits a complete academic research project into six independent
+ResearchPilot-Skills splits a complete academic research project into seven independent
 stage skills. The current skill is one link in that chain.
 
-### Six-Stage Chain
+### Seven-Stage Chain
 
 | Skill | Phase | Main Output |
 |-------|-------|-------------|
@@ -136,7 +136,13 @@ After implementation.md and pre-coding checklist are both confirmed:
 Phase D complete. implementation.md has been generated and validated.
 Pre-coding checklist confirmed.
 
+After implementation.md and pre-coding checklist are both confirmed:
+
+```
+Phase D complete. implementation.md has been generated and validated.
+
 → Use `/research[E]-coding` to start coding.
+```
 ```
 
 ---

@@ -27,7 +27,7 @@
 
 ## 概述
 
-ResearchPilot-Skills 是一套兼容 SKILL.md 标准的学术研究 Skill，支持 **Claude Code**、**OpenAI Codex CLI**、**腾讯 CodeBuddy** 等主流 AI 编程助手。六个阶段各自独立，按需加载，上下文精准，不会因提示词过长产生遗忘。
+ResearchPilot-Skills 是一套兼容 SKILL.md 标准的学术研究 Skill，支持 **Claude Code**、**OpenAI Codex CLI**、**腾讯 CodeBuddy** 等主流 AI 编程助手。七个阶段各自独立，按需加载，上下文精准，不会因提示词过长产生遗忘。
 
 ---
 
@@ -65,10 +65,11 @@ cp -r skills/ResearchPilot-Skills-zh/research[B]-idea           ~/.claude/skills
 cp -r skills/ResearchPilot-Skills-zh/research[C]-experiment     ~/.claude/skills/
 cp -r skills/ResearchPilot-Skills-zh/research[D]-implementation ~/.claude/skills/
 cp -r skills/ResearchPilot-Skills-zh/research[E]-coding         ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[F]-paper          ~/.claude/skills/
+cp -r skills/ResearchPilot-Skills-zh/research[F]-iteration       ~/.claude/skills/
+cp -r skills/ResearchPilot-Skills-zh/research[G]-paper          ~/.claude/skills/
 ```
 
-验证：`ls ~/.claude/skills/ | grep research`（应看到 7 个目录）
+验证：`ls ~/.claude/skills/ | grep research`（应看到 8 个目录）
 
 ### OpenAI Codex CLI
 
@@ -80,10 +81,11 @@ cp -r skills/ResearchPilot-Skills-zh/research[B]-idea           ~/.codex/skills/
 cp -r skills/ResearchPilot-Skills-zh/research[C]-experiment     ~/.codex/skills/
 cp -r skills/ResearchPilot-Skills-zh/research[D]-implementation ~/.codex/skills/
 cp -r skills/ResearchPilot-Skills-zh/research[E]-coding         ~/.codex/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[F]-paper          ~/.codex/skills/
+cp -r skills/ResearchPilot-Skills-zh/research[F]-iteration       ~/.codex/skills/
+cp -r skills/ResearchPilot-Skills-zh/research[G]-paper          ~/.codex/skills/
 ```
 
-验证：`ls ~/.codex/skills/ | grep research`（应看到 7 个目录）
+验证：`ls ~/.codex/skills/ | grep research`（应看到 8 个目录）
 
 ### 腾讯 CodeBuddy
 
@@ -97,7 +99,8 @@ cp -r skills/ResearchPilot-Skills-zh/research[B]-idea           .codebuddy/skill
 cp -r skills/ResearchPilot-Skills-zh/research[C]-experiment     .codebuddy/skills/
 cp -r skills/ResearchPilot-Skills-zh/research[D]-implementation .codebuddy/skills/
 cp -r skills/ResearchPilot-Skills-zh/research[E]-coding         .codebuddy/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[F]-paper          .codebuddy/skills/
+cp -r skills/ResearchPilot-Skills-zh/research[F]-iteration       .codebuddy/skills/
+cp -r skills/ResearchPilot-Skills-zh/research[G]-paper          .codebuddy/skills/
 ```
 
 验证安装（任意工具）：在对话中运行 `/research[START]`，若显示阶段检测结果则安装成功。
@@ -114,7 +117,8 @@ cp -r skills/ResearchPilot-Skills-zh/research[F]-paper          .codebuddy/skill
 | `/research[C]-experiment` | 进入实验设计 |
 | `/research[D]-implementation` | 进入实现设计 |
 | `/research[E]-coding` | 进入编码 |
-| `/research[F]-paper` | 进入论文撰写 |
+| `/research[F]-iteration` | 进入代码迭代 |
+| `/research[G]-paper` | 进入论文撰写 |
 | `/research[A]-exploration download-paper 描述 [--to "路径"]` | 独立下载单篇论文（随时可用）|
 
 > `/research 描述` 是 `/research[START] 描述` 的向后兼容别名。
@@ -143,7 +147,7 @@ cp -r skills/ResearchPilot-Skills-zh/research[F]-paper          .codebuddy/skill
 
 ---
 
-## 六阶段流程
+## 七阶段流程
 
 | 阶段 | 名称 | 主要工作 | 产物 |
 |------|------|---------|------|
@@ -152,7 +156,8 @@ cp -r skills/ResearchPilot-Skills-zh/research[F]-paper          .codebuddy/skill
 | **C** | 实验设计 | 精读 baseline 论文与代码，归纳领域惯例，先确认实验大纲再展开完整方案并给出资源预估 | `idea_report.md` Part 3 |
 | **D** | 实现设计 | 生成精确到函数的编码指南，自动校验覆盖/一致性/完整性 | `implementation.md` |
 | **E** | 编码 | 按指南逐文件实现，同步维护开发日志，逐模块校验，完工后主动代码审查 | 代码 + `dev_log.md` |
-| **F** | 论文撰写 | 先确认论文结构，生成初稿，按批注逐版改稿（每版独立存档），引导生成图表 | `docs/manuscripts/` 论文 |
+| **F** | 代码迭代 | 读取实验结果诊断问题，先更新设计文档再改代码，每次改动追加日志，支持多轮迭代 | `dev_log.md` 迭代记录 |
+| **G** | 论文撰写 | 先确认论文结构，生成初稿，按批注逐版改稿（每版独立存档），引导生成图表 | `docs/manuscripts/` 论文 |
 
 阶段间均有强制人工确认节点，未经确认绝不跳到下一阶段。每个阶段具体做什么、如何与你交互，见 **[完整流程详解 →](WORKFLOW.md)**。
 
@@ -223,7 +228,8 @@ rm -rf ~/.claude/skills/research[B]-idea
 rm -rf ~/.claude/skills/research[C]-experiment
 rm -rf ~/.claude/skills/research[D]-implementation
 rm -rf ~/.claude/skills/research[E]-coding
-rm -rf ~/.claude/skills/research[F]-paper
+rm -rf ~/.claude/skills/research[F]-iteration
+rm -rf ~/.claude/skills/research[G]-paper
 ```
 
 再将上方安装命令中的 `ResearchPilot-Skills-zh` 改为 `ResearchPilot-Skills-en` 重新安装。

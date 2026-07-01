@@ -21,10 +21,10 @@ Produces `docs/idea_report.md` Part 1, then moves to Phase B.
 
 ## Workflow Overview & Outputs
 
-ResearchPilot-Skills splits a complete academic research project into six independent
+ResearchPilot-Skills splits a complete academic research project into seven independent
 stage skills. The current skill is one link in that chain.
 
-### Six-Stage Chain
+### Seven-Stage Chain
 
 | Skill | Phase | Main Output |
 |-------|-------|-------------|

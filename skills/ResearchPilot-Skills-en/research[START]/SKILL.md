@@ -19,10 +19,10 @@ appropriate stage skill.
 
 ## Workflow Overview & Outputs
 
-ResearchPilot-Skills splits a complete academic research project into six independent
+ResearchPilot-Skills splits a complete academic research project into seven independent
 stage skills. The current skill is one link in that chain.
 
-### Six-Stage Chain
+### Seven-Stage Chain
 
 | Skill | Phase | Main Output |
 |-------|-------|-------------|
@@ -31,7 +31,8 @@ stage skills. The current skill is one link in that chain.
 | `/research[C]-experiment` | Experiment Design | `docs/idea_report.md` Part 3 |
 | `/research[D]-implementation` | Implementation Design | `docs/implementation.md` |
 | `/research[E]-coding` | Coding | `code/` + `docs/dev_log.md` |
-| `/research[F]-paper` | Paper Writing | `docs/manuscripts/v*.md` |
+| `/research[F]-iteration` | Code Iteration | `dev_log.md` appended iteration records |
+| `/research[G]-paper` | Paper Writing | `docs/manuscripts/v*.md` |
 
 ### Project Directory Structure
 
@@ -124,7 +125,8 @@ Phase-to-skill mapping:
 | C complete, D not started | `/research[D]-implementation` |
 | D complete, E not started | `/research[E]-coding` |
 | E in progress | `/research[E]-coding` |
-| F in progress | `/research[F]-paper` |
+| F in progress (iteration) | `/research[F]-iteration` |
+| G in progress | `/research[G]-paper` |
 
 ---
 

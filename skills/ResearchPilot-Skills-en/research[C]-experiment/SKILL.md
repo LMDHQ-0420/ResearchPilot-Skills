@@ -26,10 +26,10 @@ only a post-design estimate is provided.
 
 ## Workflow Overview & Outputs
 
-ResearchPilot-Skills splits a complete academic research project into six independent
+ResearchPilot-Skills splits a complete academic research project into seven independent
 stage skills. The current skill is one link in that chain.
 
-### Six-Stage Chain
+### Seven-Stage Chain
 
 | Skill | Phase | Main Output |
 |-------|-------|-------------|
@@ -117,7 +117,13 @@ After Part 3 is confirmed:
 ```
 Phase C complete. idea_report.md Part 3 has been generated.
 
+After Part 3 is confirmed:
+
+```
+Phase C complete. idea_report.md Part 3 has been generated.
+
 → Use `/research[D]-implementation` to enter the Implementation Design phase.
+```
 ```
 
 ---

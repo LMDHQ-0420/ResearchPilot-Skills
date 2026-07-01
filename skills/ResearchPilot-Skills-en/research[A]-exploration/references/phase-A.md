@@ -377,21 +377,36 @@ Confirm with the user whether to include RQ3. If yes, write to `user_requirement
 
 After all RQs are confirmed, write the necessity argument (application / theoretical / timing — three points, each backed by a paper citation). Confirm with the user that the argument holds.
 
-**Step 2: Add secondary RQs**. Once the primary RQ is confirmed, propose secondary RQs (1–3) one by one in the same manner, confirming each with the user.
+### A-7 Assemble Part 1, Submit for Review, Guide to Phase B
 
-**Step 3: Lock RQs**. As each RQ is confirmed, immediately write it into `user_requirements.md` and refresh the confirmation card.
+After the research direction, all RQs, and the necessity argument are confirmed, assemble `idea_report.md` Part 1:
 
-**Step 4: Necessity argument**. Once all RQs are confirmed, write a necessity argument for the selected RQs (application / theoretical / timing, itemized, each backed by citations), and confirm with the user that the argument holds.
+- `### 1 Motivation`: direction background and research motivation, citing key papers; **must end with a necessity argument section** (application / theoretical / timing — three points, each backed by citations)
+- `### 2 Research Questions`: lead-in statement + three-layer RQs (RQ1 core / RQ2 mechanism / RQ3 boundary optional); each RQ annotated with corresponding gap, novelty/mechanism analysis, and corresponding experiment
+- `### 3 Key Works`: summary table (5–8 key works) + per-paper entries (all downloaded papers, following the detail level chosen in A-4.5)
 
-### A-7 Proceed to Phase B
+After assembling, display the full Part 1 and ask the user to review:
 
-Once the research direction, all RQs, and the necessity argument are confirmed, proactively ask:
 ```
 {confirmation card}
 
-The research direction and RQs are now locked, and the necessity argument holds.
-I can now assemble Part 1 (Motivation / Research Questions / Key Works) and move into the idea-deepening phase.
-Shall we continue? Or is there anything to add?
+idea_report.md Part 1 has been assembled. Please review:
+
+**Motivation**: {summary of content written}
+**Research Questions**: RQ1 / RQ2 / RQ3 (if included)
+**Key Works**: {N} papers total, {N} key works
+
+Does Part 1 look accurate and complete? Any adjustments needed?
+Once confirmed, we move into the Idea Deepening phase.
+```
+
+After the user confirms Part 1, guide to Phase B:
+
+```
+Part 1 confirmed.
+
+→ Use `/research[B]-idea` to enter the Idea Deepening phase.
+```
 ```
 
 Once the user confirms, assemble Part 1 (see B-0) and proceed to Phase B.

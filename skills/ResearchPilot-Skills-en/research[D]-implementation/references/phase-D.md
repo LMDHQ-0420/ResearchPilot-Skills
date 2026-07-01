@@ -48,91 +48,14 @@ Or is there anything you'd like to adjust?
 
 After every user-requested revision, run validation again and append the result.
 
-### D-end2 Pre-Coding Checklist
-
-After the user confirms implementation.md, **confirm the following 5 items before starting to code** (present all at once; user may answer item by item):
+After implementation.md is confirmed, guide the user to Phase E:
 
 ```
-Implementation plan confirmed. Before coding, confirm a few things:
+implementation.md confirmed.
 
-**1. Runtime Environment**
-Which environment do you plan to use? What is its name?
-  - I will look for an existing environment with that name (e.g. `conda env list`):
-    found → reuse directly; not found → I create one from requirements.txt.
-
-**2. Device Requirements**
-Any special device requirements? (e.g. CUDA version, cuDNN, Apple MPS, CPU-only, Python version)
-
-**3. Dataset Preparation**
-{Per dataset} "Dataset {name}": detected {already downloaded at data/{name}/ ✅ / not yet downloaded ❌}.
-  - Not downloaded, fast (small / direct link) → I download it.
-  - Not downloaded, slow (large / login / application required) → I give you the link and command:
-    Link: {url}; Command: {cmd}; Place in: `data/raw/{name}/` (with preprocessing) or `data/{name}/` (direct use)
-
-**4. Auto-Run After Coding**
-Should I run the code automatically after writing? My recommendation based on estimated runtime:
-  - Fast (seconds to minutes) → I run it to verify
-  - Slow (hours to days, e.g. full training) → you run it
-  - Mixed → I run fast scripts (quick tests, preprocessing); you run slow ones (full training, all ablations)
-  Your choice?
-
-**5. README Location**
-I will maintain a README.md (project overview, env setup, run commands).
-Should it go in the {project root} or `code/` directory?
-
-Confirm the above and I will start coding.
+→ Use `/research[E]-coding` to start coding (the pre-coding checklist runs at the start of Phase E).
 ```
 
-Write user answers to `docs/user_requirements.md` Phase D section (env name, device requirements, dataset handling, run strategy, README location).
-
-**Dataset handling**:
-- Check whether each dataset already exists under `data/`
-- Not downloaded, fast → download directly
-- Not downloaded, slow → output download instructions and wait for user:
-```
-**Dataset: {dataset_name}**
-Download URL: {official link}
-Command: {wget/kaggle/etc.}
-Place in: `data/raw/{dataset_name}/` (with preprocessing) or `data/{dataset_name}/` (direct use)
-Expected structure:
-  data/raw/{dataset_name}/
-  ├── {file1}    # {description}
-  └── ...
-{If a preprocessing tool exists: tool {link}, command {cmd}}
-Let me know when the download is complete.
-```
-
-Proceed to Phase E after env, datasets, run strategy, and README location are all confirmed.
-
----
-
-### Validation Rules
-
-Run the following checks after every generation or revision of implementation.md. List and fix all issues before continuing:
-
-**1. Experiment Coverage**
-- For every experiment in `idea_report.md` Part 3 (main, ablation, additional), check whether implementation.md has a supporting module/function
-- Each ablation variant (w/o X) must have a corresponding implementation entry (config flag or function branch)
-- Result output file format must be able to record all metrics required by Part 3
-
-**2. Logic Consistency**
-- Tensor shapes must be consistent across modules (output shape = next module's input shape)
-- Loss function input shape must match model output shape
-- Metric computation must match the definition in Part 3
-
-**3. Completeness**
-- Every file listed in the implementation order must have a corresponding section in the file-level implementation details
-- `src/models/baseline/` must cover all baseline models in Part 3
-- `data/` directory structure must match the data flow description
-
-Validation output format:
-```
-Validation result:
-✅ Experiment coverage: {passed / missing: …}
-✅ Logic consistency: {passed / issue found: …}
-✅ Completeness: {passed / missing: …}
-```
-Fix issues directly in implementation.md, then re-output the validation result.
 
 ## implementation.md Format Spec
 

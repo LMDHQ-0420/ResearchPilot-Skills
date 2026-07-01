@@ -2,24 +2,100 @@
 
 ## Phase E: Coding
 
-
 > **user_requirements.md takes priority**: All constraints in `docs/user_requirements.md` take precedence over any default instruction in this file. Read it before coding.
+
+> **dev_log.md is append-only**: Every code change must append a new log entry. Never overwrite or delete existing entries.
 
 ### Trigger
 
-Entered automatically after the user confirms `implementation.md` and completes the pre-coding checklist (environment / device / dataset / run strategy / README location) in Phase D.
+Entered automatically after the user confirms `implementation.md` in Phase D.
 
-### E-0 Create README.md
+---
 
-Before coding formally begins, set up two artifacts that run through the whole phase:
+### E-0 Pre-Coding Checklist
 
-**README.md** (placed where confirmed in D-Final-2 — project root or `code/`): must include
-- **Project overview**: one paragraph on what the project does (from idea_report.md topic)
-- **Environment setup**: based on the environment name and device requirements confirmed in D-Final-2, give create/activate commands; install PyTorch per the official guide (by CUDA version), the rest via `pip install -r requirements.txt`
-- **Detailed run commands**: each command for training/evaluation/ablation/visualization (finalized once scripts are done)
+**Before any coding begins**, confirm the following 6 items with the user (present all at once; user may answer item by item):
 
-> README is updated as coding progresses; env and run commands are filled in as soon as the matching code is done — no placeholders left behind.
+```
+Implementation plan confirmed. Before coding, confirm a few things:
 
+**1. Runtime Environment**
+Which environment do you plan to use? What is its name?
+  - I will look for an existing environment (e.g. `conda env list`):
+    found → reuse directly; not found → I create one from requirements.txt.
+
+**2. Device Requirements**
+Any special device requirements? (e.g. CUDA version, cuDNN, Apple MPS, CPU-only, Python version)
+
+**3. Dataset Preparation**
+{Per dataset} "Dataset {name}": detected {already downloaded at data/{name}/ ✅ / not yet ❌}.
+  - Not downloaded, fast (small / direct link) → I download it.
+  - Not downloaded, slow (large / login / application required) → I give you the link and command:
+    Link: {url}; Command: {cmd}; Place in: `data/raw/{name}/` (with preprocessing) or `data/{name}/` (direct use)
+
+**4. Auto-Run After Coding**
+Should I run the code automatically after writing?
+  - Fast (seconds to minutes) → I run it to verify
+  - Slow (hours to days) → you run it
+  - Mixed → I run fast scripts; you run slow ones (full training, all ablations)
+  Your choice?
+
+**5. Git Repository**
+Do you have an existing GitHub repository?
+  - Yes → please provide the URL; push the whole project or just `code/`?
+  - No → should I initialize a new one?
+  Also: what is your git username and email? (for `git config`)
+
+**6. README Location**
+After all coding is done I will write a README.md (project overview, env setup, run commands).
+Should it go in the {project root} or `code/` directory?
+
+Confirm the above and I will start coding.
+```
+
+Write user answers to `docs/user_requirements.md` Phase E section (env name, device requirements, dataset handling, run strategy, git config, README location).
+
+**Dataset handling**:
+- Check whether each dataset already exists under `data/`
+- Not downloaded, fast → download directly
+- Not downloaded, slow → output instructions and wait:
+```
+**Dataset: {dataset_name}**
+Download URL: {official link}
+Command: {wget/kaggle/etc.}
+Place in: `data/raw/{dataset_name}/` (with preprocessing) or `data/{dataset_name}/` (direct use)
+Let me know when done.
+```
+
+**Git initialization** (if user has a repo or wants a new one):
+```bash
+git init
+git config user.name "{username}"
+git config user.email "{email}"
+```
+
+Create `.gitignore`:
+```
+# Datasets and large files
+data/
+# Model weights (may exceed 100 MB each)
+results/checkpoints/
+results/**/*.pth
+results/**/*.pt
+results/**/*.bin
+results/**/*.ckpt
+# CSV/JSON result files are tracked by default
+# Logs
+logs/
+# Python
+__pycache__/
+*.pyc
+.env
+```
+
+> **Large file check**: if any single file (dataset, weights, etc.) may exceed 100 MB, ask the user to confirm exclusion before pushing.
+
+---
 
 ### E-1 Create dev_log.md
 
@@ -27,204 +103,178 @@ Before coding formally begins, set up two artifacts that run through the whole p
 # Dev Log — {topic}
 > Created: {YYYY-MM-DD} | Last updated: {YYYY-MM-DD}
 > Linked implementation guide: docs/implementation.md
+> ⚠️ This file is append-only. Every code change must append a new log entry.
 
 ## Project Overview
-| Item | Content |
-|------|------|
+| Item | Detail |
+|------|--------|
 | Research direction | {topic} |
-| Implementation strategy | Build from scratch / Strong baseline rewrite: {project_name} |
+| Implementation strategy | from scratch |
 | Framework | {PyTorch x.x} |
+| Git repository | {repo URL or "local"} |
+| Push scope | {whole project / code/ only} |
 
 ## Implementation Progress
 
-| Module | File | Status | Completion time | Notes |
-|------|------|------|---------|------|
-| Initialization | requirements.txt, configs/, README.md | ⬜ TODO | — | |
+| Module | File | Status | Completed | Notes |
+|--------|------|--------|-----------|-------|
+| Init | requirements.txt, configs/ | ⬜ TODO | — | |
 | Data loading | src/data/ | ⬜ TODO | — | |
 | Main model | src/models/{model}.py | ⬜ TODO | — | |
-| Loss function | src/models/losses.py | ⬜ TODO | — | |
-| Train loop | src/trainers/trainer.py | ⬜ TODO | — | |
+| Baseline | src/models/baseline/ | ⬜ TODO | — | |
+| Training | src/train.py (or src/train/) | ⬜ TODO | — | |
+| Evaluation | src/evaluate.py (or src/evaluate/) | ⬜ TODO | — | |
 | Utils | src/utils/ | ⬜ TODO | — | |
 | Scripts | scripts/ | ⬜ TODO | — | |
-| Baselines | baselines/ | ⬜ TODO | — | |
+| README | README.md | ⬜ TODO | — | written after all coding is done |
 
 Status: ⬜ TODO / 🔄 WIP / ✅ Done (run-verified) / ❌ Blocked
 
 ## Dev Log
 
 ### {YYYY-MM-DD HH:MM} — Project initialized
-- **Completed**: {specific content}
-- **Issues encountered**: {description, or "none"}
-- **Solutions**: {description, or "none"}
+- **Completed**: {details}
+- **Issues**: {description, or "none"}
+- **Solution**: {description, or "none"}
 
 ## Known Issues
-- [ ] {issue description}
+- [ ] {description}
 
 ## How to Run
 
-> This chapter is fixed at the very bottom of dev_log.md and is the "run manual" for this code. List **every run command**; for each command, explain: the meaning of every parameter, what happens when it runs, and what it outputs (to which file/directory, in what format). Commands are filled in as the code progresses, and **every time the code changes, judge per E-2/E-6 whether this chapter needs syncing**.
+> This chapter is always at the bottom of dev_log.md — it is the "run manual" for this codebase. List every run command; for each command explain every parameter, what happens when it runs, and what it outputs (file/directory, format). Fill in commands as code progresses. **After every code change, check whether this chapter needs updating.**
 
-### Environment setup
+### Environment Setup
 ```bash
-{commands to create/activate the environment}
+{create/activate commands}
 ```
-> Note: {what this command does; prerequisites, e.g. PyTorch with matching CUDA already installed}
+> Note: {what this does; prerequisites, e.g. PyTorch already installed for the right CUDA version}
 
-### {Command 1: e.g. Train}
+### {Command 1: e.g. Training}
 ```bash
-{full run command, e.g. bash scripts/train.sh --config configs/default.yaml --gpu 0}
+{full run command, e.g. bash scripts/train.sh --config configs/default.yaml}
 ```
-- **Parameters**:
-  - `{--paramA}`: {meaning, range, default}
-  - `{--paramB}`: {meaning, range, default}
-- **What happens when it runs**: {step by step: what is read → what is done → training/eval process}
-- **What it outputs**: {files/dirs produced and their formats, e.g. `results/checkpoints/best.pth` (best weights), `logs/train_{timestamp}.csv` (training curve)}
+- **Parameters**: `{--param}`: {meaning, range, default}
+- **What happens**: {step-by-step: reads what → does what → outputs what}
+- **Output**: {files/directories produced and their format}
 
-### {Command 2: e.g. Evaluate}
-```bash
-{full run command}
-```
-- **Parameters**: {meaning of each parameter}
-- **What happens when it runs**: {}
-- **What it outputs**: {}
-
-### {Command 3: e.g. Ablation / Visualization …}
-> Fill in every command in the format above: all training / evaluation / ablation / data preprocessing commands must be covered.
+### {Command 2: e.g. Evaluation / Ablation / Preprocessing …}
+> Fill in all training / evaluation / ablation / preprocessing commands in the same format.
 ```
 
-### E-2 Code Files in the Implementation Order from implementation.md
+---
 
-After completing each file, immediately sync:
-1. Update the progress table in `dev_log.md` (`✅ Done`, fill in completion time)
-2. Add a log entry in `dev_log.md`
-3. If the file affects how the project runs or its environment, **sync `README.md`** (run commands / env notes)
-4. If the file corresponds to a key step, **add the matching visualization cell in `notebooks/`**
-5. **Automatically judge whether the "How to Run" chapter at the bottom of `dev_log.md` needs updating**: if this file adds/changes a run command, parameter, output file, or output format, immediately fill in or revise the corresponding entry in "How to Run" (command, meaning of each parameter, what happens when it runs, what it outputs); skip if not applicable
+### E-2 Implement Files in Order
 
-**After completing each module (data / model / training loop / utils / scripts), run one validation against implementation.md**:
-- Check that implemented function signatures, parameters, and return values match the descriptions in implementation.md
-- Check that tensor shapes in the data flow are as expected
-- If any discrepancy is found, enter the "implementation.md error found" flow (see E-5)
+Implementation order: `requirements.txt` → `configs/` → `src/data/` → `src/models/{model}.py` → `src/models/baseline/` → `src/train.py` → `src/utils/` → `src/evaluate.py` → `scripts/`
 
-**Follow the confirmed run strategy** (D-Final-2 item 4):
-- "Claude auto-run" → run to verify right after writing; `✅ Done` only after a clean run
-- "User runs" → do static checks (imports / syntax / shape reasoning), hand the run command to the user, mark `🔄 WIP`, and mark `✅ Done` only after the user reports a successful run
-- "Mixed" → Claude runs fast scripts (minimal tests, data preprocessing); the user runs slow ones (full training, all ablations)
+After completing each file, immediately:
+1. Update the `dev_log.md` progress table (`✅ Done`, fill in time)
+2. **Append** a log entry to `dev_log.md` (completed / issues / solution)
+3. **Check whether the "How to Run" chapter needs updating**: if this file adds/changes run commands, parameters, output files or formats, update it immediately; otherwise skip
+
+After completing each module (data / model / training loop / utils / scripts), run one consistency check against `implementation.md`:
+- Function signatures, parameters, return values match description
+- Tensor shapes match expected values
+- If mismatch found, enter E-5 flow
+
+**Follow the run strategy confirmed in E-0 item 4**:
+- Auto-run → run immediately, mark `✅ Done` only after no errors
+- User-run → static check (imports / syntax / shape inference), mark `🔄 WIP`, mark `✅ Done` after user confirms it passes
+- Mixed → run fast scripts automatically; hand slow ones to the user
+
+---
 
 ### E-3 requirements.txt Rules
 
 - Library names only, no version numbers
-- Must not contain `torch`, `torchvision`, `torchaudio`
+- **Must not include `torch`, `torchvision`, or `torchaudio`**
 
-### E-4 Encountering Blocking Issues
+---
+
+### E-4 Blocking Issues
 
 Stop immediately and prompt:
 ```
 ⚠️ Blocking issue: {specific problem}
 
 Options:
-- Tell me how to resolve it → fix directly and continue
-- Need to revise the idea → we go back to Phase B (see the E-8 backtracking flow)
-- Need to revise the experiment design → we go back to Phase C (see the E-8 backtracking flow)
-- Need to revise the implementation plan → we go back to Phase D (see the E-8 backtracking flow)
+- Tell me how to fix it → fix and continue
+- Needs idea change → use `/research[B]-idea` to go back to Phase B
+- Needs experiment design change → use `/research[C]-experiment`
+- Needs implementation plan change → use `/research[D]-implementation`
 ```
 
-> Any option that involves revising the idea / experiment design / implementation plan goes through the **E-8 backtracking flow** — never alter the design ad hoc at the coding site.
+---
 
-### E-5 Implementation Error Found in implementation.md
+### E-5 implementation.md Error Found
 
-If a logic error, description mismatch, or unimplementable design is found in implementation.md during coding, **do not silently work around it in code**. Follow this flow:
+If a logic error, mismatch, or unimplementable design is found in `implementation.md`, **do not patch around it in code**:
 
-1. Stop coding the current file immediately
-2. Report the issue to the user:
-   ```
-   ⚠️ Found an issue in implementation.md:
-
-   **Location**: {section / function name}
-   **Issue**: {specific description: logic error / mismatch with reality / design not implementable}
-   **Impact**: {what will go wrong if this is not fixed}
-   **Suggested fix**: {proposed change}
-
-   May I update implementation.md according to the suggestion above?
-   ```
+1. Stop coding immediately
+2. Report the issue (location / description / impact / suggested fix)
 3. Wait for user confirmation
-4. After confirmation, **update implementation.md first**, then run the validation check (see "Validation Rules")
-5. Once the check passes, update the code to match the revised implementation.md and resume coding
+4. After confirmation, **update implementation.md first**, run validation
+5. Then update code accordingly and continue
+6. Append a log entry to `dev_log.md` recording the issue and correction
 
-### E-6 When the User Requests Code Improvements
+---
 
-When the user requests code improvements (after or during coding), every change must **keep two documents in sync**:
-1. **`README.md`**: if the change affects run commands, dependencies, project structure, or functionality, update the relevant section immediately
-2. **`docs/dev_log.md`**: add a log entry recording the improvement's completed content, reason, and impact; and **automatically judge whether the "How to Run" chapter at the bottom needs updating** — if this change adds/modifies a run command, parameter, output file, or output format, revise the corresponding entry immediately; skip if not applicable
+### E-6 User Requests Code Improvement
 
-> Never change code without updating README and dev_log — all three must stay consistent. If the improvement adds a key step, also add the matching `notebooks/` visualization. **Every code change must judge whether the "How to Run" chapter of dev_log.md needs syncing.**
+After each change, append to `dev_log.md` (completed / reason / impact) and check whether "How to Run" needs updating. **Never change code without updating dev_log.**
 
-### E-7 Code Review (proactively, after all coding is complete)
+---
 
-Once all files are coded, Claude **proactively** reviews the entire codebase and reports to the user.
+### E-7 Code Review (proactive, after all coding is complete)
 
-> **Review scope**: this is research code for **validating a paper idea**, not production engineering, so it **does not pursue engineering-grade strictness** (no fussing over naming style, over-abstraction, defensive edge cases, or micro-optimization). The review targets only two **hard lines**:
-> 1. **The code runs** — dependencies, imports, paths, and entry scripts are correct; the main chain from data loading to training to evaluation runs end to end
-> 2. **The logic is fully correct** — the implementation matches the method/experiment design in `idea_report.md`; tensor-flow shapes are self-consistent; loss/metric computation is correct; ablation switches actually take effect; no silent bugs
+Two hard requirements only:
+1. **Runs without error**: imports complete, requirements.txt covers all libraries, paths and configs consistent, scripts launch via nohup with correct log paths
+2. **Logically correct**: core module matches Method description, tensor shapes consistent end-to-end, loss/metrics match Part 3 definitions, ablation switches actually change behavior
 
-**Review checklist** (go through each, report real issues only):
-- **Runnability**: imports complete, `requirements.txt` covers all libraries used, file paths match the config, script entries can invoke the right modules
-- **Logical correctness**: the core innovation module's implementation matches the Method description; tensor shapes are self-consistent across the whole chain; loss inputs/outputs match; metric computation matches Part 3; each ablation variant's switch genuinely changes behavior
-- **Data-flow closure**: data loading → preprocessing → model → loss → evaluation → results persistence — the whole chain connects
-- **Consistency with design**: every Part 3 experiment has a runnable entry; results output fields are complete
+Issues under (1) or (2) → must fix, confirm with user, append dev_log entry.
+Style/engineering issues only → mention at most in one sentence, user decides.
 
-**Report format after review**:
-```
-Code review complete (criteria: runnable + logically correct; not an engineering-grade strict review).
+---
 
-✅ Passed: {runnability / logical correctness / data-flow closure / consistency with design}
-⚠️ Issues found:
-1. {location}: {issue — why it breaks running or correctness} → suggestion: {fix}
-2. ...
+### E-8 Write README.md
 
-Shall I fix these as suggested? (dev_log will be synced after fixing)
-```
+After all code is complete and the review passes, write README.md (at the location confirmed in E-0):
 
-- If an issue falls on either hard line — "won't run" or "logic error" → **must fix**; after user confirmation, fix it and sync README/dev_log per E-6
-- If it's only style / engineering polish that doesn't affect running or correctness → do not change proactively; mention it in one line at most and leave it to the user
-- When there are no issues, report honestly "review passed, code runs and logic matches the design" — do not fabricate issues
+**Must include**:
+- **Project overview**: one paragraph on what this project does (from idea_report.md topic)
+- **Environment setup**: create/activate commands based on E-0; install PyTorch per official guide (by CUDA version); `pip install -r requirements.txt` for the rest
+- **Detailed run commands**: sync from the "How to Run" chapter in dev_log.md
 
-### E-8 Poor Experiment Results → Backtrack to Adjust the Idea / Experiment Design (full B/C/D chain)
+---
 
-> When it applies: **a design is found unworkable during coding** (E-4 / E-5), or **the experiment results are poor after the code runs**. Either case may require going back to adjust the idea and experiment design, which in turn touches both design documents `idea_report.md` and `implementation.md`. **Never patch around a design problem in code.**
+### E-9 Git Commit and Push
 
-**Step 1: Diagnose and confirm backtracking with the user (mandatory — confirm before acting)**
+After README.md is written, commit and push per the git config from E-0:
 
-First report the experiment results / blocking situation honestly, give a diagnosis and a proposed backtracking scope, and wait for the user to confirm:
-```
-Current experiment results / blocking situation: {describe honestly, with key data from dev_log / results}
-
-Diagnosis: {likely cause of poor results / unworkability}
-
-Design documents to adjust and the corresponding phases to revisit (please confirm):
-- [ ] The idea itself needs adjustment → back to Phase B, revise idea_report.md Part 2 (Method / pipeline / technical framework)
-- [ ] The experiment design needs adjustment → back to Phase C, revise idea_report.md Part 3 (datasets / experiment list / baselines / metrics)
-- [ ] The implementation plan needs adjustment → back to Phase D, revise implementation.md
-
-Shall we backtrack with the scope above? You may add or remove parts to adjust.
+```bash
+git add .
+git commit -m "Initial commit: {topic} implementation"
+git branch -M main
+git remote add origin {repo_url}
+git push -u origin main
 ```
 
-**Step 2: Re-walk the full flow of the corresponding phase per the confirmed scope (not an in-place patch)**
+> **Push scope**:
+> - Whole project → run from project root
+> - `code/` only → initialize git inside `code/`, push from there
 
-After the user confirms, **re-run the existing flow of the corresponding phase** per the mapping below, still confirming with the user at each step:
+**Large file check**: before pushing, check for files over 100 MB (`find . -size +100M`). If any found, ask user to confirm exclusion.
 
-| What to adjust | Phase to revisit | Document | Key requirement |
-|---------------|------------------|----------|-----------------|
-| Idea (technical framework / pipeline / Method) | Phase B (see `phase-research.md` B-1–B-4) | `idea_report.md` Part 2 | **Read literature extensively first** (see "Literature Reading Principle") before adjusting |
-| Experiment design (data/experiments/baselines/metrics) | Phase C (see `phase-research.md` C-1–C-8) | `idea_report.md` Part 3 | Re-verify data and code availability, re-confirm the experiment outline |
-| Implementation plan | Phase D (see D-0–D-final in this file) | `implementation.md` | Re-run the implementation.md verification rules |
+---
 
-> **Chain dependency**: adjustments usually propagate top-down — changing the idea (B) generally requires updating the experiment design (C) and implementation plan (D); changing the experiment design (C) generally requires updating the implementation plan (D). After backtracking to the topmost affected layer, **sync the affected downstream documents in order B→C→D** — do not change only the upstream and leave the downstream contradicting it.
+### E-10 Phase E Complete
 
-**Step 3: Literature requirement (mandatory for every idea adjustment)**
+After code review passes, README is written, and git is pushed:
 
-Every idea adjustment must follow the "Literature Reading Principle": first read closely the literature already in `docs/papers/`; only when the existing literature cannot solve the current problem, re-run the paper download flow to add new papers.
+```
+Phase E complete. Code review passed, README written, code pushed.
 
-**Step 4: Return to Phase E and continue coding**
-
-After all design documents (`idea_report.md` / `implementation.md` as needed) are updated and confirmed by the user, return to Phase E, revise the code per the updated implementation.md, and add a backtracking entry to `dev_log.md` (reason, which documents were adjusted, which phases).
+→ If experiment results are unsatisfactory, use `/research[F]-iteration` to iterate.
+→ If results are satisfactory, go straight to paper writing: `/research[G]-paper`.
+```

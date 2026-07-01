@@ -20,9 +20,9 @@ license: LICENSE
 
 ## 整体流程与产物
 
-ResearchPilot-Skills 将完整学术研究拆分为六个阶段，每个阶段是独立的 skill。当前 skill 是其中一环。
+ResearchPilot-Skills 将完整学术研究拆分为七个阶段，每个阶段是独立的 skill。当前 skill 是其中一环。
 
-### 六阶段链条
+### 七阶段链条
 
 | Skill | 阶段 | 主要产物 |
 |-------|------|---------|
@@ -127,7 +127,13 @@ implementation.md 和编码前确认清单均确认后，提示用户：
 ```
 阶段 D 完成。implementation.md 已生成并通过校验，编码前确认清单已确认。
 
+implementation.md 和编码前确认清单均确认后，提示用户：
+
+```
+阶段 D 完成。implementation.md 已生成并通过校验。
+
 → 请使用 `/research[E]-coding` 开始编码。
+```
 ```
 
 ---

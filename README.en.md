@@ -65,10 +65,11 @@ cp -r skills/ResearchPilot-Skills-en/research[B]-idea           ~/.claude/skills
 cp -r skills/ResearchPilot-Skills-en/research[C]-experiment     ~/.claude/skills/
 cp -r skills/ResearchPilot-Skills-en/research[D]-implementation ~/.claude/skills/
 cp -r skills/ResearchPilot-Skills-en/research[E]-coding         ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-en/research[F]-paper          ~/.claude/skills/
+cp -r skills/ResearchPilot-Skills-en/research[F]-iteration       ~/.claude/skills/
+cp -r skills/ResearchPilot-Skills-en/research[G]-paper          ~/.claude/skills/
 ```
 
-Verify: `ls ~/.claude/skills/ | grep research` (should show 7 directories)
+Verify: `ls ~/.claude/skills/ | grep research` (should show 8 directories)
 
 ### OpenAI Codex CLI
 
@@ -80,10 +81,11 @@ cp -r skills/ResearchPilot-Skills-en/research[B]-idea           ~/.codex/skills/
 cp -r skills/ResearchPilot-Skills-en/research[C]-experiment     ~/.codex/skills/
 cp -r skills/ResearchPilot-Skills-en/research[D]-implementation ~/.codex/skills/
 cp -r skills/ResearchPilot-Skills-en/research[E]-coding         ~/.codex/skills/
-cp -r skills/ResearchPilot-Skills-en/research[F]-paper          ~/.codex/skills/
+cp -r skills/ResearchPilot-Skills-en/research[F]-iteration       ~/.codex/skills/
+cp -r skills/ResearchPilot-Skills-en/research[G]-paper          ~/.codex/skills/
 ```
 
-Verify: `ls ~/.codex/skills/ | grep research` (should show 7 directories)
+Verify: `ls ~/.codex/skills/ | grep research` (should show 8 directories)
 
 ### Tencent CodeBuddy
 
@@ -97,7 +99,8 @@ cp -r skills/ResearchPilot-Skills-en/research[B]-idea           .codebuddy/skill
 cp -r skills/ResearchPilot-Skills-en/research[C]-experiment     .codebuddy/skills/
 cp -r skills/ResearchPilot-Skills-en/research[D]-implementation .codebuddy/skills/
 cp -r skills/ResearchPilot-Skills-en/research[E]-coding         .codebuddy/skills/
-cp -r skills/ResearchPilot-Skills-en/research[F]-paper          .codebuddy/skills/
+cp -r skills/ResearchPilot-Skills-en/research[F]-iteration       .codebuddy/skills/
+cp -r skills/ResearchPilot-Skills-en/research[G]-paper          .codebuddy/skills/
 ```
 
 Verify installation (any tool): run `/research[START]` in conversation — if it shows a phase detection result, installation succeeded.
@@ -114,7 +117,8 @@ Verify installation (any tool): run `/research[START]` in conversation — if it
 | `/research[C]-experiment` | Enter Experiment Design |
 | `/research[D]-implementation` | Enter Implementation Design |
 | `/research[E]-coding` | Enter Coding |
-| `/research[F]-paper` | Enter Paper Writing |
+| `/research[F]-iteration` | Enter Code Iteration |
+| `/research[G]-paper` | Enter Paper Writing |
 | `/research[A]-exploration download-paper description [--to "path"]` | Download a single paper (standalone, works anytime) |
 
 > `/research description` is a backward-compatible alias for `/research[START] description`.
@@ -143,7 +147,7 @@ Phase A complete. → Use `/research[B]-idea` to enter the Idea Deepening phase.
 
 ---
 
-## Six-Phase Workflow
+## Seven-Phase Workflow
 
 | Phase | Name | What the AI mainly does | Output |
 |-------|------|------------------------|--------|
@@ -152,7 +156,8 @@ Phase A complete. → Use `/research[B]-idea` to enter the Idea Deepening phase.
 | **C** | Experiment Design | Deep-reads baseline papers and code, synthesizes field conventions, confirms an experiment outline before expanding the full plan and giving a resource estimate | `idea_report.md` Part 3 |
 | **D** | Implementation Design | Generates a function-precise coding guide, auto-checks coverage/consistency/completeness | `implementation.md` |
 | **E** | Coding | Implements file by file per the guide, maintains a dev log, validates per module, reviews code on completion | code + `dev_log.md` |
-| **F** | Paper Writing | Confirms the paper structure, drafts it, revises version by version from your annotations (each archived separately), guides figure/table generation | papers in `docs/manuscripts/` |
+| **F** | Code Iteration | Reads experiment results, diagnoses issues, updates design docs, iterates code, logs every change | `dev_log.md` iteration records |
+| **G** | Paper Writing | Confirms the paper structure, drafts it, revises version by version from your annotations (each archived separately), guides figure/table generation | papers in `docs/manuscripts/` |
 
 Every phase boundary is a mandatory human checkpoint — the AI never jumps to the next phase without your confirmation. For exactly what the AI does at each phase and how it interacts with you, see the **[full workflow guide →](WORKFLOW.en.md)**.
 
@@ -223,7 +228,8 @@ rm -rf ~/.claude/skills/research[B]-idea
 rm -rf ~/.claude/skills/research[C]-experiment
 rm -rf ~/.claude/skills/research[D]-implementation
 rm -rf ~/.claude/skills/research[E]-coding
-rm -rf ~/.claude/skills/research[F]-paper
+rm -rf ~/.claude/skills/research[F]-iteration
+rm -rf ~/.claude/skills/research[G]-paper
 ```
 
 Then re-run the install commands above replacing `ResearchPilot-Skills-en` with `ResearchPilot-Skills-zh`.

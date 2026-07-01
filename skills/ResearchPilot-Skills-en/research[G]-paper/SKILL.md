@@ -1,10 +1,10 @@
 ---
-name: research[F]-paper
+name: research[G]-paper
 description: >
   ResearchPilot academic research Phase F: Paper Writing. Use after Phase E coding and
   experiments are complete. Confirms paper structure, generates a draft, revises
   based on user annotations (each revision saved as a new version), and guides
-  Python figure/table generation. Trigger: /research[F]-paper
+  Python figure/table generation. Trigger: /research[G]-paper
 version: 2.0.0
 license: LICENSE
 ---
@@ -12,7 +12,7 @@ license: LICENSE
 > **user_requirements.md priority**: All user constraints recorded in `docs/user_requirements.md` (direction preferences, implementation requirements, document format, etc.) **take precedence over any default instruction in this skill**. Always read that file before generating any output to ensure compliance with confirmed user constraints.
 
 
-# Phase F: Paper Writing
+# Phase G: Paper Writing
 
 Write the paper from all prior outputs (`idea_report.md`, `dev_log.md` experiment
 results, `docs/papers/` literature). Every revision creates a new version file,
@@ -22,10 +22,10 @@ forming a traceable version chain.
 
 ## Workflow Overview & Outputs
 
-ResearchPilot-Skills splits a complete academic research project into six independent
+ResearchPilot-Skills splits a complete academic research project into seven independent
 stage skills. The current skill is one link in that chain.
 
-### Six-Stage Chain
+### Seven-Stage Chain
 
 | Skill | Phase | Main Output |
 |-------|-------|-------------|
@@ -34,7 +34,7 @@ stage skills. The current skill is one link in that chain.
 | `/research[C]-experiment` | Experiment Design | `docs/idea_report.md` Part 3 |
 | `/research[D]-implementation` | Implementation Design | `docs/implementation.md` |
 | `/research[E]-coding` | Coding | `code/` + `docs/dev_log.md` |
-| `/research[F]-paper` | Paper Writing | `docs/manuscripts/v*.md` |
+| `/research[G]-paper` | Paper Writing | `docs/manuscripts/v*.md` |
 
 ### Project Directory Structure
 
@@ -133,7 +133,7 @@ docs/manuscripts/v{major}.{minor}-{summary (≤15 chars)}.md
 After the paper is finalized and figures/tables are generated:
 
 ```
-Phase F complete. Paper finalized. Full workflow done.
+Phase G complete. Paper finalized. Full workflow done.
 
 Final version: docs/manuscripts/{latest version filename}
 Figure files: notebooks/image.ipynb, notebooks/table.ipynb (if generated)
