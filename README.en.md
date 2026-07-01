@@ -1,16 +1,25 @@
-# ResearchPilot-Skills
+<div align="center">
+
+<img src="logo.png" alt="ResearchPilot-Skills" width="600" />
+
+[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/LMDHQ-0420/ResearchPilot-Skills/releases)
+[![Platform](https://img.shields.io/badge/platform-Claude%20Code%20%7C%20Codex%20%7C%20CodeBuddy-lightgrey.svg)](https://github.com/LMDHQ-0420/ResearchPilot-Skills)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 **Automated Academic Research Workflow Skill**
 
+From direction exploration, literature review, and idea development to experiment design,  
+code implementation, and paper writing — all through natural conversation.
+
 [中文](README.md) | English
+
+</div>
 
 ---
 
 ## Overview
 
-ResearchPilot-Skills is an AI coding assistant skill that automates the complete academic research pipeline: direction exploration, literature retrieval, idea development, experiment design, code implementation, and paper writing. The workflow advances naturally through conversation — the AI asks for confirmation at each key checkpoint, so you never need to remember mode-switching commands.
-
-Compatible with **Claude Code**, **OpenAI Codex CLI**, **Tencent CodeBuddy**, and any AI coding assistant that supports the SKILL.md standard.
+ResearchPilot-Skills is a set of SKILL.md-compatible academic research skills, supporting **Claude Code**, **OpenAI Codex CLI**, **Tencent CodeBuddy**, and other mainstream AI coding assistants. Each of the six phases is an independent skill loaded only when needed — precise context, no forgetting from oversized prompts.
 
 ---
 
@@ -21,7 +30,7 @@ Compatible with **Claude Code**, **OpenAI Codex CLI**, **Tencent CodeBuddy**, an
 - **Deep-read baselines before designing experiments**: before designing experiments, the AI deep-reads the papers and GitHub code of the chosen baselines, extracts their actual experimental designs, and aligns the plan with field conventions — rather than designing in a vacuum.
 - **Plain-language method exposition**: idea deepening proceeds in three layers (technical framework → detailed pipeline → Introduction polishing); the pipeline is explained as "step 1… step 2…", without piling up formulas.
 - **Anti-hallucination citation verification**: every citation is anchored to a supporting sentence in the source PDF; unverifiable ones are explicitly marked `⚠️ [low confidence]` and registered in a pending-verification list — uncertainty is never hidden.
-- **Effectiveness first + implementation validation**: the first purpose of experiment design is to rigorously prove the idea's effectiveness, never trimming experiments to fit resources (resources are only estimated after design); only data/code availability is verified before design; the implementation guide is automatically checked for experiment coverage, logical consistency, and completeness.
+- **Effectiveness first + implementation validation**: the first purpose of experiment design is to rigorously prove the idea's effectiveness, never trimming experiments to fit resources; the implementation guide is automatically checked for experiment coverage, logical consistency, and completeness.
 - **Paper writing with versioning and annotations**: confirm the paper structure before drafting; the body leaves blank `>` markers for you to annotate in place, and the AI revises from your notes; every revision is archived as a separate file (`v{major}.{minor}-{summary}`), with figures/tables Python-generated to match the paper format.
 
 > To learn exactly what the AI does at each phase and how it interacts with you, see the **[full workflow guide →](WORKFLOW.en.md)**.
