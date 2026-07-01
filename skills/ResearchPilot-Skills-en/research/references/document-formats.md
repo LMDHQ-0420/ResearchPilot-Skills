@@ -477,10 +477,11 @@ load ckpt → test set → forward → postprocess → compute metrics → save 
 | Init | README.md, requirements.txt, configs/ | ✅ Done | {date} | |
 | Data loading | src/data/ | ⬜ TODO | — | |
 | Main model | src/models/{model}.py | ⬜ TODO | — | |
-| Train loop | src/trainers/trainer.py | ⬜ TODO | — | |
+| Baseline | src/models/baseline/ | ⬜ TODO | — | |
+| Training | src/train.py (or src/train/) | ⬜ TODO | — | |
+| Evaluation | src/evaluate.py (or src/evaluate/) | ⬜ TODO | — | |
 | Utils | src/utils/ | ⬜ TODO | — | |
 | Scripts | scripts/ | ⬜ TODO | — | |
-| Baselines | baselines/ | ⬜ TODO | — | |
 
 Status legend: ⬜ TODO / 🔄 WIP / ✅ Done (run-verified) / ❌ Blocked
 

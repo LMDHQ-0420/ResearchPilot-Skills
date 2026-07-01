@@ -2,11 +2,14 @@
 
 ## Phase E: Coding
 
+
+> **user_requirements.md takes priority**: All constraints in `docs/user_requirements.md` take precedence over any default instruction in this file. Read it before coding.
+
 ### Trigger
 
 Entered automatically after the user confirms `implementation.md` and completes the pre-coding checklist (environment / device / dataset / run strategy / README location) in Phase D.
 
-### E-0 Create README.md and notebooks/
+### E-0 Create README.md
 
 Before coding formally begins, set up two artifacts that run through the whole phase:
 
@@ -17,12 +20,6 @@ Before coding formally begins, set up two artifacts that run through the whole p
 
 > README is updated as coding progresses; env and run commands are filled in as soon as the matching code is done — no placeholders left behind.
 
-**notebooks/ directory**: create one Jupyter file per **key step** of the project for visualization, e.g.:
-- `notebooks/01_data_demo.ipynb`: raw data → preprocessing → model input
-- `notebooks/02_model_demo.ipynb`: model structure / key intermediate representations
-- `notebooks/03_results_demo.ipynb`: training curves, prediction comparison, ablation results
-
-> As each key step's code is finished, add the matching notebook cell so every key step is visually inspectable.
 
 ### E-1 Create dev_log.md
 
@@ -50,7 +47,6 @@ Before coding formally begins, set up two artifacts that run through the whole p
 | Utils | src/utils/ | ⬜ TODO | — | |
 | Scripts | scripts/ | ⬜ TODO | — | |
 | Baselines | baselines/ | ⬜ TODO | — | |
-| Visualization notebooks | notebooks/ | ⬜ TODO | — | one per key step |
 
 Status: ⬜ TODO / 🔄 WIP / ✅ Done (run-verified) / ❌ Blocked
 
@@ -93,7 +89,7 @@ Status: ⬜ TODO / 🔄 WIP / ✅ Done (run-verified) / ❌ Blocked
 - **What it outputs**: {}
 
 ### {Command 3: e.g. Ablation / Visualization …}
-> Fill in every command in the format above: all training / evaluation / ablation / data preprocessing / notebook run commands must be covered.
+> Fill in every command in the format above: all training / evaluation / ablation / data preprocessing commands must be covered.
 ```
 
 ### E-2 Code Files in the Implementation Order from implementation.md

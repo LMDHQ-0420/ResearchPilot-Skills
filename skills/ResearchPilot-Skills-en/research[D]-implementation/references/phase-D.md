@@ -1,10 +1,10 @@
 # Phase D Detailed Flow: Implementation Design
 
-: Implementation Design and Coding
-
 ---
 
 ## Phase D: Implementation Design
+
+> **user_requirements.md takes priority**: All constraints recorded in `docs/user_requirements.md` (framework, device, code style, hard requirements, etc.) take precedence over any default instruction in this file. Read that file before generating implementation.md to ensure all design decisions comply with user constraints.
 
 ### Trigger
 
@@ -12,521 +12,222 @@ Entered automatically after the user confirms the experiment design in Phase C.
 
 ---
 
-### D-0 Ask Whether to Use a Strong Baseline
-
-**Strong baseline** definition: improving on top of an existing open-source project, rather than building from scratch.
-
-```
-The Method section of idea_report.md Part 2 mentions a Baseline reference.
-Is your implementation based on an existing open-source project, or built from scratch?
-
-- If based on an existing open-source project (strong baseline), provide the GitHub link
-- If building from scratch, just say so
-```
-
-Based on the user's answer, proceed down one of the two paths below:
-
----
-
-### Path A: Strong Baseline (Improving on an Open-Source Project)
-
-#### D-A1 Obtain the Open-Source Project
-
-Ask the user how to obtain the code:
-
-```
-How would you like to get the code for {project_name}?
-
-Option 1: I'll run git clone and clone the project into the code/ directory
-Option 2: I'll clone it myself and let you know when done
-```
-
-**If Claude runs git clone:**
-```bash
-git clone {repo_url} code/
-```
-Confirm the directory exists and files are complete after running.
-
-**If the user clones it themselves:**
-Wait for the user to finish, then:
-```bash
-ls code/
-```
-Confirm the directory exists before continuing.
-
-If the clone fails or the directory does not exist, prompt the user to check the link or permissions.
-
-#### D-A2 Read the Existing Project Structure
-
-Fully scan the `code/` directory:
-- List all files and directories
-- For each Python file, extract:
-  - All class definitions (class name, inheritance)
-  - All functions/methods (function name, parameter list, return type, docstring)
-  - Key dependencies (import statements)
-
-#### D-A3 Collect Coding Constraints
+### D-0 Collect Coding Constraints
 
 Ask the user (if not already mentioned in conversation):
-```
-Before designing the rewrite plan, a few quick questions:
-1. PyTorch version requirements? (compatible with the original project)
-2. Which features of the original project need to be preserved? (all / specific features)
-3. Any special code requirements? (style, multi-GPU support, etc.)
-```
-Write to `docs/user_requirements.md`.
 
-#### D-A4 Generate implementation.md (Strong Baseline Format)
+```
+Before designing the implementation, confirm a few things:
+1. Framework: PyTorch or something else?
+2. Any special code requirements? (style, multi-GPU, ONNX export, etc.)
+3. Any hard requirements?
+```
 
-Generate `docs/implementation.md` using the "Strong Baseline Format Template" below.
-Content must be precise down to the specific rewrite plan for every function that needs modification.
+Write the answers to `docs/user_requirements.md` Phase D section.
 
 ---
 
-### Path B: Build from Scratch
+### D-1 Generate implementation.md
 
-#### D-B1 Collect Coding Constraints
-
-Ask the user (if not already mentioned in conversation):
-```
-Before designing the implementation, a few quick questions:
-1. PyTorch or another framework?
-2. Any special code requirements? (style, multi-GPU support, etc.)
-```
-Write to `docs/user_requirements.md`.
-
-#### D-B2 Generate implementation.md (Build from Scratch Format)
-
-Generate `docs/implementation.md` using the "Build from Scratch Format Template" below.
-Content must be precise down to every function signature, parameters, return values, and implementation logic for every file.
+Generate `docs/implementation.md` following the format template below. Content must be precise to every function signature, parameters, return values, and implementation logic for every file.
 
 ---
 
-### D-Final-1 implementation.md Validation and Confirmation
+### D-end1 Validation and Confirmation
 
-After generating implementation.md, **immediately run one experiment requirements check** (see "Validation Rules" below), then ask for confirmation:
-
-```
-implementation.md has been generated and the experiment requirements check is complete.
-Check result: {passed / issues found: …}
-
-Do you think the implementation plan is detailed and complete enough?
-If so, the next step is to confirm a few pre-coding preparations, then start coding.
-Or is there anything you'd like to add or adjust?
-```
-
-After each user-requested revision to implementation.md, run the check again and append the result to the revised output.
-
-### D-Final-2 Pre-Coding Confirmation Checklist
-
-After the user confirms implementation.md, **before starting to code, confirm the following 5 items with the user** (presented together; the user can respond item by item):
+After generating implementation.md, **immediately run the validation checks** (see "Validation Rules" below), then ask the user to confirm:
 
 ```
-Implementation plan confirmed. Before coding, let's confirm a few preparations:
+implementation.md has been generated and validation is complete.
+Validation result: {passed / issues found: …}
 
-**1. Run environment**
-Which environment will you use? What is its name?
-  - I'll first look it up by name (e.g. `conda env list`): if found → reuse it; if not → I'll create it per requirements.txt.
+Is the implementation plan detailed and complete enough?
+If so, the next step is to confirm a few pre-coding items, then start coding.
+Or is there anything you'd like to adjust?
+```
 
-**2. Device-specific requirements**
-Any special requirements your device places on the environment? (e.g., CUDA version, specific cuDNN, Apple MPS, CPU-only, specific Python version)
+After every user-requested revision, run validation again and append the result.
 
-**3. Dataset preparation**
-{Per dataset} "Dataset {name}": I detect it is {already downloaded at data/{name}/ ✅ / not downloaded yet ❌}.
-  - Not downloaded and quick (small / direct link) → I'll download it directly.
-  - Not downloaded and slow (large / login / application required) → I'll give you the URL, command, and target path to download yourself:
-    URL: {link}; command: {command}; place at: `data/{name}/`
+### D-end2 Pre-Coding Checklist
 
-**4. Auto-run the code?**
-After writing the code, should I run it automatically? I'll advise based on estimated runtime:
-  - Fast (seconds to a few minutes) → I recommend running it to verify
-  - Slow (hours to days, e.g. full training) → I recommend you run it
-  - Mixed → I run the fast scripts (minimal tests, data preprocessing), you run the slow ones (full training / all ablations)
+After the user confirms implementation.md, **confirm the following 5 items before starting to code** (present all at once; user may answer item by item):
+
+```
+Implementation plan confirmed. Before coding, confirm a few things:
+
+**1. Runtime Environment**
+Which environment do you plan to use? What is its name?
+  - I will look for an existing environment with that name (e.g. `conda env list`):
+    found → reuse directly; not found → I create one from requirements.txt.
+
+**2. Device Requirements**
+Any special device requirements? (e.g. CUDA version, cuDNN, Apple MPS, CPU-only, Python version)
+
+**3. Dataset Preparation**
+{Per dataset} "Dataset {name}": detected {already downloaded at data/{name}/ ✅ / not yet downloaded ❌}.
+  - Not downloaded, fast (small / direct link) → I download it.
+  - Not downloaded, slow (large / login / application required) → I give you the link and command:
+    Link: {url}; Command: {cmd}; Place in: `data/raw/{name}/` (with preprocessing) or `data/{name}/` (direct use)
+
+**4. Auto-Run After Coding**
+Should I run the code automatically after writing? My recommendation based on estimated runtime:
+  - Fast (seconds to minutes) → I run it to verify
+  - Slow (hours to days, e.g. full training) → you run it
+  - Mixed → I run fast scripts (quick tests, preprocessing); you run slow ones (full training, all ablations)
   Your choice?
 
-**5. README location**
-I'll maintain a README.md (project overview, env setup, detailed run commands).
-Do you want it in the {project root} or the `code/` directory?
+**5. README Location**
+I will maintain a README.md (project overview, env setup, run commands).
+Should it go in the {project root} or `code/` directory?
 
-Once confirmed, I'll start coding.
+Confirm the above and I will start coding.
 ```
 
-Write the answers to the Phase D section of `docs/user_requirements.md` (environment name, device requirements, dataset handling, run strategy, README location).
+Write user answers to `docs/user_requirements.md` Phase D section (env name, device requirements, dataset handling, run strategy, README location).
 
-**Dataset handling:**
-- Detect whether each dataset already exists under `data/`
-- Not downloaded and quick → Claude downloads it
-- Not downloaded and slow → output the download guide below and wait for the user:
+**Dataset handling**:
+- Check whether each dataset already exists under `data/`
+- Not downloaded, fast → download directly
+- Not downloaded, slow → output download instructions and wait for user:
 ```
 **Dataset: {dataset_name}**
 Download URL: {official link}
-Download command: {specific wget/kaggle command}
-Place at: `data/{dataset_name}/`
+Command: {wget/kaggle/etc.}
+Place in: `data/raw/{dataset_name}/` (with preprocessing) or `data/{dataset_name}/` (direct use)
 Expected structure:
-  data/{dataset_name}/
+  data/raw/{dataset_name}/
   ├── {file1}    # {description}
   └── ...
-{If a standard preprocessing tool exists: tool {link}, command {command}}
-Let me know once the download is complete.
+{If a preprocessing tool exists: tool {link}, command {cmd}}
+Let me know when the download is complete.
 ```
 
-Once environment, dataset, run strategy, and README location are all confirmed, proceed to Phase E.
+Proceed to Phase E after env, datasets, run strategy, and README location are all confirmed.
 
 ---
 
-### implementation.md Validation Rules
+### Validation Rules
 
-After every generation or revision of implementation.md, Claude must run the following checks, fix any issues found, then continue:
+Run the following checks after every generation or revision of implementation.md. List and fix all issues before continuing:
 
-**1. Experiment Requirements Coverage**
-- Cross-check every experiment in `idea_report.md` Part 3 (main, ablation, additional) against implementation.md — is there a corresponding module/function for each?
-- Does each ablation variant (w/o X) have a corresponding implementation entry (config flag or code branch)?
-- Does the results output format capture all evaluation metrics required by Part 3?
+**1. Experiment Coverage**
+- For every experiment in `idea_report.md` Part 3 (main, ablation, additional), check whether implementation.md has a supporting module/function
+- Each ablation variant (w/o X) must have a corresponding implementation entry (config flag or function branch)
+- Result output file format must be able to record all metrics required by Part 3
 
-**2. Logical Consistency**
-- Are tensor shapes consistent across modules (output shape of one module = input shape of the next)?
-- Does the loss function's input shape match the model's output shape?
-- Is the metric computation consistent with the definitions in Part 3?
+**2. Logic Consistency**
+- Tensor shapes must be consistent across modules (output shape = next module's input shape)
+- Loss function input shape must match model output shape
+- Metric computation must match the definition in Part 3
 
 **3. Completeness**
-- Does every file in the implementation order have a corresponding section in the file details?
-- Does the baselines list cover all comparison models in Part 3?
-- Is the data directory structure consistent with the data flow description?
+- Every file listed in the implementation order must have a corresponding section in the file-level implementation details
+- `src/models/baseline/` must cover all baseline models in Part 3
+- `data/` directory structure must match the data flow description
 
-Check result format:
+Validation output format:
 ```
 Validation result:
 ✅ Experiment coverage: {passed / missing: …}
-✅ Logical consistency: {passed / issues found: …}
+✅ Logic consistency: {passed / issue found: …}
 ✅ Completeness: {passed / missing: …}
 ```
-Fix any failing items directly in implementation.md, then re-output the check result.
+Fix issues directly in implementation.md, then re-output the validation result.
+
+## implementation.md Format Spec
 
 ### General Rules
 
-- Precise down to every function: function name, parameters (with type annotations), return value (with type), specific implementation logic
-- Precise down to every directory and file: what it stores, what its responsibility is
-- Precise down to every results file: filename, format, the meaning and units of every field
-- Use `>` extensively to explain the rationale behind each design decision; include citation numbers for literature-backed decisions
+- Precise to every function: name, parameters (with type annotations), return value (with type), implementation logic
+- Precise to every directory and file: what it stores, what it is responsible for
+- Precise to every results file: filename, format, meaning and unit of each field
+- Use `>` extensively to explain the rationale behind each design decision; cite references where applicable
 
 ---
 
-### Strong Baseline Format Template
+### Format Template
 
 ````markdown
 # Implementation Guide — {Topic}
-> Generated: {YYYY-MM-DD} | Strategy: Strong Baseline Improvement | Status: PENDING_REVIEW
-> Original project: {repo_url}
-> Linked design: docs/idea_report.md Part 3
-
----
-
-## 1 Original Project Info
-
-### 1.1 Project Overview
-
-- **Name**: {project name}
-- **URL**: {GitHub URL}
-- **Commit**: {hash} (pinned to avoid upstream changes)
-- **Framework**: {PyTorch x.x / other}
-- **Original functionality**: {one paragraph describing what the project does}
-
-### 1.2 Rewrite Scope Summary
-
-| File/Directory | Action | Reason |
-|---------------|--------|--------|
-| `{file1.py}` | `[MODIFIED]` | {reason} |
-| `{file2.py}` | `[NEW]` | {reason} |
-| `{file3.py}` | `[KEEP]` | No changes needed |
-
-> {Explain the rewrite boundary: reuse as much as possible, only modify what is directly tied to the innovation}
-
-### 1.3 Full Directory Tree After Rewrite
-
-> This is one of the two key parts at the start of implementation.md: the complete tree of the project after the rewrite (including retained and new files).
-
-```text
-code/
-├── {existing dir}/
-│   ├── {file1.py}              # [MODIFIED] {one-line responsibility}
-│   └── {file2.py}              # [KEEP] {one-line responsibility}
-├── {new dir}/
-│   └── {file3.py}              # [NEW] {one-line responsibility}
-├── notebooks/                  # [NEW] visualization of key steps (see Phase E)
-├── README.md                   # [NEW/MODIFIED] project overview, env setup, run commands
-└── ...
-```
-
-### 1.4 Per-File Function Table
-
-> This is the second key part at the start of implementation.md: a table describing each file's function.
-
-| File | Action | Function | Called by |
-|------|--------|----------|-----------|
-| `{file1.py}` | MODIFIED | {responsibility} | {caller} |
-| `{file2.py}` | KEEP | {responsibility} | {caller} |
-| `{file3.py}` | NEW | {responsibility} | {caller} |
-
----
-
-## 2 Data Flow
-
-Complete path from raw data files to model input:
-
-```text
-Raw files (data/{dataset_name}/)
-  → Read and parse ({dataset_file.py})
-      {format, field extraction, missing value handling}
-  → Split (train / val / test)
-      {split method: official / chronological / random; ratio; cite Part 3}
-  → Normalize ({transforms_file.py})
-      {mean/std computed from train set, applied to all splits; or other normalization}
-  → Window / chunk / sample (if applicable)
-      {window size, stride, label extraction; cite Part 3}
-  → Model input Tensors
-      x: shape {[B, ?, ?]}, meaning: {dimension explanation}
-      y: shape {[B, ?]}, meaning: {explanation}
-```
-
-> {Key decisions in the data flow: why this split method, why this normalization}
-
----
-
-## 3 Existing Files: Rewrite Plans
-
-> For each file to modify: describe the current core logic, then give the rewrite plan.
-
-### 3.x `{file_to_modify.py}` [MODIFIED]
-
-**File responsibility**: {one sentence}
-
-**Current core logic**:
-{Describe what the existing functions do in plain text — no code. Focus on parts relevant to the innovation.}
-
-**Functions to rewrite:**
-
-**`{method_to_modify}({params}) -> {return_type}`**
-
-- What it currently does: {describe original logic}
-- What it will do instead:
-  1. {Step 1}
-  2. {Step 2}
-  3. {Step 3}
-- Parameter changes: {added / removed / modified params and their meaning}
-- Return value changes: {if changed, explain new semantics and shape}
-
-> {Why this change: design rationale or literature support} [n]
-
-**Functions to add:**
-
-**`{new_method}({params}) -> {return_type}`** (new)
-
-- Purpose: {one sentence}
-- Parameters: `{param}` ({type}) — {meaning and constraints}
-- Return: {type}, shape {[?]}, {meaning}
-- Implementation logic:
-  1. {Step 1}
-  2. {Step 2}
-  3. {Step 3}
-
-> {Why this new function is needed: which innovation component it implements}
-
----
-
-### 3.x `{new_file.py}` [NEW]
-
-**File responsibility**: {one sentence}
-
-**Functions/classes:**
-
-**`{ClassName}`**
-
-- Responsibility: {description}
-- Init parameters: `{param}` ({type}) — {meaning and constraints}
-- Key methods:
-
-  **`{method1}({params}) -> {return_type}`**
-  - Input: {description including shape}
-  - Output: {description including shape}
-  - Implementation logic:
-    1. {Step 1}
-    2. {Step 2}
-
-  > {Rationale for key design decisions}
-
----
-
-## 4 Data Download and Preparation
-
-### 4.1 Datasets
-
-| Dataset | Type | Source | Download | Storage Path |
-|---------|------|--------|---------|-------------|
-
-### 4.2 Download Steps
-
-```bash
-mkdir -p data/{dataset_name}
-{specific download command}
-```
-
-### 4.3 Directory Structure After Download
-
-```text
-data/
-└── {dataset_name}/
-    ├── {file1}    # {format: file type, row count/size, content}
-    ├── {file2}    # {description}
-    └── ...
-```
-
-### 4.4 Data Field Reference
-
-| Field | Type | Unit | Meaning | Normal Range |
-|-------|------|------|---------|-------------|
-| {field} | {type} | {unit} | {meaning} | [{min}, {max}] |
-
-> {Domain-specific concept explanations}
-
----
-
-## 5 Results File Format
-
-### 5.1 Model Weights `results/checkpoints/best.pth`
-
-- **Format**: PyTorch state_dict
-- **Load**: `torch.load('results/checkpoints/best.pth', map_location='cpu')`
-- **Content**: Model parameter dict from the best validation epoch
-
-### 5.2 Training Curve `logs/train_{timestamp}.csv`
-
-| Field | Type | Meaning |
-|-------|------|---------|
-| epoch | int | Epoch number, starting from 1 |
-| train_loss | float | Average training loss |
-| val_loss | float | Average validation loss |
-| val_{metric1} | float | {metric name}, {unit}, {higher/lower is better} |
-| lr | float | Current learning rate |
-
-### 5.3 Evaluation Results `results/eval_{timestamp}.json`
-
-| Field | Type | Unit | Meaning | Direction |
-|-------|------|------|---------|-----------|
-| {metric1} | float | {unit} | {meaning} | lower is better |
-| num_samples | int | — | Total test set samples | — |
-| dataset | str | — | Dataset name | — |
-| split | str | — | Evaluation split | — |
-| checkpoint | str | — | Weights path used | — |
-
-### 5.4 Per-Sample Predictions `results/predictions_{timestamp}.csv`
-
-| Field | Type | Unit | Meaning |
-|-------|------|------|---------|
-| sample_id | int | — | Sample index in test set |
-| {true_col} | float | {unit} | Ground truth label |
-| {pred_col} | float | {unit} | Model prediction |
-| abs_error | float | {unit} | Absolute error = \|pred - true\| |
-
-> Sort by abs_error descending to find the hardest samples; trace back to raw data via sample_id.
-
-### 5.5 Ablation Summary `results/ablation/summary.csv`
-
-| Field | Meaning |
-|-------|---------|
-| variant | Variant name, matches --ablation flag in ablation.sh |
-| {metric1} | Metric 1 on test set |
-| notes | Variant description |
-
----
-
-## 6 Implementation Order
-
-```
-1. Confirm original project runs correctly (run original training script), record baseline performance
-2. Follow rewrite scope table, start with the most core change
-   → After each file, do a minimal runnable test to confirm no errors
-3. Integrate all rewrites, run full training
-4. Add baseline implementations in baselines/ (if any)
-5. Add results/ output and logs/ logging
-6. Add notebooks/ visualizations for each key step; maintain README.md (env setup + run commands)
-```
-
-After completing each file, immediately update progress and add a log entry in `docs/dev_log.md`; sync `README.md` for anything affecting run/env, and add the matching `notebooks/` cell for key steps.
-````
-
----
-
-### Build from Scratch Format Template
-
-````markdown
-# Implementation Guide — {Topic}
-> Generated: {YYYY-MM-DD} | Strategy: Build from Scratch | Status: PENDING_REVIEW
-> Linked design: docs/idea_report.md Part 3
+> Generated: {YYYY-MM-DD} | Strategy: from scratch | Status: PENDING_REVIEW
+> Linked experiment design: docs/idea_report.md Part 3
 
 ---
 
 ## 1 Project Structure
 
-> This chapter is the key opening part of implementation.md: first the full directory tree (1.1), then a per-file function table (1.2).
+> This chapter is the key opening section of implementation.md: complete directory tree (1.1) followed by a per-file function table (1.2).
 
-### 1.1 Full Directory Tree
+### 1.1 Complete Directory Tree
 
 ```text
 code/
 ├── src/
-│   ├── data/
-│   │   ├── {dataset}_dataset.py    # {one sentence: responsibility}
-│   │   └── transforms.py           # {one sentence: responsibility}
 │   ├── models/
-│   │   ├── {model_name}.py         # {one sentence: responsibility}
-│   │   └── losses.py               # {one sentence: responsibility}
-│   ├── trainers/
-│   │   └── trainer.py              # {one sentence: responsibility}
-│   └── utils/
-│       ├── metrics.py              # {one sentence: responsibility}
-│       └── logger.py               # {one sentence: responsibility}
+│   │   ├── {model_name}.py         # proposed model (one file per model)
+│   │   └── baseline/
+│   │       ├── {baseline1}.py      # one file per baseline
+│   │       └── {baseline2}.py
+│   ├── data/                       # subdirectory when multiple data files; else src/dataset.py
+│   │   ├── {dataset}_dataset.py    # Dataset class
+│   │   └── transforms.py           # preprocessing / augmentation
+│   ├── train/                      # subdirectory when multiple training files; else src/train.py
+│   │   ├── trainer.py              # training loop
+│   │   └── scheduler.py            # lr scheduler (if separate)
+│   ├── evaluate/                   # subdirectory when multiple eval files; else src/evaluate.py
+│   │   └── evaluator.py
+│   ├── utils/
+│   │   ├── metrics.py              # metric computation
+│   │   └── logger.py               # logging utility
+│   ├── train.py                    # training entry point (called by scripts/train.sh)
+│   ├── evaluate.py                 # evaluation entry point
+│   └── predict.py                  # inference entry point (optional)
 ├── scripts/
-│   ├── train.sh                    # Launch training
-│   ├── evaluate.sh                 # Evaluate a checkpoint
-│   └── ablation.sh                 # Batch ablation runs
-├── notebooks/                      # Key-step visualization (one .ipynb per key step, see Phase E)
-│   └── {step}_demo.ipynb           # {which step it visualizes}
+│   ├── train.sh                    # nohup training, logs → logs/
+│   ├── evaluate.sh                 # nohup evaluation
+│   └── ablation.sh                 # nohup batch ablation
 ├── configs/
-│   └── default.yaml                # All hyperparameters here
-├── baselines/
-│   └── {baseline_name}.py          # Same interface as main model
-├── data/                           # gitignored
+│   ├── default.yaml                # all hyperparameters centralized here
+│   └── ablation_{variant}.yaml     # one config per ablation variant
+├── data/                           # if preprocessing produces intermediate files: raw/ + processed/
+│   ├── raw/                        # original downloaded data (when preprocessing exists)
+│   └── processed/                  # preprocessed data (when preprocessing exists)
+│   # if no intermediate data is produced, store files directly in data/ without subdirectories
 ├── results/                        # gitignored
-├── logs/                           # gitignored
-├── README.md                       # Project overview, env setup, run commands (location confirmed by user, see Phase E)
+├── logs/                           # gitignored; filename: YY-MM-DD_HH-MM-SS.log
+├── README.md
 └── requirements.txt
 ```
 
+> **Directory rules**:
+> - If there is only one proposed model under `src/models/`, place it directly as `{model_name}.py` without a subdirectory
+> - `src/data/`, `src/train/`, `src/evaluate/`: if only one file, place it directly under `src/` without a subdirectory
+> - `data/`: if the pipeline produces intermediate files, use `raw/` + `processed/`; otherwise store data directly in `data/`
+
 ### 1.2 Per-File Function Table
 
-> Describe each file (not just each directory) in a table. One row per file.
+> One row per file (not per directory). As many rows as there are files.
 
 | File | Function | Input | Output | Called by |
 |------|----------|-------|--------|-----------|
-| `src/data/{dataset}_dataset.py` | {responsibility} | {input} | {output} | `trainers/trainer.py` |
-| `src/models/{model_name}.py` | {responsibility} | {input} | {output} | `trainers/trainer.py` |
-| `src/trainers/trainer.py` | {responsibility} | {input} | {output} | `scripts/train.sh` |
-| `src/utils/metrics.py` | {responsibility} | {input} | {output} | `trainer.py`, `evaluate.sh` |
-| `configs/default.yaml` | Centralized hyperparameters | — | — | All modules via config |
-| `notebooks/{step}_demo.ipynb` | {which step it visualizes} | — | charts | Manual review |
+| `src/models/{model_name}.py` | {role} | {input} | {output} | `src/train.py` |
+| `src/models/baseline/{baseline1}.py` | {role} | {input} | {output} | `src/train.py` |
+| `src/data/{dataset}_dataset.py` | {role} | {input} | {output} | `src/train.py` |
+| `src/train.py` | {role} | {input} | {output} | `scripts/train.sh` |
+| `src/evaluate.py` | {role} | {input} | {output} | `scripts/evaluate.sh` |
+| `src/utils/metrics.py` | {role} | {input} | {output} | `src/train.py`, `src/evaluate.py` |
+| `configs/default.yaml` | centralize hyperparameters | — | — | all modules via config |
 | ... | ... | ... | ... | ... |
 
-**Directory-level constraints:**
+**Directory-level constraints**:
 
-| Path | Key Constraint |
+| Path | Key constraint |
 |------|---------------|
-| `src/data/` | Data only — no model logic |
-| `src/models/` | Structure only — no training loop |
-| `src/trainers/` | Receives model as parameter |
-| `src/utils/` | Stateless utility functions |
-| `scripts/` | No business logic — only calls Python modules |
-| `notebooks/` | Key-step visualization; not depended on by production code |
-| `baselines/` | Identical interface to main model |
+| `src/models/` | structure only, no training loop |
+| `src/models/baseline/` | identical input/output interface as the main model |
+| `src/data/` | data handling only, no model logic |
+| `src/utils/` | stateless utility functions |
+| `scripts/` | parameter assembly and nohup invocation only, no business logic |
 
 ---
 
@@ -535,213 +236,137 @@ code/
 Complete path from raw data files to model input:
 
 ```text
-Raw files (data/{dataset_name}/)
-  → Read and parse ({dataset}_dataset.py)
+data/raw/{dataset_name}/ (or data/{dataset_name}/)
+  → load and parse ({dataset_file.py})
       {format, field extraction, missing value handling}
-  → Split (train / val / test)
-      {split method: official / chronological / random; ratio; cite Part 3}
-  → Normalize (transforms.py)
-      {mean/std from train set, applied to all splits; or other method}
-  → Window / chunk / sample (if applicable)
+  → preprocessing (if any): output to data/processed/{dataset_name}/
+      {preprocessing steps}
+  → split (train / val / test)
+      {split strategy: official / chronological / random; ratio; cite Part 3}
+  → normalization (transforms.py)
+      {mean/std from training set, applied to all splits}
+  → sliding window / chunking / sampling (if applicable)
       {window size, stride, label extraction; cite Part 3}
-  → Model input Tensors
-      x: shape {[B, ?, ?]}, meaning: {dimension explanation}
-      y: shape {[B, ?]}, meaning: {explanation}
+  → model input Tensor
+      x: shape {[B, ?, ?]}, meaning: {dimension description}
+      y: shape {[B, ?]}, meaning: {description}
 ```
 
-> {Key decisions in the data flow: why this split, why this normalization}
+> {Key decisions in data flow design: why this split, why this normalization}
 
 ---
 
-## 3 File Implementation Details
+## 3 Per-File Implementation Details
 
-> Each function: signature, parameter meaning, return value semantics, implementation logic (text steps — no code).
-> Reading order: data → model → loss → training loop → utils → scripts → baselines
+> For every function: signature, parameter meanings, return value semantics, implementation logic (prose steps, no code).
+> Reading order: data → model → baseline → loss → training loop → evaluation → utils → scripts
 
 ### 3.1 `src/data/{dataset}_dataset.py`
 
-**File responsibility**: Load {dataset name} data, preprocess, return tensors for the model.
+**Responsibility**: load {dataset name}, preprocess, return model-ready tensors.
 
 **`{DatasetName}(Dataset)`**
 
 - Init parameters:
   - `data_path` (str): dataset root directory
   - `split` (str): "train" / "val" / "test"
-  - `{other param}` ({type}): {meaning and constraints}
+  - `{other}` ({type}): {meaning, valid range}
 - Init logic:
   1. Read raw file ({format: csv / mat / hdf5})
-  2. Split by {method} ({rationale, cite Part 3})
-  3. {Normalize / window / other preprocessing}
-- `__len__() -> int`: total sample count, computed as: {description}
+  2. Split by {strategy} ({rationale, cite Part 3})
+  3. {normalization / sliding window / other preprocessing}
+- `__len__() -> int`: total samples, computed as: {description}
 - `__getitem__(idx) -> tuple[Tensor, Tensor]`:
   - Returns `(x, y)`, x shape: {[?, ?]}, y shape: {[?]}
-  - Extraction: {window bounds, label extraction method}
-
-> {Rationale for preprocessing decisions; cite papers or field conventions}
+  - Extraction: {window start/end, label extraction}
 
 ---
 
-### 3.2 `src/data/transforms.py`
+### 3.2 `src/models/{model_name}.py`
 
-**File responsibility**: Normalization and augmentation transforms; stateless or carrying train-set statistics.
-
-**`Normalize`**
-
-- Init: accepts `mean`, `std` (shape `[feature_dim]`, computed from train set)
-- `__call__(x) -> ndarray`: computes `(x - mean) / (std + 1e-8)`
-
-> {Why +1e-8: prevents division by zero when std is zero}
-
-**{Other transform classes (if any)}**: {brief description}
-
----
-
-### 3.3 `src/models/{model_name}.py`
-
-**File responsibility**: Define the main model; implement forward inference for {core mechanism}.
-
-**Model structure**:
-```text
-Input [B, L, D]
-  → {Module A (class name)}: {role} → [B, L, D']
-  → {Module B (class name)}: {role} → [B, D']
-  → Prediction head (Linear)        → [B, {output_dim}]
-```
+**Responsibility**: define the proposed model architecture.
 
 **`{ModelName}(nn.Module)`**
 
-- Init parameters: `input_dim` (int), `hidden_dim` (int, default {N}), `{other}`
+- Init: `input_dim` (int), `hidden_dim` (int, default {N}), `{other}`
 - `forward(x: Tensor) -> Tensor`:
   - Input x: shape `[B, L, D]`
-  - Implementation logic:
-    1. Through {Module A}: {what it does, output shape change}
-    2. Through {Module B}: {description}
+  - Logic:
+    1. Through {module A}: {what it does, shape change}
+    2. Through {module B}: {description}
     3. Prediction head: {description}
   - Output shape: `[B, {output_dim}]`
 
-> {Overall model design rationale, corresponding to idea_report.md Part 2 Method section}
+---
 
-**`{CoreModule}(nn.Module)`** (core innovation module)
+### 3.3 `src/models/baseline/{baseline_name}.py`
 
-- Init parameters: `{param}` ({type}) — {meaning}
-- `forward(x: Tensor) -> Tensor`:
-  - Input: shape `[B, L, D]`
-  - Implementation logic:
-    1. {Step 1: describe operation and output shape change}
-    2. {Step 2}
-    3. {Step 3}
-  - Output: shape `[B, L, D]` (or changed shape)
+**Responsibility**: reproduce {baseline name} with an interface identical to the main model.
 
-> {Rationale for each key step, corresponding to Method 3.3 theoretical description}
-> {If a step borrows from a paper, cite the source} [n]
+- `__init__` signature matches the main model
+- `forward(x: Tensor) -> Tensor` input/output format matches the main model
+- Implementation: {describe the core approach of this baseline}
 
-**Parameter count estimate**: ~{N}M parameters
-**VRAM estimate**: ~{N}GB at batch_size={B}
+> Identical interface rationale: enables direct model replacement in `src/train.py` without modifying training code.
 
 ---
 
-### 3.4 `src/models/losses.py`
+### 3.4 `src/train.py` (or `src/train/trainer.py`)
 
-**File responsibility**: Define the training loss function.
-
-**`{loss_fn}(pred: Tensor, target: Tensor) -> Tensor`**
-
-- Input: `pred` shape `[B, {dim}]`, `target` shape `[B, {dim}]`
-- Output: scalar
-- Formula: $\mathcal{L} = {formula}$
-- Implementation logic: {step-by-step computation description}
-
-> {Why this loss function over MSE; literature support} [n]
-
----
-
-### 3.5 `src/trainers/trainer.py`
-
-**File responsibility**: Encapsulate full training/validation loop with early stopping, LR scheduling, and checkpoint saving.
+**Responsibility**: training/validation loop with early stopping, lr scheduling, checkpoint saving.
 
 **`Trainer`**
 
-- Init parameters: `model`, `train_loader`, `val_loader`, `config` (from yaml)
-- Init logic: build optimizer, scheduler, criterion from config; initialize patience counter
-
-**`train_one_epoch() -> float`**
-
-- Returns: average training loss for this epoch
-- Logic: iterate train_loader → forward → compute loss → backward → update params
-- Gradient clipping: {whether clip_grad_norm\_ is needed, threshold and rationale}
-
-**`validate() -> tuple[float, dict]`**
-
-- Returns: `(val_loss, {metric_name: value})`
-- Logic: model.eval() → no_grad → iterate val_loader → collect predictions → call metrics.py
-
-**`fit() -> None`**
-
-- Logic: epoch loop → train_one_epoch + validate → early stopping check → save best checkpoint
-- Early stopping: val_loss shows no improvement for {patience} consecutive epochs (threshold {min_delta})
-
-> {Rationale for patience and min_delta values}
+- Init: `model`, `train_loader`, `val_loader`, `config` (from yaml)
+- `train_one_epoch() -> float`: returns mean training loss
+- `validate() -> tuple[float, dict]`: returns `(val_loss, {metric: value})`
+- `fit() -> None`: epoch loop → train + validate → early stopping → save best checkpoint
 
 ---
 
-### 3.6 `src/utils/metrics.py`
+### 3.5 `src/utils/metrics.py`
 
-**File responsibility**: Compute evaluation metrics; all functions accept numpy arrays and return float.
+**Responsibility**: compute evaluation metrics; all functions accept numpy arrays and return float.
 
 | Function | Metric | Formula | Range | Direction |
 |----------|--------|---------|-------|-----------|
-| `{metric1}(pred, true)` | {name} | {formula} | {range} | {higher/lower} is better |
-| `{metric2}(pred, true)` | {name} | {formula} | {range} | {higher/lower} is better |
-
-> {Field conventions for these metrics; cite papers using the same metrics}
+| `{metric1}(pred, true)` | {name} | {formula} | {range} | lower/higher is better |
 
 ---
 
-### 3.7 `src/utils/logger.py`
+### 3.6 `configs/default.yaml`
 
-**File responsibility**: Manage training logs; append per-epoch metrics to CSV.
+All hyperparameters centralized here, grouped by: `data`, `model`, `training`, `logging`.
 
-**`Logger.log(epoch: int, metrics: dict) -> None`**
-
-- Appends all metrics for the current epoch to `logs/train_{timestamp}.csv`
-
----
-
-### 3.8 `configs/default.yaml`
-
-All hyperparameters here, organized by block: `data`, `model`, `training`, `logging`.
-
-| Parameter | Block | Default | Notes |
-|-----------|-------|---------|-------|
-| `data.seq_len` | data | {N} | {rationale, cite Part 3} |
+| Parameter | Section | Default | Rationale |
+|-----------|---------|---------|-----------|
+| `data.seq_len` | data | {N} | {cite Part 3} |
 | `model.hidden_dim` | model | {N} | {rationale} |
 | `training.lr` | training | {float} | {rationale} |
-| `training.batch_size` | training | {N} | {VRAM constraint or field convention} |
+| `training.batch_size` | training | {N} | {GPU memory or field convention} |
 | `training.patience` | training | {N} | {early stopping rationale} |
 
-> Copy to `configs/{experiment_name}.yaml` for different experiments; specify with `--config`.
+> Ablation experiments copy this as `configs/ablation_{variant}.yaml` and pass it via `--config`.
 
 ---
 
-### 3.9 `scripts/`
+### 3.7 `scripts/train.sh`
 
-**`train.sh`**: Call trainer with config path and GPU index.
-**`evaluate.sh`**: Load a checkpoint, evaluate on test set, output eval json.
-**`ablation.sh`**: Loop through ablation variants, consolidate results to `results/ablation/summary.csv`.
+```bash
+#!/bin/bash
+TIMESTAMP=$(date +"%y-%m-%d_%H-%M-%S")
+LOG_FILE="logs/${TIMESTAMP}.log"
+mkdir -p logs
 
-> Scripts contain no business logic — only parameter assembly and Python module calls.
+nohup python src/train.py \
+    --config configs/default.yaml \
+    --gpu 0 \
+    > "$LOG_FILE" 2>&1 &
 
----
+echo "Training started. PID: $! | Log: $LOG_FILE"
+```
 
-### 3.10 `baselines/{baseline_name}.py`
-
-**File responsibility**: Reimplement baseline method with identical interface to the main model.
-
-- `__init__` parameter signature matches the main model
-- `forward(x: Tensor) -> Tensor` input/output format identical to main model
-- Implementation logic: {describe this baseline's core approach}
-
-> Identical interface means the model can be swapped in trainer.py without any training code changes.
+`evaluate.sh` and `ablation.sh` follow the same nohup pattern, calling `src/evaluate.py` and looping over configs respectively.
 
 ---
 
@@ -749,82 +374,75 @@ All hyperparameters here, organized by block: `data`, `model`, `training`, `logg
 
 ### 4.1 Datasets
 
-| Dataset | Type | Source | Download | Storage Path |
-|---------|------|--------|---------|-------------|
+| Dataset | Type | Source | Download link | Storage path |
+|---------|------|--------|--------------|--------------|
 
 ### 4.2 Download Steps
 
 ```bash
-mkdir -p data/{dataset_name}
-{specific download command}
+mkdir -p data/raw/{dataset_name}
+{download command}
 ```
 
 ### 4.3 Directory Structure After Download
 
 ```text
 data/
+├── raw/
+│   └── {dataset_name}/
+│       ├── {file1}    # {format description}
+│       └── ...
+└── processed/         # auto-generated after preprocessing (if applicable)
+```
+
+If no preprocessing is needed, store directly:
+```text
+data/
 └── {dataset_name}/
-    ├── {file1}    # {format: file type, row count/size, content}
-    ├── {file2}    # {description}
+    ├── {file1}    # {format description}
     └── ...
 ```
 
-### 4.4 Data Field Reference
-
-| Field | Type | Unit | Meaning | Normal Range |
-|-------|------|------|---------|-------------|
-| {field} | {type} | {unit} | {meaning} | [{min}, {max}] |
-
-> {Domain-specific concept explanations}
-
 ---
 
-## 5 Results File Format
+## 5 Results File Format Spec
 
 ### 5.1 Model Weights `results/checkpoints/best.pth`
 
 - **Format**: PyTorch state_dict
 - **Load**: `torch.load('results/checkpoints/best.pth', map_location='cpu')`
-- **Content**: Model parameter dict from the best validation epoch
+- **Content**: model parameters at the best validation epoch
 
-### 5.2 Training Curve `logs/train_{timestamp}.csv`
+### 5.2 Training Logs `logs/YY-MM-DD_HH-MM-SS.log`
 
-| Field | Type | Meaning |
-|-------|------|---------|
-| epoch | int | Epoch number, starting from 1 |
-| train_loss | float | Average training loss |
-| val_loss | float | Average validation loss |
-| val_{metric1} | float | {metric name}, {unit}, {higher/lower is better} |
-| lr | float | Current learning rate |
+Each `scripts/train.sh` run auto-generates a timestamp-named log file containing the full stdout/stderr of the training process.
 
 ### 5.3 Evaluation Results `results/eval_{timestamp}.json`
 
 | Field | Type | Unit | Meaning | Direction |
 |-------|------|------|---------|-----------|
 | {metric1} | float | {unit} | {meaning} | lower is better |
-| num_samples | int | — | Total test set samples | — |
-| dataset | str | — | Dataset name | — |
-| split | str | — | Evaluation split | — |
-| checkpoint | str | — | Weights path used | — |
+| num_samples | int | — | test set size | — |
+| dataset | str | — | dataset name | — |
+| split | str | — | evaluation split | — |
+| checkpoint | str | — | weight path used | — |
 
 ### 5.4 Per-Sample Predictions `results/predictions_{timestamp}.csv`
 
 | Field | Type | Unit | Meaning |
 |-------|------|------|---------|
-| sample_id | int | — | Sample index in test set |
-| {true_col} | float | {unit} | Ground truth label |
-| {pred_col} | float | {unit} | Model prediction |
-| abs_error | float | {unit} | Absolute error = \|pred - true\| |
-
-> Sort by abs_error descending to find the hardest samples; trace back to raw data via sample_id.
+| sample_id | int | — | index in test set |
+| {true_col} | float | {unit} | ground truth |
+| {pred_col} | float | {unit} | model prediction |
+| abs_error | float | {unit} | absolute error = |pred - true| |
 
 ### 5.5 Ablation Summary `results/ablation/summary.csv`
 
 | Field | Meaning |
 |-------|---------|
-| variant | Variant name, matches --ablation flag in ablation.sh |
-| {metric1} | Metric 1 on test set |
-| notes | Variant description |
+| variant | variant name, maps to configs/ablation_{variant}.yaml |
+| {metric1} | metric on test set |
+| notes | variant description |
 
 ---
 
@@ -832,22 +450,18 @@ data/
 
 ```
 requirements.txt
-  → configs/default.yaml
-  → README.md (draft: project overview + env setup; run commands as placeholders)
-  → src/data/{dataset}_dataset.py
-  → src/data/transforms.py
-  → notebooks/01_data_demo.ipynb (after data loading: visualize preprocessing and model input)
-  → src/models/{model_name}.py (implement core innovation module first, then assemble full model)
-  → src/models/losses.py
-  → notebooks/02_model_demo.ipynb (after model: visualize structure and intermediate representations)
-  → src/trainers/trainer.py
-  → src/utils/metrics.py
-  → src/utils/logger.py
-  → scripts/ (finalize README.md run commands after scripts are done)
-  → baselines/{baseline_name}.py
-  → notebooks/03_results_demo.ipynb (after training/eval: visualize curves, predictions, ablation results)
+  → configs/default.yaml (and ablation configs)
+  → README.md (draft: project overview + env setup; run commands filled in as code completes)
+  → src/data/ (Dataset class + transforms)
+  → src/models/{model_name}.py (core innovation module first, then assemble full model)
+  → src/models/baseline/ (each baseline, interface identical to main model)
+  → src/train.py (or src/train/trainer.py)
+  → src/utils/metrics.py + logger.py
+  → src/evaluate.py
+  → src/predict.py (if needed)
+  → scripts/ (complete README.md run commands)
 ```
 
-After completing each file, immediately update progress and add a log entry in `docs/dev_log.md`; sync `README.md` for anything affecting run/env, and add the matching `notebooks/` cell for key steps.
-`✅ Done` can only be marked after the file is written AND verified to run without errors locally (under the user-run strategy, mark it after the user reports a successful run).
+After completing each file, immediately update `docs/dev_log.md` progress and add a log entry; update `README.md` if run commands or env are affected.
+`✅ Done` may only be marked after the file is written **and** verified to run without errors (under user-run strategy: mark after user confirms it passes).
 ````

@@ -8,6 +8,9 @@ version: 2.0.0
 license: LICENSE
 ---
 
+> **user_requirements.md 优先级**：`docs/user_requirements.md` 中记录的所有用户约束（方向偏好、实现要求、文档格式等）**优先于本 skill 提示词中的任何默认指令**。每次调用前必须先读取该文件，确保所有输出符合用户已确认的约束。
+
+
 # 阶段 B：Idea 深化
 
 在已确认的研究方向和 RQ 基础上，把"研究问题"深化为"可实现的方法"。

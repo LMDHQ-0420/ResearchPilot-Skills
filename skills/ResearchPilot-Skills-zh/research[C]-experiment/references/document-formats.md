@@ -439,7 +439,24 @@ $$
 
 ```text
 code/
-└── ...（与用户确认的结构完全一致）
+├── src/
+│   ├── models/
+│   │   ├── {model_name}.py         # 本文提出的模型
+│   │   └── baseline/
+│   │       └── {baseline_name}.py  # 一个 baseline 一个文件
+│   ├── data/                       # 多文件时建子目录；单文件直接 src/dataset.py
+│   ├── train/                      # 多文件时建子目录；单文件直接 src/train.py
+│   ├── evaluate/                   # 多文件时建子目录；单文件直接 src/evaluate.py
+│   ├── utils/
+│   ├── train.py                    # 训练入口
+│   └── evaluate.py                 # 评估入口
+├── scripts/                        # nohup shell 脚本，日志 → logs/YY-MM-DD_HH-MM-SS.log
+├── configs/                        # 超参数 yaml，每个消融变体一个 config
+├── data/                           # 有预处理流程时建 raw/ + processed/；否则直接存放
+├── results/                        # gitignored
+├── logs/                           # gitignored
+├── README.md
+└── requirements.txt
 ```
 
 ### 各模块职责
@@ -484,10 +501,11 @@ class {ModelName}(nn.Module):
 | 初始化 | README.md, requirements.txt, configs/ | ✅ Done | {日期} | |
 | 数据加载 | src/data/ | ⬜ TODO | — | |
 | 主模型 | src/models/{model}.py | ⬜ TODO | — | |
-| 训练循环 | src/trainers/trainer.py | ⬜ TODO | — | |
+| Baseline | src/models/baseline/ | ⬜ TODO | — | |
+| 训练逻辑 | src/train.py（或 src/train/） | ⬜ TODO | — | |
+| 评估逻辑 | src/evaluate.py（或 src/evaluate/） | ⬜ TODO | — | |
 | 工具函数 | src/utils/ | ⬜ TODO | — | |
 | 运行脚本 | scripts/ | ⬜ TODO | — | |
-| Baseline | baselines/ | ⬜ TODO | — | |
 
 状态：⬜ TODO / 🔄 WIP / ✅ Done（已运行验证）/ ❌ Blocked
 

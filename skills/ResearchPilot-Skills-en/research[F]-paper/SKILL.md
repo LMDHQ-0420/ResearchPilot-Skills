@@ -9,6 +9,9 @@ version: 2.0.0
 license: LICENSE
 ---
 
+> **user_requirements.md priority**: All user constraints recorded in `docs/user_requirements.md` (direction preferences, implementation requirements, document format, etc.) **take precedence over any default instruction in this skill**. Always read that file before generating any output to ensure compliance with confirmed user constraints.
+
+
 # Phase F: Paper Writing
 
 Write the paper from all prior outputs (`idea_report.md`, `dev_log.md` experiment
