@@ -1,6 +1,6 @@
 # ResearchPilot-Skills
 
-**Automated Academic Research Workflow for Claude Code**
+**Automated Academic Research Workflow Skill**
 
 [中文](README.md) | English
 
@@ -8,57 +8,82 @@
 
 ## Overview
 
-ResearchPilot-Skills is a Claude Code Skill that automates the complete academic research pipeline: direction exploration, literature retrieval, idea development, experiment design, code implementation, and paper writing. The workflow progresses naturally through conversation — Claude asks for confirmation at each key checkpoint, so you never need to remember mode-switching commands.
+ResearchPilot-Skills is an AI coding assistant skill that automates the complete academic research pipeline: direction exploration, literature retrieval, idea development, experiment design, code implementation, and paper writing. The workflow advances naturally through conversation — the AI asks for confirmation at each key checkpoint, so you never need to remember mode-switching commands.
+
+Compatible with **Claude Code**, **OpenAI Codex CLI**, **Tencent CodeBuddy**, and any AI coding assistant that supports the SKILL.md standard.
 
 ---
 
 ## Highlights
 
-- **Step-by-step confirmation, never deciding for you**: the research direction and each RQ are locked one at a time through multi-round dialogue; every output in Phases A/B carries a "confirmed content card" so the current consensus is always visible, and Claude never skips a phase without your confirmation.
+- **Step-by-step confirmation, never deciding for you**: the research direction and each RQ are locked one at a time through multi-round dialogue; every output in Phases A/B carries a "confirmed content card" so the current consensus is always visible, and the AI never skips a phase without your confirmation.
 - **Research before design, method grounded in evidence**: deep literature review comes first — every research gap must be backed by a passage from a paper; each RQ's novelty is validated by a targeted search, eliminating pseudo-innovation at the source.
-- **Deep-read baselines before designing experiments**: before designing experiments, Claude deep-reads the papers and GitHub code of the chosen baselines, extracts their actual experimental designs, and aligns the plan with field conventions — rather than designing in a vacuum.
-- **Plain-language method exposition**: idea deepening proceeds in three layers (technical framework → detailed pipeline → Introduction polishing); the pipeline is explained as "first… then…", without piling up formulas.
+- **Deep-read baselines before designing experiments**: before designing experiments, the AI deep-reads the papers and GitHub code of the chosen baselines, extracts their actual experimental designs, and aligns the plan with field conventions — rather than designing in a vacuum.
+- **Plain-language method exposition**: idea deepening proceeds in three layers (technical framework → detailed pipeline → Introduction polishing); the pipeline is explained as "step 1… step 2…", without piling up formulas.
 - **Anti-hallucination citation verification**: every citation is anchored to a supporting sentence in the source PDF; unverifiable ones are explicitly marked `⚠️ [low confidence]` and registered in a pending-verification list — uncertainty is never hidden.
 - **Effectiveness first + implementation validation**: the first purpose of experiment design is to rigorously prove the idea's effectiveness, never trimming experiments to fit resources (resources are only estimated after design); only data/code availability is verified before design; the implementation guide is automatically checked for experiment coverage, logical consistency, and completeness.
-- **Paper writing with versioning and annotations**: confirm the paper structure before drafting; the body leaves blank `>` markers for you to annotate in place, and Claude revises from your notes; every revision is archived as a separate file (`v{major}.{minor}-{summary}`), with figures/tables Python-generated to match the paper format.
+- **Paper writing with versioning and annotations**: confirm the paper structure before drafting; the body leaves blank `>` markers for you to annotate in place, and the AI revises from your notes; every revision is archived as a separate file (`v{major}.{minor}-{summary}`), with figures/tables Python-generated to match the paper format.
 
-> To learn exactly what Claude does at each phase and how it interacts with you, see the **[full workflow guide →](WORKFLOW.en.md)**.
+> To learn exactly what the AI does at each phase and how it interacts with you, see the **[full workflow guide →](WORKFLOW.en.md)**.
 
 ---
 
 ## Installation
 
-```bash
-git clone https://github.com/YOUR_USERNAME/ResearchPilot-Skills.git
-cd ResearchPilot-Skills
+Clone the repository first:
 
-# Install English version (all 7 skills)
-cp -r skills/ResearchPilot-Skills-en/research[START]           ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-en/research[A]-exploration   ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-en/research[B]-idea          ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-en/research[C]-experiment    ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-en/research[D]-implementation ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-en/research[E]-coding        ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-en/research[F]-paper         ~/.claude/skills/
+```bash
+git clone https://github.com/LMDHQ-0420/ResearchPilot-Skills.git
+cd ResearchPilot-Skills
 ```
 
 > Each phase is an independent skill — all 7 must be installed for the full workflow. Chinese and English versions are mutually exclusive; do not mix them.
 
-Verify installation:
+### Claude Code
 
 ```bash
-ls ~/.claude/skills/ | grep research
+cp -r skills/ResearchPilot-Skills-en/research[START]            ~/.claude/skills/
+cp -r skills/ResearchPilot-Skills-en/research[A]-exploration    ~/.claude/skills/
+cp -r skills/ResearchPilot-Skills-en/research[B]-idea           ~/.claude/skills/
+cp -r skills/ResearchPilot-Skills-en/research[C]-experiment     ~/.claude/skills/
+cp -r skills/ResearchPilot-Skills-en/research[D]-implementation ~/.claude/skills/
+cp -r skills/ResearchPilot-Skills-en/research[E]-coding         ~/.claude/skills/
+cp -r skills/ResearchPilot-Skills-en/research[F]-paper          ~/.claude/skills/
 ```
 
-You should see 7 directories: `research[START]`, `research[A]-exploration`, `research[B]-idea`, `research[C]-experiment`, `research[D]-implementation`, `research[E]-coding`, `research[F]-paper`.
+Verify: `ls ~/.claude/skills/ | grep research` (should show 7 directories)
 
-Then run in Claude Code:
+### OpenAI Codex CLI
 
 ```bash
-/research[START] test installation
+mkdir -p ~/.codex/skills
+cp -r skills/ResearchPilot-Skills-en/research[START]            ~/.codex/skills/
+cp -r skills/ResearchPilot-Skills-en/research[A]-exploration    ~/.codex/skills/
+cp -r skills/ResearchPilot-Skills-en/research[B]-idea           ~/.codex/skills/
+cp -r skills/ResearchPilot-Skills-en/research[C]-experiment     ~/.codex/skills/
+cp -r skills/ResearchPilot-Skills-en/research[D]-implementation ~/.codex/skills/
+cp -r skills/ResearchPilot-Skills-en/research[E]-coding         ~/.codex/skills/
+cp -r skills/ResearchPilot-Skills-en/research[F]-paper          ~/.codex/skills/
 ```
 
-If Claude shows a phase detection result, installation succeeded.
+Verify: `ls ~/.codex/skills/ | grep research` (should show 7 directories)
+
+### Tencent CodeBuddy
+
+CodeBuddy skills are installed in the `.codebuddy/skills/` directory inside your workspace:
+
+```bash
+mkdir -p .codebuddy/skills
+cp -r skills/ResearchPilot-Skills-en/research[START]            .codebuddy/skills/
+cp -r skills/ResearchPilot-Skills-en/research[A]-exploration    .codebuddy/skills/
+cp -r skills/ResearchPilot-Skills-en/research[B]-idea           .codebuddy/skills/
+cp -r skills/ResearchPilot-Skills-en/research[C]-experiment     .codebuddy/skills/
+cp -r skills/ResearchPilot-Skills-en/research[D]-implementation .codebuddy/skills/
+cp -r skills/ResearchPilot-Skills-en/research[E]-coding         .codebuddy/skills/
+cp -r skills/ResearchPilot-Skills-en/research[F]-paper          .codebuddy/skills/
+```
+
+Verify installation (any tool): run `/research[START]` in conversation — if it shows a phase detection result, installation succeeded.
 
 ---
 
@@ -94,7 +119,7 @@ If Claude shows a phase detection result, installation succeeded.
 /research[A]-exploration download-paper 2310.06625 --to ./my-papers
 ```
 
-At the end of each phase, Claude prompts the next command, e.g.:
+At the end of each phase, the AI prompts the next command, e.g.:
 ```
 Phase A complete. → Use `/research[B]-idea` to enter the Idea Deepening phase.
 ```
@@ -103,16 +128,16 @@ Phase A complete. → Use `/research[B]-idea` to enter the Idea Deepening phase.
 
 ## Six-Phase Workflow
 
-| Phase | Name | What Claude mainly does | Output |
+| Phase | Name | What the AI mainly does | Output |
 |-------|------|------------------------|--------|
 | **A** | Direction Exploration & Literature Review | Searches literature, confirms the research direction and RQs step by step, writes the necessity argument | `idea_report.md` Part 1 |
 | **B** | Idea Development | Three-layer confirmation: technical framework → plain-language pipeline → Introduction polishing | `idea_report.md` Part 2 |
-| **C** | Experiment Design | Deep-reads baseline papers and code, synthesizes field conventions, confirms an experiment outline with you before expanding the full plan and giving a resource estimate | `idea_report.md` Part 3 |
+| **C** | Experiment Design | Deep-reads baseline papers and code, synthesizes field conventions, confirms an experiment outline before expanding the full plan and giving a resource estimate | `idea_report.md` Part 3 |
 | **D** | Implementation Design | Generates a function-precise coding guide, auto-checks coverage/consistency/completeness | `implementation.md` |
 | **E** | Coding | Implements file by file per the guide, maintains a dev log, validates per module, reviews code on completion | code + `dev_log.md` |
 | **F** | Paper Writing | Confirms the paper structure, drafts it, revises version by version from your annotations (each archived separately), guides figure/table generation | papers in `docs/manuscripts/` |
 
-Every phase boundary is a mandatory human checkpoint — Claude never jumps to the next phase without your confirmation. For exactly what Claude does at each phase and how it interacts with you, see the **[full workflow guide →](WORKFLOW.en.md)**.
+Every phase boundary is a mandatory human checkpoint — the AI never jumps to the next phase without your confirmation. For exactly what the AI does at each phase and how it interacts with you, see the **[full workflow guide →](WORKFLOW.en.md)**.
 
 ---
 
@@ -121,20 +146,18 @@ Every phase boundary is a mandatory human checkpoint — Claude never jumps to t
 ```
 docs/
   idea_report.md        # Full research report
-                        #   Part 1: Motivation (necessity argument), Research Questions, Key Works (table + detail entries)
+                        #   Part 1: Motivation (necessity arguments), Research Questions, Key Works
                         #   Part 2: Introduction, Related Works, Method
-                        #   Part 3: Datasets, experiment design (main/ablation/additional)
-                        #   References: MLA format, with main work and citation reason per entry
-  implementation.md     # File-by-file, function-by-function implementation guide
-                        #   (opens with directory tree + per-file function table; includes data flow and validation records)
+                        #   Part 3: Datasets, Experiment Design (main/ablation/additional), Resource Estimate
+                        #   References: MLA format, with main contribution and citation reason per entry
+  implementation.md     # File- and function-level coding guide (dir tree, file table, data flow, validation log)
   dev_log.md            # Coding progress and decision log
-  user_requirements.md  # Constraints collected by Claude via conversation
-                        #   (direction preferences, RQ constraints, implementation constraints, etc.)
-  papers/               # Downloaded PDFs or abstract TXTs
+  user_requirements.md  # Constraints collected through conversation (direction, RQ, implementation preferences)
+  papers/               # Downloaded paper PDFs or abstract TXTs
   manuscripts/          # Phase F paper; each revision archived separately v{major}.{minor}-{summary}.md
 
 code/
-  README.md             # Project overview, env setup, detailed run commands (location: project root or code/)
+  README.md             # Project overview, env setup, detailed run commands
   requirements.txt
   src/                  # Core model and training code
   scripts/              # Data processing and experiment scripts
@@ -152,30 +175,31 @@ code/
 
 **Skill not triggering?**
 
+Check that the skill directories exist. For Claude Code:
 ```bash
-ls ~/.claude/skills/research/SKILL.md
+ls ~/.claude/skills/ | grep research
 ```
-If the file doesn't exist, re-run the install command and restart Claude Code.
+If directories are missing, re-run the install commands and restart the AI assistant.
 
 **Want to change the document format?**
 
-Tell Claude in conversation, e.g. "Make the Introduction more detailed." Claude records preferences in `user_requirements.md` and applies them.
+Tell the AI in conversation, e.g. "Make the Introduction more detailed." It records preferences in `user_requirements.md` and applies them.
 
 **A paper failed to download?**
 
-Claude tries arXiv then OpenReview automatically. If both fail, it saves an abstract TXT (if available) or annotates citations with `⚠️ [PDF unavailable]`. You can also manually place the PDF in `docs/papers/` using the full paper title as the filename.
+The AI tries arXiv then OpenReview automatically. If both fail, it saves an abstract TXT (if available) or annotates citations with `⚠️ [PDF unavailable]`. You can also manually place the PDF in `docs/papers/` using the full paper title as the filename.
 
 **How to download a paper without starting the research workflow?**
 
 ```bash
-/research download-paper Mamba: Linear-Time Sequence Modeling with Selective State Spaces
-/research download-paper 2312.00752 --to ./papers
+/research[A]-exploration download-paper Mamba: Linear-Time Sequence Modeling with Selective State Spaces
+/research[A]-exploration download-paper 2312.00752 --to ./papers
 ```
 
 **How to switch to the Chinese version?**
 
+Remove the installed English skills first (Claude Code example):
 ```bash
-# Remove installed English skills
 rm -rf ~/.claude/skills/research[START]
 rm -rf ~/.claude/skills/research[A]-exploration
 rm -rf ~/.claude/skills/research[B]-idea
@@ -183,16 +207,9 @@ rm -rf ~/.claude/skills/research[C]-experiment
 rm -rf ~/.claude/skills/research[D]-implementation
 rm -rf ~/.claude/skills/research[E]-coding
 rm -rf ~/.claude/skills/research[F]-paper
-
-# Install Chinese version
-cp -r skills/ResearchPilot-Skills-zh/research[START]           ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[A]-exploration   ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[B]-idea          ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[C]-experiment    ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[D]-implementation ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[E]-coding        ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[F]-paper         ~/.claude/skills/
 ```
+
+Then re-run the install commands above replacing `ResearchPilot-Skills-en` with `ResearchPilot-Skills-zh`.
 
 ---
 
