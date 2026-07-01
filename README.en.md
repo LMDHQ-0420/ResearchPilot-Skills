@@ -17,6 +17,14 @@ code implementation, and paper writing — all through natural conversation.
 
 ---
 
+## News
+
+- 🎉 **[2026/07/01]** Officially renamed to **ResearchPilot-Skills** with a full six-phase refactor — each phase is now an independent skill, eliminating context-overload forgetting.
+- 📄 **[2026/06/07]** Added paper writing support (Phase F): versioned drafts, annotation-driven revisions, and Python figure/table generation.
+- 🚀 **[2026/06/04]** Project launched — initial release covering the full pipeline from direction exploration to coding.
+
+---
+
 ## Overview
 
 ResearchPilot-Skills is a set of SKILL.md-compatible academic research skills, supporting **Claude Code**, **OpenAI Codex CLI**, **Tencent CodeBuddy**, and other mainstream AI coding assistants. Each of the six phases is an independent skill loaded only when needed — precise context, no forgetting from oversized prompts.
