@@ -1,7 +1,7 @@
 ---
 name: research[G.8]-translate
 description: >
-  ResearchPilot 科研助手[阶段 G.8]：将中文手稿翻译为英文 LaTeX 版本（仅中文版）
+  ResearchPilot 科研助手[阶段 G.8]：中英翻译（仅中文版）
 version: 2.0.0
 license: LICENSE
 ---
@@ -15,6 +15,8 @@ license: LICENSE
 ```
 /research[G.8]-translate
 ```
+> 命令后可跟可选的自然语言指令，AI 会将其作为本次调用的额外约束或补充说明优先处理。
+
 
 **前置条件**：G.7 审阅通过，中文手稿基本定稿。
 

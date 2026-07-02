@@ -1,7 +1,7 @@
 ---
 name: research[C]-experiment
 description: >
-  ResearchPilot 科研助手[阶段 C]：精读 baseline 代码 → 设计主/消融/附加实验
+  ResearchPilot 科研助手[阶段 C]：实验设计
 version: 2.0.0
 license: LICENSE
 ---
@@ -77,6 +77,8 @@ code/
 ```
 /research[C]-experiment
 ```
+> 命令后可跟可选的自然语言指令，AI 会将其作为本次调用的额外约束或补充说明优先处理。
+
 
 ---
 

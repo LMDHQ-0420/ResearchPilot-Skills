@@ -1,7 +1,7 @@
 ---
 name: research[G.4]-introduction
 description: >
-  ResearchPilot Research Assistant [Phase G.4]: Write / revise manuscript Introduction section
+  ResearchPilot Research Assistant [Phase G.4]: Write manuscript Introduction
 version: 2.0.0
 license: LICENSE
 ---
@@ -32,6 +32,8 @@ license: LICENSE
 ```
 /research[G.4]-introduction
 ```
+> An optional natural-language instruction may follow the command. The AI will treat it as an additional constraint or supplement for this invocation.
+
 
 **Prerequisite**: G.3 Abstract written
 

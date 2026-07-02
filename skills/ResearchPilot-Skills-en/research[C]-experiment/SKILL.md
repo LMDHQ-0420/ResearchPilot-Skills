@@ -1,7 +1,7 @@
 ---
 name: research[C]-experiment
 description: >
-  ResearchPilot Research Assistant [Phase C]: Deep-read baseline code → design main/ablation/additional experiments
+  ResearchPilot Research Assistant [Phase C]: Experiment design
 version: 2.0.0
 license: LICENSE
 ---
@@ -80,6 +80,8 @@ code/
 ```
 /research[C]-experiment
 ```
+> An optional natural-language instruction may follow the command. The AI will treat it as an additional constraint or supplement for this invocation.
+
 
 ---
 

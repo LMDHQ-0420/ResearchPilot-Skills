@@ -1,7 +1,7 @@
 ---
 name: research[G.0]-plan
 description: >
-  ResearchPilot Research Assistant [Phase G.0]: Update idea_report, plan paper structure and figures, generate notebook
+  ResearchPilot Research Assistant [Phase G.0]: Paper planning
 version: 2.0.0
 license: LICENSE
 ---
@@ -32,6 +32,8 @@ license: LICENSE
 ```
 /research[G.0]-plan
 ```
+> An optional natural-language instruction may follow the command. The AI will treat it as an additional constraint or supplement for this invocation.
+
 
 ---
 

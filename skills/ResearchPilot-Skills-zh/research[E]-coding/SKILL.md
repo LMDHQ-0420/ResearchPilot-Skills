@@ -1,7 +1,7 @@
 ---
 name: research[E]-coding
 description: >
-  ResearchPilot 科研助手[阶段 E]：逐文件编码、维护开发日志、代码审查、git 推送
+  ResearchPilot 科研助手[阶段 E]：编码
 version: 2.0.0
 license: LICENSE
 ---
@@ -74,6 +74,8 @@ code/
 ```
 /research[E]-coding
 ```
+> 命令后可跟可选的自然语言指令，AI 会将其作为本次调用的额外约束或补充说明优先处理。
+
 
 ---
 

@@ -1,7 +1,7 @@
 ---
 name: research[G.1]-method
 description: >
-  ResearchPilot Research Assistant [Phase G.1]: Write / revise manuscript Method section
+  ResearchPilot Research Assistant [Phase G.1]: Write manuscript Method
 version: 2.0.0
 license: LICENSE
 ---
@@ -32,6 +32,8 @@ license: LICENSE
 ```
 /research[G.1]-method
 ```
+> An optional natural-language instruction may follow the command. The AI will treat it as an additional constraint or supplement for this invocation.
+
 
 **Prerequisite**: G.0 planning complete, architecture comments written into manuscript
 

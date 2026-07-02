@@ -1,7 +1,7 @@
 ---
 name: research[D]-implementation
 description: >
-  ResearchPilot 科研助手[阶段 D]：生成函数级编码指南并执行三项校验
+  ResearchPilot 科研助手[阶段 D]：实现设计
 version: 2.0.0
 license: LICENSE
 ---
@@ -74,6 +74,8 @@ code/
 ```
 /research[D]-implementation
 ```
+> 命令后可跟可选的自然语言指令，AI 会将其作为本次调用的额外约束或补充说明优先处理。
+
 
 ---
 

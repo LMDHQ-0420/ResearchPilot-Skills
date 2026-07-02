@@ -1,7 +1,7 @@
 ---
 name: research[G.4]-introduction
 description: >
-  ResearchPilot 科研助手[阶段 G.4]：撰写 / 修改手稿 Introduction 章节
+  ResearchPilot 科研助手[阶段 G.4]：撰写手稿 Introduction
 version: 2.0.0
 license: LICENSE
 ---
@@ -36,6 +36,8 @@ license: LICENSE
 ```
 research[G.4]-introduction
 ```
+> 命令后可跟可选的自然语言指令，AI 会将其作为本次调用的额外约束或补充说明优先处理。
+
 
 **前置条件**：G.3 Abstract 已写
 

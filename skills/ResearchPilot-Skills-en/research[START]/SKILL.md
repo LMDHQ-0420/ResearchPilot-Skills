@@ -1,7 +1,7 @@
 ---
 name: research[START]
 description: >
-  ResearchPilot Research Assistant [Entry]: Detect current research phase and route to the correct skill
+  ResearchPilot Research Assistant [Entry]: Entry router
 version: 2.0.0
 license: LICENSE
 ---

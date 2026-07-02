@@ -1,7 +1,7 @@
 ---
 name: research[G.2]-experiments
 description: >
-  ResearchPilot Research Assistant [Phase G.2]: Write / revise manuscript Experiments section
+  ResearchPilot Research Assistant [Phase G.2]: Write manuscript Experiments
 version: 2.0.0
 license: LICENSE
 ---
@@ -32,6 +32,8 @@ license: LICENSE
 ```
 /research[G.2]-experiments
 ```
+> An optional natural-language instruction may follow the command. The AI will treat it as an additional constraint or supplement for this invocation.
+
 
 **Prerequisite**: G.1 Method written
 

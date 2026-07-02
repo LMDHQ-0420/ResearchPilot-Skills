@@ -1,7 +1,7 @@
 ---
 name: research[F]-iteration
 description: >
-  ResearchPilot Research Assistant [Phase F]: Diagnose experiment results, update docs before code, append iteration log
+  ResearchPilot Research Assistant [Phase F]: Code iteration
 version: 2.0.0
 license: LICENSE
 ---
@@ -60,6 +60,8 @@ code/
 ```
 /research[F]-iteration
 ```
+> An optional natural-language instruction may follow the command. The AI will treat it as an additional constraint or supplement for this invocation.
+
 
 ---
 

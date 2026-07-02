@@ -1,7 +1,7 @@
 ---
 name: research[B]-idea
 description: >
-  ResearchPilot Research Assistant [Phase B]: Technical framework → pipeline confirmation → write Method and Introduction
+  ResearchPilot Research Assistant [Phase B]: Idea deepening
 version: 2.0.0
 license: LICENSE
 ---
@@ -76,6 +76,8 @@ code/
 ```
 /research[B]-idea
 ```
+> An optional natural-language instruction may follow the command. The AI will treat it as an additional constraint or supplement for this invocation.
+
 
 ---
 

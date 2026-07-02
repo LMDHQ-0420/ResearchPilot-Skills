@@ -1,7 +1,7 @@
 ---
 name: research[G.6]-conclusion
 description: >
-  ResearchPilot Research Assistant [Phase G.6]: Write / revise manuscript Conclusion and References
+  ResearchPilot Research Assistant [Phase G.6]: Write manuscript Conclusion
 version: 2.0.0
 license: LICENSE
 ---
@@ -32,6 +32,8 @@ license: LICENSE
 ```
 /research[G.6]-conclusion
 ```
+> An optional natural-language instruction may follow the command. The AI will treat it as an additional constraint or supplement for this invocation.
+
 
 **Prerequisite**: G.5 Related Works written
 

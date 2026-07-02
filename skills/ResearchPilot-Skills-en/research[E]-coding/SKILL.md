@@ -1,7 +1,7 @@
 ---
 name: research[E]-coding
 description: >
-  ResearchPilot Research Assistant [Phase E]: File-by-file coding, maintain dev log, code review, git push
+  ResearchPilot Research Assistant [Phase E]: Coding
 version: 2.0.0
 license: LICENSE
 ---
@@ -77,6 +77,8 @@ code/
 ```
 /research[E]-coding
 ```
+> An optional natural-language instruction may follow the command. The AI will treat it as an additional constraint or supplement for this invocation.
+
 
 ---
 

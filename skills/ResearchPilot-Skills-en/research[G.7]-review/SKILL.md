@@ -1,7 +1,7 @@
 ---
 name: research[G.7]-review
 description: >
-  ResearchPilot Research Assistant [Phase G.7]: Five-dimension full-paper review and claim-evidence alignment check
+  ResearchPilot Research Assistant [Phase G.7]: Full-paper review
 version: 2.0.0
 license: LICENSE
 ---
@@ -32,6 +32,8 @@ license: LICENSE
 ```
 /research[G.7]-review
 ```
+> An optional natural-language instruction may follow the command. The AI will treat it as an additional constraint or supplement for this invocation.
+
 
 **Prerequisite**: Any or all sections written
 

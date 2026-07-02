@@ -1,7 +1,7 @@
 ---
 name: research[B]-idea
 description: >
-  ResearchPilot 科研助手[阶段 B]：技术框架 → pipeline 确认 → 撰写 Method 与 Introduction
+  ResearchPilot 科研助手[阶段 B]：Idea 深化
 version: 2.0.0
 license: LICENSE
 ---
@@ -74,6 +74,8 @@ code/
 ```
 /research[B]-idea
 ```
+> 命令后可跟可选的自然语言指令，AI 会将其作为本次调用的额外约束或补充说明优先处理。
+
 
 ---
 

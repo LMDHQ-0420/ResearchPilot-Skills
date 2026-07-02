@@ -1,7 +1,7 @@
 ---
 name: research[D]-implementation
 description: >
-  ResearchPilot Research Assistant [Phase D]: Generate function-level coding guide and run three-way validation
+  ResearchPilot Research Assistant [Phase D]: Implementation design
 version: 2.0.0
 license: LICENSE
 ---
@@ -76,6 +76,8 @@ code/
 ```
 /research[D]-implementation
 ```
+> An optional natural-language instruction may follow the command. The AI will treat it as an additional constraint or supplement for this invocation.
+
 
 ---
 

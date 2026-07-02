@@ -1,8 +1,7 @@
 ---
 name: research[START]
 description: >
-  ResearchPilot 科研助手[入口]：检测当前研究阶段，路由到对应 skill
-  检测当前项目所处阶段，引导用户使用对应的阶段 skill。不执行任何研究工作，只做阶段检测和路由。
+  ResearchPilot 科研助手[入口]：入口路由
 version: 2.0.0
 license: LICENSE
 ---

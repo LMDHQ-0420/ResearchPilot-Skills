@@ -1,7 +1,7 @@
 ---
 name: research[G.5]-related
 description: >
-  ResearchPilot 科研助手[阶段 G.5]：撰写 / 修改手稿 Related Works 章节
+  ResearchPilot 科研助手[阶段 G.5]：撰写手稿 Related Works
 version: 2.0.0
 license: LICENSE
 ---
@@ -36,6 +36,8 @@ license: LICENSE
 ```
 research[G.5]-related
 ```
+> 命令后可跟可选的自然语言指令，AI 会将其作为本次调用的额外约束或补充说明优先处理。
+
 
 **前置条件**：G.4 Introduction 已写
 

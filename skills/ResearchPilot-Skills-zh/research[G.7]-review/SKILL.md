@@ -1,7 +1,7 @@
 ---
 name: research[G.7]-review
 description: >
-  ResearchPilot 科研助手[阶段 G.7]：整稿五维度审阅与 claim-evidence 对齐核查
+  ResearchPilot 科研助手[阶段 G.7]：整稿审阅
 version: 2.0.0
 license: LICENSE
 ---
@@ -15,6 +15,8 @@ license: LICENSE
 ```
 /research[G.7]-review
 ```
+> 命令后可跟可选的自然语言指令，AI 会将其作为本次调用的额外约束或补充说明优先处理。
+
 
 可在任意章节写完后触发，也可在全部章节完成后做最终审阅。
 

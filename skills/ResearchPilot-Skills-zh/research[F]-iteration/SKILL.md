@@ -1,7 +1,7 @@
 ---
 name: research[F]-iteration
 description: >
-  ResearchPilot 科研助手[阶段 F]：诊断实验结果、先改文档再改代码、追加迭代日志
+  ResearchPilot 科研助手[阶段 F]：代码迭代
 version: 2.0.0
 license: LICENSE
 ---
@@ -61,6 +61,8 @@ code/
 ```
 /research[F]-iteration
 ```
+> 命令后可跟可选的自然语言指令，AI 会将其作为本次调用的额外约束或补充说明优先处理。
+
 
 ---
 

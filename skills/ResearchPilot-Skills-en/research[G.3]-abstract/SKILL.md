@@ -1,7 +1,7 @@
 ---
 name: research[G.3]-abstract
 description: >
-  ResearchPilot Research Assistant [Phase G.3]: Write / revise manuscript Abstract
+  ResearchPilot Research Assistant [Phase G.3]: Write manuscript Abstract
 version: 2.0.0
 license: LICENSE
 ---
@@ -32,6 +32,8 @@ license: LICENSE
 ```
 /research[G.3]-abstract
 ```
+> An optional natural-language instruction may follow the command. The AI will treat it as an additional constraint or supplement for this invocation.
+
 
 **Prerequisite**: G.1 Method and G.2 Experiments written
 
