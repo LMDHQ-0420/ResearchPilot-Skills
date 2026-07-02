@@ -32,7 +32,14 @@ stage skills. The current skill is one link in that chain.
 | `/research[D]-implementation` | Implementation Design | `docs/implementation.md` |
 | `/research[E]-coding` | Coding | `code/` + `docs/dev_log.md` |
 | `/research[F]-iteration` | Code Iteration | `dev_log.md` appended iteration records |
-| `/research[G]-paper` | Paper Writing | `docs/manuscripts/v*.md` |
+| `/research[G.0]-plan` | Paper planning | `docs/manuscripts/` architecture |
+| `/research[G.1]-method` | Method | manuscript Method section |
+| `/research[G.2]-experiments` | Experiments | manuscript Experiments section |
+| `/research[G.3]-abstract` | Abstract | manuscript Abstract |
+| `/research[G.4]-introduction` | Introduction | manuscript Introduction |
+| `/research[G.5]-related` | Related Works | manuscript Related Works |
+| `/research[G.6]-conclusion` | Conclusion + References | manuscript Conclusion |
+| `/research[G.7]-review` | Full-paper review | review report |
 
 ### Project Directory Structure
 
@@ -126,7 +133,8 @@ Phase-to-skill mapping:
 | D complete, E not started | `/research[E]-coding` |
 | E in progress | `/research[E]-coding` |
 | F in progress (iteration) | `/research[F]-iteration` |
-| G in progress | `/research[G]-paper` |
+| G.0 complete, G.1+ in progress | `/research[G.1]-method` (or the current section) |
+| G.7 review done | `/research[G.7]-review` |
 
 ---
 

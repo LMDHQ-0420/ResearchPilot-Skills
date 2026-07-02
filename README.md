@@ -66,10 +66,18 @@ cp -r skills/ResearchPilot-Skills-zh/research[C]-experiment     ~/.claude/skills
 cp -r skills/ResearchPilot-Skills-zh/research[D]-implementation ~/.claude/skills/
 cp -r skills/ResearchPilot-Skills-zh/research[E]-coding         ~/.claude/skills/
 cp -r skills/ResearchPilot-Skills-zh/research[F]-iteration       ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[G]-paper          ~/.claude/skills/
+cp -r skills/ResearchPilot-Skills-zh/research[G.0]-plan           ~/.claude/skills/
+cp -r skills/ResearchPilot-Skills-zh/research[G.1]-method          ~/.claude/skills/
+cp -r skills/ResearchPilot-Skills-zh/research[G.2]-experiments     ~/.claude/skills/
+cp -r skills/ResearchPilot-Skills-zh/research[G.3]-abstract        ~/.claude/skills/
+cp -r skills/ResearchPilot-Skills-zh/research[G.4]-introduction    ~/.claude/skills/
+cp -r skills/ResearchPilot-Skills-zh/research[G.5]-related         ~/.claude/skills/
+cp -r skills/ResearchPilot-Skills-zh/research[G.6]-conclusion      ~/.claude/skills/
+cp -r skills/ResearchPilot-Skills-zh/research[G.7]-review          ~/.claude/skills/
+cp -r skills/ResearchPilot-Skills-zh/research[G.8]-translate       ~/.claude/skills/
 ```
 
-验证：`ls ~/.claude/skills/ | grep research`（应看到 8 个目录）
+验证：`ls ~/.claude/skills/ | grep research`（应看到 16 个目录（含 G.0–G.8））
 
 ### OpenAI Codex CLI
 
@@ -82,10 +90,18 @@ cp -r skills/ResearchPilot-Skills-zh/research[C]-experiment     ~/.codex/skills/
 cp -r skills/ResearchPilot-Skills-zh/research[D]-implementation ~/.codex/skills/
 cp -r skills/ResearchPilot-Skills-zh/research[E]-coding         ~/.codex/skills/
 cp -r skills/ResearchPilot-Skills-zh/research[F]-iteration       ~/.codex/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[G]-paper          ~/.codex/skills/
+cp -r skills/ResearchPilot-Skills-zh/research[G.0]-plan           ~/.codex/skills/
+cp -r skills/ResearchPilot-Skills-zh/research[G.1]-method          ~/.codex/skills/
+cp -r skills/ResearchPilot-Skills-zh/research[G.2]-experiments     ~/.codex/skills/
+cp -r skills/ResearchPilot-Skills-zh/research[G.3]-abstract        ~/.codex/skills/
+cp -r skills/ResearchPilot-Skills-zh/research[G.4]-introduction    ~/.codex/skills/
+cp -r skills/ResearchPilot-Skills-zh/research[G.5]-related         ~/.codex/skills/
+cp -r skills/ResearchPilot-Skills-zh/research[G.6]-conclusion      ~/.codex/skills/
+cp -r skills/ResearchPilot-Skills-zh/research[G.7]-review          ~/.codex/skills/
+cp -r skills/ResearchPilot-Skills-zh/research[G.8]-translate       ~/.codex/skills/
 ```
 
-验证：`ls ~/.codex/skills/ | grep research`（应看到 8 个目录）
+验证：`ls ~/.codex/skills/ | grep research`（应看到 16 个目录（含 G.0–G.8））
 
 ### 腾讯 CodeBuddy
 
@@ -100,7 +116,15 @@ cp -r skills/ResearchPilot-Skills-zh/research[C]-experiment     .codebuddy/skill
 cp -r skills/ResearchPilot-Skills-zh/research[D]-implementation .codebuddy/skills/
 cp -r skills/ResearchPilot-Skills-zh/research[E]-coding         .codebuddy/skills/
 cp -r skills/ResearchPilot-Skills-zh/research[F]-iteration       .codebuddy/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[G]-paper          .codebuddy/skills/
+cp -r skills/ResearchPilot-Skills-zh/research[G.0]-plan           .codebuddy/skills/
+cp -r skills/ResearchPilot-Skills-zh/research[G.1]-method          .codebuddy/skills/
+cp -r skills/ResearchPilot-Skills-zh/research[G.2]-experiments     .codebuddy/skills/
+cp -r skills/ResearchPilot-Skills-zh/research[G.3]-abstract        .codebuddy/skills/
+cp -r skills/ResearchPilot-Skills-zh/research[G.4]-introduction    .codebuddy/skills/
+cp -r skills/ResearchPilot-Skills-zh/research[G.5]-related         .codebuddy/skills/
+cp -r skills/ResearchPilot-Skills-zh/research[G.6]-conclusion      .codebuddy/skills/
+cp -r skills/ResearchPilot-Skills-zh/research[G.7]-review          .codebuddy/skills/
+cp -r skills/ResearchPilot-Skills-zh/research[G.8]-translate       .codebuddy/skills/
 ```
 
 验证安装（任意工具）：在对话中运行 `/research[START]`，若显示阶段检测结果则安装成功。
@@ -229,7 +253,15 @@ rm -rf ~/.claude/skills/research[C]-experiment
 rm -rf ~/.claude/skills/research[D]-implementation
 rm -rf ~/.claude/skills/research[E]-coding
 rm -rf ~/.claude/skills/research[F]-iteration
-rm -rf ~/.claude/skills/research[G]-paper
+rm -rf ~/.claude/skills/research[G.0]-plan
+rm -rf ~/.claude/skills/research[G.1]-method
+rm -rf ~/.claude/skills/research[G.2]-experiments
+rm -rf ~/.claude/skills/research[G.3]-abstract
+rm -rf ~/.claude/skills/research[G.4]-introduction
+rm -rf ~/.claude/skills/research[G.5]-related
+rm -rf ~/.claude/skills/research[G.6]-conclusion
+rm -rf ~/.claude/skills/research[G.7]-review
+rm -rf ~/.claude/skills/research[G.8]-translate
 ```
 
 再将上方安装命令中的 `ResearchPilot-Skills-zh` 改为 `ResearchPilot-Skills-en` 重新安装。
