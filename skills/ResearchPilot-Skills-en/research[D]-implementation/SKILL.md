@@ -1,7 +1,7 @@
 ---
 name: research[D]-implementation
 description: >
-  ResearchPilot academic research Phase D: Implementation Design. Use after Phase C has
+  ResearchPilot Research Assistant [Phase D]: Generate function-level coding guide and run three-way validation
 version: 2.0.0
 license: LICENSE
 ---

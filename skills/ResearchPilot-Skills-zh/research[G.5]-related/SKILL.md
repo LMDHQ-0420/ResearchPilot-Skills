@@ -1,7 +1,7 @@
 ---
 name: research[G.5]-related
 description: >
-  阶段 G.5：写 / 改 Related Works。按主题分节，每节四步结构，末节固定为 Research Gap。触发格式：/research[G.5]-related
+  ResearchPilot 科研助手[阶段 G.5]：撰写 / 修改手稿 Related Works 章节
 version: 2.0.0
 license: LICENSE
 ---

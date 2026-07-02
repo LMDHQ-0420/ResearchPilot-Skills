@@ -1,7 +1,7 @@
 ---
 name: research[START]
 description: >
-  Entry point and router for the ResearchPilot academic research workflow. Triggered by
+  ResearchPilot Research Assistant [Entry]: Detect current research phase and route to the correct skill
 version: 2.0.0
 license: LICENSE
 ---

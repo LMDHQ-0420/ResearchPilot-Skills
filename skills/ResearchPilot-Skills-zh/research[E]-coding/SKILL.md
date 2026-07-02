@@ -1,7 +1,7 @@
 ---
 name: research[E]-coding
 description: >
-  ResearchPilot 学术研究阶段 E：编码。在阶段 D 完成实现设计后使用。
+  ResearchPilot 科研助手[阶段 E]：逐文件编码、维护开发日志、代码审查、git 推送
 version: 2.0.0
 license: LICENSE
 ---

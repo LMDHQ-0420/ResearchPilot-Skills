@@ -1,7 +1,7 @@
 ---
 name: research[G.0]-plan
 description: >
-  ResearchPilot 学术研究阶段 G.0：论文规划。在阶段 E/F 完成后使用。
+  ResearchPilot 科研助手[阶段 G.0]：更新 idea_report、规划论文结构与图表、生成 notebook
 version: 2.0.0
 license: LICENSE
 ---

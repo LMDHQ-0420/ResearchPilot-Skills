@@ -1,7 +1,7 @@
 ---
 name: research[G.2]-experiments
 description: >
-  ResearchPilot Phase G.2: Write / revise the Experiments section. Organizes analysis around three core questions. All data must come from real results/. Trigger: /research[G.2]-experiments
+  ResearchPilot Research Assistant [Phase G.2]: Write / revise manuscript Experiments section
 version: 2.0.0
 license: LICENSE
 ---

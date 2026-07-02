@@ -1,7 +1,7 @@
 ---
 name: research[C]-experiment
 description: >
-  ResearchPilot 学术研究阶段 C：实验设计。在阶段 B 完成 Idea 深化后使用。
+  ResearchPilot 科研助手[阶段 C]：精读 baseline 代码 → 设计主/消融/附加实验
 version: 2.0.0
 license: LICENSE
 ---

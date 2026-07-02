@@ -1,7 +1,7 @@
 ---
 name: research[E]-coding
 description: >
-  ResearchPilot academic research Phase E: Coding. Use after Phase D has completed
+  ResearchPilot Research Assistant [Phase E]: File-by-file coding, maintain dev log, code review, git push
 version: 2.0.0
 license: LICENSE
 ---

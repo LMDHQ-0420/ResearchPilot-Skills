@@ -1,7 +1,7 @@
 ---
 name: research[G.8]-translate
 description: >
-  ResearchPilot 学术研究阶段 G.8：中文稿→英文 LaTeX 翻译。仅在中文版 skill 中出现。
+  ResearchPilot 科研助手[阶段 G.8]：将中文手稿翻译为英文 LaTeX 版本（仅中文版）
 version: 2.0.0
 license: LICENSE
 ---

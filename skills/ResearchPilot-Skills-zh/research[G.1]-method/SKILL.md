@@ -1,7 +1,7 @@
 ---
 name: research[G.1]-method
 description: >
-  阶段 G.1：写 / 改 Method 章节。在 G.0 规划完成后，按 Master-cai 三要素框架（设计→动机→技术优势）撰写每个模块。触发格式：/research[G.1]-method
+  ResearchPilot 科研助手[阶段 G.1]：撰写 / 修改手稿 Method 章节
 version: 2.0.0
 license: LICENSE
 ---

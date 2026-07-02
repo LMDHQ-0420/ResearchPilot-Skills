@@ -1,7 +1,7 @@
 ---
 name: research[A]-exploration
 description: >
-  ResearchPilot 学术研究阶段 A：方向探索与调研。当用户想要从零开始探索研究方向、检索文献、
+  ResearchPilot 科研助手[阶段 A]：文献检索、RQ 三层确认、汇编 idea_report Part 1
 version: 2.0.0
 license: LICENSE
 ---

@@ -1,7 +1,7 @@
 ---
 name: research[G.3]-abstract
 description: >
-  阶段 G.3：写 / 改 Abstract。在 Method 和 Experiments 写完后使用。按三种模板（Challenge→Contribution 等）撰写，Result 句必须含真实数字。触发格式：/research[G.3]-abstract
+  ResearchPilot 科研助手[阶段 G.3]：撰写 / 修改手稿 Abstract
 version: 2.0.0
 license: LICENSE
 ---

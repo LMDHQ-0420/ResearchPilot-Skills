@@ -16,8 +16,8 @@
 
 ## News
 
+- 📄 **[2026/07/02]** Added paper writing phase G (G.0–G.7), based on Prof. Pengsida's public learning notes, covering planning, section-by-section writing, full-paper review, and more.
 - 🎉 **[2026/07/01]** Officially renamed **ResearchPilot-Skills** with a full multi-stage skill refactor, eliminating context-overload forgetting.
-- 📝 **[2026/06/07]** Added paper writing phase (G), based on Prof. Pengsida's public learning notes, covering the full journey from planning to submission.
 - 🚀 **[2026/06/04]** Project launched — initial release covering the full pipeline from direction exploration to code implementation.
 
 ---

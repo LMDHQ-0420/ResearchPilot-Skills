@@ -1,7 +1,7 @@
 ---
 name: research[G.6]-conclusion
 description: >
-  阶段 G.6：写 / 改 Conclusion 和 References。按四步结构撰写 Conclusion，完整核验参考文献。触发格式：/research[G.6]-conclusion
+  ResearchPilot 科研助手[阶段 G.6]：撰写 / 修改手稿 Conclusion 章节与参考文献
 version: 2.0.0
 license: LICENSE
 ---

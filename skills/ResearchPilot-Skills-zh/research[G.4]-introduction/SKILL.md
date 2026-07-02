@@ -1,7 +1,7 @@
 ---
 name: research[G.4]-introduction
 description: >
-  阶段 G.4：写 / 改 Introduction。在 Abstract 写完后使用。按五部分结构（任务→SOTA失败→本文方法→附加贡献→实验摘要）撰写。触发格式：/research[G.4]-introduction
+  ResearchPilot 科研助手[阶段 G.4]：撰写 / 修改手稿 Introduction 章节
 version: 2.0.0
 license: LICENSE
 ---

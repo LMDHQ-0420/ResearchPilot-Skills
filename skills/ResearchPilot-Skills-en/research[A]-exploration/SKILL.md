@@ -1,7 +1,7 @@
 ---
 name: research[A]-exploration
 description: >
-  ResearchPilot academic research Phase A: Direction Exploration. Use this skill when
+  ResearchPilot Research Assistant [Phase A]: Literature search, three-layer RQ confirmation, assemble idea_report Part 1
 version: 2.0.0
 license: LICENSE
 ---

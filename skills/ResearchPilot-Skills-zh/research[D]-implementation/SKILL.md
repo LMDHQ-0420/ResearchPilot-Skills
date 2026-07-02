@@ -1,7 +1,7 @@
 ---
 name: research[D]-implementation
 description: >
-  ResearchPilot 学术研究阶段 D：实现设计。在阶段 C 完成实验设计后使用。
+  ResearchPilot 科研助手[阶段 D]：生成函数级编码指南并执行三项校验
 version: 2.0.0
 license: LICENSE
 ---

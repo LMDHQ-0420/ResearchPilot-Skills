@@ -1,7 +1,7 @@
 ---
 name: research[F]-iteration
 description: >
-  ResearchPilot 学术研究阶段 F：代码迭代与模型优化。在阶段 E 编码完成、实验效果不佳时使用。
+  ResearchPilot 科研助手[阶段 F]：诊断实验结果、先改文档再改代码、追加迭代日志
 version: 2.0.0
 license: LICENSE
 ---

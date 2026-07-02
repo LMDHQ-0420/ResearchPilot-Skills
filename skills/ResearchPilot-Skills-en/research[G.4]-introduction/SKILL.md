@@ -1,7 +1,7 @@
 ---
 name: research[G.4]-introduction
 description: >
-  ResearchPilot Phase G.4: Write / revise the Introduction. Five-part structure: task→SOTA failure→proposed method→additional contributions→experiment summary. Trigger: /research[G.4]-introduction
+  ResearchPilot Research Assistant [Phase G.4]: Write / revise manuscript Introduction section
 version: 2.0.0
 license: LICENSE
 ---

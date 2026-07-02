@@ -1,7 +1,7 @@
 ---
 name: research[G.6]-conclusion
 description: >
-  ResearchPilot Phase G.6: Write / revise Conclusion and References. Four-step Conclusion structure plus complete reference verification. Trigger: /research[G.6]-conclusion
+  ResearchPilot Research Assistant [Phase G.6]: Write / revise manuscript Conclusion and References
 version: 2.0.0
 license: LICENSE
 ---

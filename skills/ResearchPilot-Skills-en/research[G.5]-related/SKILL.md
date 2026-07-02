@@ -1,7 +1,7 @@
 ---
 name: research[G.5]-related
 description: >
-  ResearchPilot Phase G.5: Write / revise Related Works. Topic-based sections with four-step structure, final section fixed as Research Gap. Trigger: /research[G.5]-related
+  ResearchPilot Research Assistant [Phase G.5]: Write / revise manuscript Related Works section
 version: 2.0.0
 license: LICENSE
 ---

@@ -1,7 +1,7 @@
 ---
 name: research[G.3]-abstract
 description: >
-  ResearchPilot Phase G.3: Write / revise the Abstract. Uses three templates (Challenge→Contribution etc.). Result sentence must contain real numbers. Trigger: /research[G.3]-abstract
+  ResearchPilot Research Assistant [Phase G.3]: Write / revise manuscript Abstract
 version: 2.0.0
 license: LICENSE
 ---

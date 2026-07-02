@@ -1,7 +1,7 @@
 ---
 name: research[G.0]-plan
 description: >
-  ResearchPilot Phase G.0: Paper Planning. Used after Phase E/F. Updates idea_report.md against code, plans paper structure and figures, selects format (md/LaTeX), uploads writing examples, and writes detailed architecture comments into the manuscript. Trigger: /research[G.0]-plan
+  ResearchPilot Research Assistant [Phase G.0]: Update idea_report, plan paper structure and figures, generate notebook
 version: 2.0.0
 license: LICENSE
 ---

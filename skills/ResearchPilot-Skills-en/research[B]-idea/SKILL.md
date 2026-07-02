@@ -1,7 +1,7 @@
 ---
 name: research[B]-idea
 description: >
-  ResearchPilot academic research Phase B: Idea Deepening. Use after Phase A has
+  ResearchPilot Research Assistant [Phase B]: Technical framework → pipeline confirmation → write Method and Introduction
 version: 2.0.0
 license: LICENSE
 ---

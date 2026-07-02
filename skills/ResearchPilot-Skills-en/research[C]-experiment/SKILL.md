@@ -1,7 +1,7 @@
 ---
 name: research[C]-experiment
 description: >
-  ResearchPilot academic research Phase C: Experiment Design. Use after Phase B has
+  ResearchPilot Research Assistant [Phase C]: Deep-read baseline code → design main/ablation/additional experiments
 version: 2.0.0
 license: LICENSE
 ---

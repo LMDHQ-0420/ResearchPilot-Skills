@@ -1,7 +1,7 @@
 ---
 name: research[B]-idea
 description: >
-  ResearchPilot 学术研究阶段 B：Idea 深化。在阶段 A 确认研究方向和 RQ 之后使用。
+  ResearchPilot 科研助手[阶段 B]：技术框架 → pipeline 确认 → 撰写 Method 与 Introduction
 version: 2.0.0
 license: LICENSE
 ---

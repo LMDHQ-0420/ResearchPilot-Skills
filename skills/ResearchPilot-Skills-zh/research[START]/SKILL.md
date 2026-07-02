@@ -1,7 +1,7 @@
 ---
 name: research[START]
 description: >
-  ResearchPilot 学术研究流程的入口与路由 skill。当用户输入 /research[START] 或 /research 描述方向时触发，
+  ResearchPilot 科研助手[入口]：检测当前研究阶段，路由到对应 skill
   检测当前项目所处阶段，引导用户使用对应的阶段 skill。不执行任何研究工作，只做阶段检测和路由。
 version: 2.0.0
 license: LICENSE

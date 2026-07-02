@@ -1,7 +1,7 @@
 ---
 name: research[G.2]-experiments
 description: >
-  阶段 G.2：写 / 改 Experiments 章节。在 Method 完成后使用。按三个核心问题组织实验分析，数据必须来自 results/ 真实结果。触发格式：/research[G.2]-experiments
+  ResearchPilot 科研助手[阶段 G.2]：撰写 / 修改手稿 Experiments 章节
 version: 2.0.0
 license: LICENSE
 ---

@@ -1,7 +1,7 @@
 ---
 name: research[F]-iteration
 description: >
-  ResearchPilot academic research Phase F: Code Iteration and Model Improvement. Use after
+  ResearchPilot Research Assistant [Phase F]: Diagnose experiment results, update docs before code, append iteration log
 version: 2.0.0
 license: LICENSE
 ---

@@ -1,7 +1,7 @@
 ---
 name: research[G.7]-review
 description: >
-  ResearchPilot 学术研究阶段 G.7：整稿审阅。在论文各章节写完后使用。
+  ResearchPilot 科研助手[阶段 G.7]：整稿五维度审阅与 claim-evidence 对齐核查
 version: 2.0.0
 license: LICENSE
 ---
