@@ -2,10 +2,6 @@
 name: research[A]-exploration
 description: >
   ResearchPilot academic research Phase A: Direction Exploration. Use this skill when
-  starting from scratch to explore a research direction, search literature, and
-  iteratively confirm research direction and research questions (RQs).
-  Trigger: /research[A]-exploration followed by a research description.
-  Also supports standalone paper download: /research[A]-exploration download-paper description.
 version: 2.0.0
 license: LICENSE
 ---
@@ -33,7 +29,15 @@ stage skills. The current skill is one link in that chain.
 | `/research[C]-experiment` | Experiment Design | `docs/idea_report.md` Part 3 |
 | `/research[D]-implementation` | Implementation Design | `docs/implementation.md` |
 | `/research[E]-coding` | Coding | `code/` + `docs/dev_log.md` |
-| `/research[F]-paper` | Paper Writing | `docs/manuscripts/v*.md` |
+| `/research[F]-iteration` | Code Iteration | `dev_log.md` iteration records |
+| `/research[G.0]-plan` | Paper Planning | manuscript architecture + `notebooks/figures.ipynb` |
+| `/research[G.1]-method` | Method | manuscript Method section |
+| `/research[G.2]-experiments` | Experiments | manuscript Experiments section |
+| `/research[G.3]-abstract` | Abstract | manuscript Abstract |
+| `/research[G.4]-introduction` | Introduction | manuscript Introduction |
+| `/research[G.5]-related` | Related Works | manuscript Related Works |
+| `/research[G.6]-conclusion` | Conclusion + References | manuscript Conclusion |
+| `/research[G.7]-review` | Full-paper Review | review report |
 
 ### Project Directory Structure
 

@@ -1,12 +1,7 @@
 ---
 name: research[F]-iteration
 description: >
-  CCFA academic research Phase F: Code Iteration and Model Improvement. Use after
-  Phase E coding is complete and experiment results are unsatisfactory. Reads
-  dev_log.md and results/ data together with idea_report.md to produce a systematic
-  diagnosis, confirms the scope of changes, updates design documents before touching
-  code, and appends every change to dev_log. Supports multiple iteration rounds.
-  Trigger: /research[F]-iteration
+  ResearchPilot academic research Phase F: Code Iteration and Model Improvement. Use after
 version: 2.0.0
 license: LICENSE
 ---
@@ -28,8 +23,15 @@ ResearchPilot-Skills splits a complete academic research project into seven inde
 | `/research[C]-experiment` | Experiment Design | `docs/idea_report.md` Part 3 |
 | `/research[D]-implementation` | Implementation Design | `docs/implementation.md` |
 | `/research[E]-coding` | Coding | `code/` + `docs/dev_log.md` |
-| `/research[F]-iteration` | Code Iteration | `dev_log.md` appended iteration records |
-| `/research[G]-paper` | Paper Writing | `docs/manuscripts/v*.md` |
+| `/research[F]-iteration` | Code Iteration | `dev_log.md` iteration records |
+| `/research[G.0]-plan` | Paper Planning | manuscript architecture + `notebooks/figures.ipynb` |
+| `/research[G.1]-method` | Method | manuscript Method section |
+| `/research[G.2]-experiments` | Experiments | manuscript Experiments section |
+| `/research[G.3]-abstract` | Abstract | manuscript Abstract |
+| `/research[G.4]-introduction` | Introduction | manuscript Introduction |
+| `/research[G.5]-related` | Related Works | manuscript Related Works |
+| `/research[G.6]-conclusion` | Conclusion + References | manuscript Conclusion |
+| `/research[G.7]-review` | Full-paper Review | review report |
 
 ### Project Directory Structure
 

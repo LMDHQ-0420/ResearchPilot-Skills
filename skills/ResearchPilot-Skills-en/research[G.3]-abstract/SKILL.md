@@ -1,7 +1,7 @@
 ---
 name: research[G.3]-abstract
 description: >
-  CCFA research Phase G.3: Write / revise the Abstract. Uses three templates (Challenge→Contribution etc.). Result sentence must contain real numbers. Trigger: /research[G.3]-abstract
+  ResearchPilot Phase G.3: Write / revise the Abstract. Uses three templates (Challenge→Contribution etc.). Result sentence must contain real numbers. Trigger: /research[G.3]-abstract
 version: 2.0.0
 license: LICENSE
 ---

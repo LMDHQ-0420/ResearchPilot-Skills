@@ -1,10 +1,7 @@
 ---
 name: research[G.0]-plan
 description: >
-  CCFA 学术研究阶段 G.0：论文规划。在阶段 E/F 完成后使用。
-  对比代码与 idea_report.md 并更新、规划论文结构与图表、选择格式（md/LaTeX）、
-  询问写作范例、询问写作语言（中文版）、将详细架构注释写入手稿、生成图表 notebook。
-  触发格式：/research[G.0]-plan
+  ResearchPilot 学术研究阶段 G.0：论文规划。在阶段 E/F 完成后使用。
 version: 2.0.0
 license: LICENSE
 ---

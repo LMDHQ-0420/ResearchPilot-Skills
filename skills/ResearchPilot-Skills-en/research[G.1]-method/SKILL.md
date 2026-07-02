@@ -1,7 +1,7 @@
 ---
 name: research[G.1]-method
 description: >
-  CCFA research Phase G.1: Write / revise the Method section. Uses Master-cai three-element framework (design→motivation→technical advantage) for each module. Trigger: /research[G.1]-method
+  ResearchPilot Phase G.1: Write / revise the Method section. Uses Master-cai three-element framework (design→motivation→technical advantage) for each module. Trigger: /research[G.1]-method
 version: 2.0.0
 license: LICENSE
 ---

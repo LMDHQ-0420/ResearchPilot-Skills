@@ -2,10 +2,6 @@
 name: research[B]-idea
 description: >
   ResearchPilot academic research Phase B: Idea Deepening. Use after Phase A has
-  confirmed the research direction and RQs. Deepens the research question into
-  an implementable method through three layers of confirmation: technical
-  framework → detailed pipeline → Introduction polish. Produces idea_report.md
-  Part 2. Trigger: /research[B]-idea
 version: 2.0.0
 license: LICENSE
 ---
@@ -35,7 +31,15 @@ stage skills. The current skill is one link in that chain.
 | `/research[C]-experiment` | Experiment Design | `docs/idea_report.md` Part 3 |
 | `/research[D]-implementation` | Implementation Design | `docs/implementation.md` |
 | `/research[E]-coding` | Coding | `code/` + `docs/dev_log.md` |
-| `/research[F]-paper` | Paper Writing | `docs/manuscripts/v*.md` |
+| `/research[F]-iteration` | Code Iteration | `dev_log.md` iteration records |
+| `/research[G.0]-plan` | Paper Planning | manuscript architecture + `notebooks/figures.ipynb` |
+| `/research[G.1]-method` | Method | manuscript Method section |
+| `/research[G.2]-experiments` | Experiments | manuscript Experiments section |
+| `/research[G.3]-abstract` | Abstract | manuscript Abstract |
+| `/research[G.4]-introduction` | Introduction | manuscript Introduction |
+| `/research[G.5]-related` | Related Works | manuscript Related Works |
+| `/research[G.6]-conclusion` | Conclusion + References | manuscript Conclusion |
+| `/research[G.7]-review` | Full-paper Review | review report |
 
 ### Project Directory Structure
 

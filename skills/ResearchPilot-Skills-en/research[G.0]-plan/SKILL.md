@@ -1,7 +1,7 @@
 ---
 name: research[G.0]-plan
 description: >
-  CCFA research Phase G.0: Paper Planning. Used after Phase E/F. Updates idea_report.md against code, plans paper structure and figures, selects format (md/LaTeX), uploads writing examples, and writes detailed architecture comments into the manuscript. Trigger: /research[G.0]-plan
+  ResearchPilot Phase G.0: Paper Planning. Used after Phase E/F. Updates idea_report.md against code, plans paper structure and figures, selects format (md/LaTeX), uploads writing examples, and writes detailed architecture comments into the manuscript. Trigger: /research[G.0]-plan
 version: 2.0.0
 license: LICENSE
 ---

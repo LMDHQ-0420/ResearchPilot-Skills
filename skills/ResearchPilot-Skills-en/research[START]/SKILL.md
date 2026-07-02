@@ -2,9 +2,6 @@
 name: research[START]
 description: >
   Entry point and router for the ResearchPilot academic research workflow. Triggered by
-  /research[START] or /research with a description. Detects the current project
-  phase and guides the user to the correct stage skill. Does not perform any
-  research work — only detects and routes.
 version: 2.0.0
 license: LICENSE
 ---
@@ -31,15 +28,15 @@ stage skills. The current skill is one link in that chain.
 | `/research[C]-experiment` | Experiment Design | `docs/idea_report.md` Part 3 |
 | `/research[D]-implementation` | Implementation Design | `docs/implementation.md` |
 | `/research[E]-coding` | Coding | `code/` + `docs/dev_log.md` |
-| `/research[F]-iteration` | Code Iteration | `dev_log.md` appended iteration records |
-| `/research[G.0]-plan` | Paper planning | `docs/manuscripts/` architecture |
+| `/research[F]-iteration` | Code Iteration | `dev_log.md` iteration records |
+| `/research[G.0]-plan` | Paper Planning | manuscript architecture + `notebooks/figures.ipynb` |
 | `/research[G.1]-method` | Method | manuscript Method section |
 | `/research[G.2]-experiments` | Experiments | manuscript Experiments section |
 | `/research[G.3]-abstract` | Abstract | manuscript Abstract |
 | `/research[G.4]-introduction` | Introduction | manuscript Introduction |
 | `/research[G.5]-related` | Related Works | manuscript Related Works |
 | `/research[G.6]-conclusion` | Conclusion + References | manuscript Conclusion |
-| `/research[G.7]-review` | Full-paper review | review report |
+| `/research[G.7]-review` | Full-paper Review | review report |
 
 ### Project Directory Structure
 
@@ -153,8 +150,16 @@ Available at any time, regardless of phase state:
 | Skill | Phase | Main Output |
 |-------|-------|-------------|
 | `/research[A]-exploration` | Direction Exploration | `docs/idea_report.md` Part 1 |
-| `/research[B]-idea` | Idea Deepening | `idea_report.md` Part 2 |
-| `/research[C]-experiment` | Experiment Design | `idea_report.md` Part 3 |
+| `/research[B]-idea` | Idea Deepening | `docs/idea_report.md` Part 2 |
+| `/research[C]-experiment` | Experiment Design | `docs/idea_report.md` Part 3 |
 | `/research[D]-implementation` | Implementation Design | `docs/implementation.md` |
-| `/research[E]-coding` | Coding | Code + `docs/dev_log.md` |
-| `/research[F]-paper` | Paper Writing | `docs/manuscripts/v*.md` |
+| `/research[E]-coding` | Coding | `code/` + `docs/dev_log.md` |
+| `/research[F]-iteration` | Code Iteration | `dev_log.md` iteration records |
+| `/research[G.0]-plan` | Paper Planning | manuscript architecture + `notebooks/figures.ipynb` |
+| `/research[G.1]-method` | Method | manuscript Method section |
+| `/research[G.2]-experiments` | Experiments | manuscript Experiments section |
+| `/research[G.3]-abstract` | Abstract | manuscript Abstract |
+| `/research[G.4]-introduction` | Introduction | manuscript Introduction |
+| `/research[G.5]-related` | Related Works | manuscript Related Works |
+| `/research[G.6]-conclusion` | Conclusion + References | manuscript Conclusion |
+| `/research[G.7]-review` | Full-paper Review | review report |

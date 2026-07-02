@@ -1,9 +1,7 @@
 ---
 name: research[G.7]-review
 description: >
-  CCFA 学术研究阶段 G.7：整稿审阅。在论文各章节写完后使用。
-  五维度检查（贡献/写作清晰度/实验充分性/评估完整性/方法设计合理性）
-  + claim-evidence 对齐核查。可多次触发。触发格式：/research[G.7]-review
+  ResearchPilot 学术研究阶段 G.7：整稿审阅。在论文各章节写完后使用。
 version: 2.0.0
 license: LICENSE
 ---

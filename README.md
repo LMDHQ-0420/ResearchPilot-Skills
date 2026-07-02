@@ -56,78 +56,49 @@ cd ResearchPilot-Skills
 
 > 每个阶段是独立的 skill，需全部安装才能使用完整流程。中英文版互斥，不要混装。
 
-### Claude Code
+### 一键安装（推荐）
 
 ```bash
-cp -r skills/ResearchPilot-Skills-zh/research[START]            ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[A]-exploration    ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[B]-idea           ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[C]-experiment     ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[D]-implementation ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[E]-coding         ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[F]-iteration       ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[G.0]-plan           ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[G.1]-method          ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[G.2]-experiments     ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[G.3]-abstract        ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[G.4]-introduction    ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[G.5]-related         ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[G.6]-conclusion      ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[G.7]-review          ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[G.8]-translate       ~/.claude/skills/
+# Claude Code（默认）
+bash install-zh.sh
+
+# OpenAI Codex CLI
+bash install-zh.sh codex
+
+# 腾讯 CodeBuddy（在项目目录下运行）
+bash install-zh.sh codebuddy
 ```
 
-验证：`ls ~/.claude/skills/ | grep research`（应看到 16 个目录（含 G.0–G.8））
-
-### OpenAI Codex CLI
+安装完成后验证：
 
 ```bash
-mkdir -p ~/.codex/skills
-cp -r skills/ResearchPilot-Skills-zh/research[START]            ~/.codex/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[A]-exploration    ~/.codex/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[B]-idea           ~/.codex/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[C]-experiment     ~/.codex/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[D]-implementation ~/.codex/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[E]-coding         ~/.codex/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[F]-iteration       ~/.codex/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[G.0]-plan           ~/.codex/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[G.1]-method          ~/.codex/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[G.2]-experiments     ~/.codex/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[G.3]-abstract        ~/.codex/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[G.4]-introduction    ~/.codex/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[G.5]-related         ~/.codex/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[G.6]-conclusion      ~/.codex/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[G.7]-review          ~/.codex/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[G.8]-translate       ~/.codex/skills/
+ls ~/.claude/skills/ | grep research
 ```
 
-验证：`ls ~/.codex/skills/ | grep research`（应看到 16 个目录（含 G.0–G.8））
+应看到 16 个目录（`research[START]`、`research[A]-exploration` … `research[G.8]-translate`）。
 
-### 腾讯 CodeBuddy
-
-CodeBuddy 的 skill 安装在 workspace 的 `.codebuddy/skills/` 目录下：
+然后在 Claude Code 中运行：
 
 ```bash
-mkdir -p .codebuddy/skills
-cp -r skills/ResearchPilot-Skills-zh/research[START]            .codebuddy/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[A]-exploration    .codebuddy/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[B]-idea           .codebuddy/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[C]-experiment     .codebuddy/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[D]-implementation .codebuddy/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[E]-coding         .codebuddy/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[F]-iteration       .codebuddy/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[G.0]-plan           .codebuddy/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[G.1]-method          .codebuddy/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[G.2]-experiments     .codebuddy/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[G.3]-abstract        .codebuddy/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[G.4]-introduction    .codebuddy/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[G.5]-related         .codebuddy/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[G.6]-conclusion      .codebuddy/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[G.7]-review          .codebuddy/skills/
-cp -r skills/ResearchPilot-Skills-zh/research[G.8]-translate       .codebuddy/skills/
+/research[START]
 ```
 
-验证安装（任意工具）：在对话中运行 `/research[START]`，若显示阶段检测结果则安装成功。
+若显示阶段检测结果，说明安装成功。
+
+### 卸载
+
+```bash
+bash uninstall.sh           # Claude Code
+bash uninstall.sh codex     # Codex
+bash uninstall.sh codebuddy # CodeBuddy
+```
+
+### 切换为英文版
+
+```bash
+bash uninstall.sh   # 先卸载中文版
+bash install-en.sh  # 安装英文版
+```
 
 ---
 
@@ -135,14 +106,17 @@ cp -r skills/ResearchPilot-Skills-zh/research[G.8]-translate       .codebuddy/sk
 
 | 命令 | 说明 |
 |------|------|
-| `/research[START] 研究方向描述` | 检测当前阶段，自动路由到对应 skill |
+| `/research[START]` | 检测当前阶段，自动路由到对应 skill |
+| `/research[START] 研究方向描述` | 同上，并将描述传递给阶段 A |
 | `/research[A]-exploration 研究方向描述` | 直接进入方向探索（全新项目从这里开始）|
 | `/research[B]-idea` | 进入 Idea 深化 |
 | `/research[C]-experiment` | 进入实验设计 |
 | `/research[D]-implementation` | 进入实现设计 |
 | `/research[E]-coding` | 进入编码 |
 | `/research[F]-iteration` | 进入代码迭代 |
-| `/research[G]-paper` | 进入论文撰写 |
+| `/research[G.0]-plan` | 进入论文规划 |
+| `/research[G.1]-method` … `/research[G.7]-review` | 写各章节 / 整稿审阅 |
+| `/research[G.8]-translate` | 中→英翻译（仅中文版）|
 | `/research[A]-exploration download-paper 描述 [--to "路径"]` | 独立下载单篇论文（随时可用）|
 
 > `/research 描述` 是 `/research[START] 描述` 的向后兼容别名。
@@ -181,7 +155,7 @@ cp -r skills/ResearchPilot-Skills-zh/research[G.8]-translate       .codebuddy/sk
 | **D** | 实现设计 | 生成精确到函数的编码指南，自动校验覆盖/一致性/完整性 | `implementation.md` |
 | **E** | 编码 | 按指南逐文件实现，同步维护开发日志，逐模块校验，完工后主动代码审查 | 代码 + `dev_log.md` |
 | **F** | 代码迭代 | 读取实验结果诊断问题，先更新设计文档再改代码，每次改动追加日志，支持多轮迭代 | `dev_log.md` 迭代记录 |
-| **G** | 论文撰写 | 先确认论文结构，生成初稿，按批注逐版改稿（每版独立存档），引导生成图表 | `docs/manuscripts/` 论文 |
+| **G** | 论文撰写（9 个子阶段）| G.0 规划→G.1 Method→G.2 Experiments→G.3 Abstract→G.4 Introduction→G.5 Related→G.6 Conclusion→G.7 审阅→G.8 翻译 | `docs/manuscripts/` |
 
 阶段间均有强制人工确认节点，未经确认绝不跳到下一阶段。每个阶段具体做什么、如何与你交互，见 **[完整流程详解 →](WORKFLOW.md)**。
 

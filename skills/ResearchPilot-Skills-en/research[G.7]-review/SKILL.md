@@ -1,7 +1,7 @@
 ---
 name: research[G.7]-review
 description: >
-  CCFA research Phase G.7: Full-paper adversarial review. Five dimensions (contribution/clarity/experimental strength/evaluation completeness/method soundness) plus claim-evidence alignment. Trigger: /research[G.7]-review
+  ResearchPilot Phase G.7: Full-paper adversarial review. Five dimensions (contribution/clarity/experimental strength/evaluation completeness/method soundness) plus claim-evidence alignment. Trigger: /research[G.7]-review
 version: 2.0.0
 license: LICENSE
 ---

@@ -27,7 +27,7 @@ code implementation, and paper writing — all through natural conversation.
 
 ## Overview
 
-ResearchPilot-Skills is a set of SKILL.md-compatible academic research skills, supporting **Claude Code**, **OpenAI Codex CLI**, **Tencent CodeBuddy**, and other mainstream AI coding assistants. Each of the six phases is an independent skill loaded only when needed — precise context, no forgetting from oversized prompts.
+ResearchPilot-Skills is a set of SKILL.md-compatible academic research skills, supporting **Claude Code**, **OpenAI Codex CLI**, **Tencent CodeBuddy**, and other mainstream AI coding assistants. Each of the seven phases is an independent skill loaded only when needed — precise context, no forgetting from oversized prompts.
 
 ---
 
@@ -54,77 +54,51 @@ git clone https://github.com/LMDHQ-0420/ResearchPilot-Skills.git
 cd ResearchPilot-Skills
 ```
 
-> Each phase is an independent skill — all 7 must be installed for the full workflow. Chinese and English versions are mutually exclusive; do not mix them.
+> Each phase is an independent skill. Chinese and English versions are mutually exclusive; do not mix them.
 
-### Claude Code
-
-```bash
-cp -r skills/ResearchPilot-Skills-en/research[START]            ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-en/research[A]-exploration    ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-en/research[B]-idea           ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-en/research[C]-experiment     ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-en/research[D]-implementation ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-en/research[E]-coding         ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-en/research[F]-iteration       ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-en/research[G.0]-plan           ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-en/research[G.1]-method          ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-en/research[G.2]-experiments     ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-en/research[G.3]-abstract        ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-en/research[G.4]-introduction    ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-en/research[G.5]-related         ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-en/research[G.6]-conclusion      ~/.claude/skills/
-cp -r skills/ResearchPilot-Skills-en/research[G.7]-review          ~/.claude/skills/
-```
-
-Verify: `ls ~/.claude/skills/ | grep research` (should show 15+ directories (including G.0–G.7))
-
-### OpenAI Codex CLI
+### One-Command Install (Recommended)
 
 ```bash
-mkdir -p ~/.codex/skills
-cp -r skills/ResearchPilot-Skills-en/research[START]            ~/.codex/skills/
-cp -r skills/ResearchPilot-Skills-en/research[A]-exploration    ~/.codex/skills/
-cp -r skills/ResearchPilot-Skills-en/research[B]-idea           ~/.codex/skills/
-cp -r skills/ResearchPilot-Skills-en/research[C]-experiment     ~/.codex/skills/
-cp -r skills/ResearchPilot-Skills-en/research[D]-implementation ~/.codex/skills/
-cp -r skills/ResearchPilot-Skills-en/research[E]-coding         ~/.codex/skills/
-cp -r skills/ResearchPilot-Skills-en/research[F]-iteration       ~/.codex/skills/
-cp -r skills/ResearchPilot-Skills-en/research[G.0]-plan           ~/.codex/skills/
-cp -r skills/ResearchPilot-Skills-en/research[G.1]-method          ~/.codex/skills/
-cp -r skills/ResearchPilot-Skills-en/research[G.2]-experiments     ~/.codex/skills/
-cp -r skills/ResearchPilot-Skills-en/research[G.3]-abstract        ~/.codex/skills/
-cp -r skills/ResearchPilot-Skills-en/research[G.4]-introduction    ~/.codex/skills/
-cp -r skills/ResearchPilot-Skills-en/research[G.5]-related         ~/.codex/skills/
-cp -r skills/ResearchPilot-Skills-en/research[G.6]-conclusion      ~/.codex/skills/
-cp -r skills/ResearchPilot-Skills-en/research[G.7]-review          ~/.codex/skills/
+# Claude Code (default)
+bash install-en.sh
+
+# OpenAI Codex CLI
+bash install-en.sh codex
+
+# Tencent CodeBuddy (run inside your project directory)
+bash install-en.sh codebuddy
 ```
 
-Verify: `ls ~/.codex/skills/ | grep research` (should show 15+ directories (including G.0–G.7))
-
-### Tencent CodeBuddy
-
-CodeBuddy skills are installed in the `.codebuddy/skills/` directory inside your workspace:
+Verify:
 
 ```bash
-mkdir -p .codebuddy/skills
-cp -r skills/ResearchPilot-Skills-en/research[START]            .codebuddy/skills/
-cp -r skills/ResearchPilot-Skills-en/research[A]-exploration    .codebuddy/skills/
-cp -r skills/ResearchPilot-Skills-en/research[B]-idea           .codebuddy/skills/
-cp -r skills/ResearchPilot-Skills-en/research[C]-experiment     .codebuddy/skills/
-cp -r skills/ResearchPilot-Skills-en/research[D]-implementation .codebuddy/skills/
-cp -r skills/ResearchPilot-Skills-en/research[E]-coding         .codebuddy/skills/
-cp -r skills/ResearchPilot-Skills-en/research[F]-iteration       .codebuddy/skills/
-cp -r skills/ResearchPilot-Skills-en/research[G.0]-plan           .codebuddy/skills/
-cp -r skills/ResearchPilot-Skills-en/research[G.1]-method          .codebuddy/skills/
-cp -r skills/ResearchPilot-Skills-en/research[G.2]-experiments     .codebuddy/skills/
-cp -r skills/ResearchPilot-Skills-en/research[G.3]-abstract        .codebuddy/skills/
-cp -r skills/ResearchPilot-Skills-en/research[G.4]-introduction    .codebuddy/skills/
-cp -r skills/ResearchPilot-Skills-en/research[G.5]-related         .codebuddy/skills/
-cp -r skills/ResearchPilot-Skills-en/research[G.6]-conclusion      .codebuddy/skills/
-cp -r skills/ResearchPilot-Skills-en/research[G.7]-review          .codebuddy/skills/
+ls ~/.claude/skills/ | grep research
 ```
 
-Verify installation (any tool): run `/research[START]` in conversation — if it shows a phase detection result, installation succeeded.
+You should see 15 directories (`research[START]`, `research[A]-exploration` … `research[G.7]-review`).
+
+Then run in Claude Code:
+
+```bash
+/research[START]
+```
+
+If it shows a phase detection result, installation succeeded.
+
+### Uninstall
+
+```bash
+bash uninstall.sh           # Claude Code
+bash uninstall.sh codex     # Codex
+bash uninstall.sh codebuddy # CodeBuddy
+```
+
+### Switch to Chinese Version
+
+```bash
+bash uninstall.sh   # remove English version first
+bash install-zh.sh  # install Chinese version
+```
 
 ---
 
@@ -139,7 +113,9 @@ Verify installation (any tool): run `/research[START]` in conversation — if it
 | `/research[D]-implementation` | Enter Implementation Design |
 | `/research[E]-coding` | Enter Coding |
 | `/research[F]-iteration` | Enter Code Iteration |
-| `/research[G]-paper` | Enter Paper Writing |
+| `/research[G.0]-plan` | Enter Paper Planning |
+| `/research[G.1]-method` … `/research[G.7]-review` | Write sections / full-paper review |
+| `/research[A]-exploration download-paper description [--to "path"]` | Download a single paper (standalone) |
 | `/research[A]-exploration download-paper description [--to "path"]` | Download a single paper (standalone, works anytime) |
 
 > `/research description` is a backward-compatible alias for `/research[START] description`.

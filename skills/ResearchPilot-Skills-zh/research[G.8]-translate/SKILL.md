@@ -1,9 +1,7 @@
 ---
 name: research[G.8]-translate
 description: >
-  CCFA 学术研究阶段 G.8：中文稿→英文 LaTeX 翻译。仅在中文版 skill 中出现。
-  将中文手稿翻译为英文 LaTeX，每句英文上方保留中文注释，中英文共用同一份 .bib 文件。
-  触发格式：/research[G.8]-translate
+  ResearchPilot 学术研究阶段 G.8：中文稿→英文 LaTeX 翻译。仅在中文版 skill 中出现。
 version: 2.0.0
 license: LICENSE
 ---
