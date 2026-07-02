@@ -353,6 +353,7 @@ Every G.1–G.6 skill must execute before writing:
 
 ```
 === Paper Architecture ===
+Paper title: {confirmed title}
 Target venue: {name}
 
 1. Introduction
