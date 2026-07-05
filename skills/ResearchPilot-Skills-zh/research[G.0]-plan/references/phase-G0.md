@@ -270,31 +270,99 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 import numpy as np
 
-# CCFA/IEEE 全局样式
+# 全局样式
 mpl.rcParams.update({
-    'font.family': 'Times New Roman',
-    'font.size': 8,
-    'axes.titlesize': 9,
-    'axes.labelsize': 8,
-    'xtick.labelsize': 7,
-    'ytick.labelsize': 7,
-    'legend.fontsize': 7,
+    'font.family': 'Arial',          # 顶刊标准；Arial 不可用时回退 DejaVu Sans
+    'svg.fonttype': 'none',          # SVG 文字保持可编辑
+    'pdf.fonttype': 42,              # PDF 文字保持可编辑
+    'font.size': 7,
+    'axes.titlesize': 8,
+    'axes.labelsize': 7,
+    'xtick.labelsize': 6,
+    'ytick.labelsize': 6,
+    'legend.fontsize': 6,
     'lines.linewidth': 1.0,
     'lines.markersize': 4,
+    'axes.linewidth': 0.8,
     'axes.spines.right': False,
     'axes.spines.top': False,
+    'legend.frameon': False,
     'figure.dpi': 300,
     'savefig.dpi': 300,
     'savefig.bbox': 'tight',
 })
 
 # 语义化色板（colorblind-safe）
+# 规则：红色 / 橙色专用于失败 / 降级 / 警示，不得用于普通 baseline
 COLORS = {
-    'proposed': '#2166AC',   # 蓝：本文方法
-    'baseline': '#D6604D',   # 红：baseline
-    'variant':  '#4DAC26',   # 绿：消融变体
-    'ref':      '#999999',   # 灰：参考线/下界
+    'proposed':  '#2CB1A1',  # teal：本文方法（全图统一）
+    'baseline1': '#4C78A8',  # 蓝：强 baseline
+    'baseline2': '#8172D5',  # 紫：次 baseline
+    'baseline3': '#B4C0E4',  # 淡蓝：弱 / 经典 baseline
+    'variant':   '#4DAC26',  # 绿：消融变体
+    'ref':       '#909090',  # 灰：参考线 / 不可用 baseline
+    'failure':   '#C44E52',  # 红：失败 / 降级 / 超时（专用）
+    'warning':   '#E6A23C',  # 橙：警示 / 阈值（专用）
+    'neutral':   '#D9D9D9',  # 浅灰：缺失值填充
 }
+
+# 图类型选择规则：
+#   主质量指标（多方法 × 多数据集） → 分组柱状图 或 方法×数据集热图
+#   运行时 / 内存对比               → 方法×数据集热图（log10 值）
+#   加速比排名                      → 水平 lollipop（对数 x 轴），显示中位数 ± IQR
+#   消融组件贡献                    → delta lollipop 或哑铃图（paired slope）
+#                                     不用普通柱状图（除非绝对量是核心信息）
+#   参数敏感性                      → small-multiple 折线图，端点直接标签，不用图例
+#   可扩展性 / 延迟趋势             → 对数 x 折线图，端点直接标签
+#   多指标权衡（如 F1 vs 运行时）   → scatter，双轴标注方向（↑better / ↓better）
+#   鲁棒性 / 失败分析               → 失败区域热图 或 heat-bubble 矩阵
+
+# 对数坐标规则（强制）：
+#   运行时 / 内存 / 加速比：max/min > 10 时必须用对数坐标
+#   精度 / F1 / 召回率：0–1 或 0–100 线性坐标，不缩放
+#   误差指标（MAE/RMSE 等）：轴标签标注 "↓ better"
+
+# 缺失 / 超时 baseline 处理（不得静默丢弃）：
+#   热图：用 COLORS['neutral'] 填充对应格，标注 "N/A" 或 "T/O"
+#   柱状图：用虚线框占位，标注 "N/A" 或 "T/O"
+
+# 布局规则：
+#   4–6 个 panel 为宜
+#   主 claim panel（主实验对比）应大于辅助 panel，不做等大网格
+#   机制 / 消融 / 效率 panel 压缩为一行
+#   图例：优先端点直接标签；需要图例时用一条共享图例条，不在每个 panel 重复
+
+# 布局防护规则（每张图都必须遵守，防止常见排版问题）
+#
+# 1. 整体布局方式（二选一，不得混用）
+#    方案 A：等大网格  →  plt.subplots(..., constrained_layout=True)
+#    方案 B：不等大 GridSpec  →  fig.add_gridspec(..., hspace=0.6, wspace=0.55)
+#            + fig.subplots_adjust(left=0.08, right=0.98, top=0.96, bottom=0.11)
+#    禁止：constrained_layout=True 与手动 GridSpec hspace/wspace 同时使用
+#    保存：fig.savefig(..., bbox_inches="tight") 两种方案都必须加
+#
+# 2. x 轴标签
+#    - 标签数 > 8：rotation=35, ha="right", fontsize=6
+#    - 标签字符 > 12：截断为 11 字符 + "..."（在 set_xticks 前处理，不在渲染后处理）
+#    - 上限：x 轴 ≤ 12 个，y 轴 ≤ 10 个
+#
+# 3. 图例防遮挡
+#    - 2–6 条折线：用端点直接标注（ax.annotate + textcoords="offset points"）
+#    - 必须用图例时：ax.legend(frameon=False, fontsize=6)，不放在数据密集区域
+#
+# 4. Colorbar
+#    - fraction=0.033（panel 多）或 0.046（panel 少），pad=0.012–0.02
+#    - cbar.ax.tick_params(labelsize=body_fontsize - 1)
+#    - cbar.outline.set_visible(False)
+#
+# 5. Panel 标签与标题分离（防碰撞）
+#    - 字母标签：ax.text(-0.11, 1.055, "a", transform=ax.transAxes,
+#                        fontsize=8.4, fontweight="bold", va="bottom", ha="left")
+#    - 标题：ax.set_title("短名词短语", loc="left", fontsize=7.6, pad=4.5)
+#    - 两者必须分开设置，不合并
+#
+# 6. 多 panel 间距参考（3 行图含旋转标签）
+#    hspace=0.62, wspace=0.56, bottom=0.105
 
 # 从 results/ 读取真实数据
 # data = ...（从 results/ 下的 json/csv 文件读取）
@@ -304,9 +372,21 @@ fig, axes = plt.subplots(...)
 # ... 绘图代码 ...
 
 # 输出到 notebooks/fig/（SVG 矢量 + PNG 300dpi）
-# fig.savefig('notebooks/fig/Fig_N.svg', format='svg')
-# fig.savefig('notebooks/fig/Fig_N.png', dpi=300)
+# fig.savefig('notebooks/fig/Fig_N.svg', format='svg', bbox_inches='tight')
+# fig.savefig('notebooks/fig/Fig_N.png', dpi=300, bbox_inches='tight')
 plt.show()
+
+# ── 视觉自检（每张图生成后必须执行）──────────────────────────
+# 保存 PNG 后，读取 notebooks/fig/Fig_N.png，检查以下问题：
+#   - 标签 / 刻度被图边界截断
+#   - x 轴标签互相重叠
+#   - 图例遮挡数据区域
+#   - Colorbar 与 panel 内容重叠
+#   - Panel 字母标签与标题碰撞
+#   - 任何文字显示不完整
+# 发现问题 → 修改代码 → 重新生成 → 再次检查
+# 最多迭代 2 次；2 次后仍有问题则告知用户并说明原因
+# ─────────────────────────────────────────────────────────────
 ```
 
 每个表格的单元格格式：
@@ -342,14 +422,17 @@ print(df.to_latex(
 
 ---
 
-## 图片设计规范（CCFA/IEEE 风格）
+## 图片设计规范
 
-- **尺寸**：单栏图 3.5 英寸宽，双栏图 7.0 英寸宽，高度按内容比例调整
-- **字体**：Times New Roman，正文 8pt，坐标轴标签 8pt，刻度 7pt，图例 7pt
-- **线宽**：1.0–1.5pt
-- **色板**：colorblind-safe，语义化（见上方 COLORS）
-- **坐标轴**：去掉右轴和上轴（spines.right=False, spines.top=False）
-- **图例**：放图内，不单独放外
+- **尺寸**：单栏图 3.5 英寸（89mm）宽，双栏图 7.2 英寸（183mm）宽，高度按内容比例调整
+- **字体**：Arial（不可用时回退 DejaVu Sans），正文/轴标签 7pt，刻度 6pt，图例 6pt，panel 标签 8pt bold
+- **线宽**：0.8–1.5pt（坐标轴 0.8pt，数据线 1.0–1.5pt）
+- **色板**：colorblind-safe，语义化（见上方 COLORS）；红色/橙色专用于失败/降级，不用于普通 baseline
+- **坐标轴**：去掉右轴和上轴；轴线宽 0.8pt；误差指标轴标签标注"↓ better"，精度指标标注"↑ better"
+- **对数坐标**：运行时/内存/加速比 max/min > 10 时强制使用对数坐标
+- **图例**：优先端点直接标签；需要图例时用一条共享图例条，不在多个 panel 中重复
+- **缺失 baseline**：不得静默丢弃；热图用浅灰（#D9D9D9）填充并标注"N/A"或"T/O"；柱状图用虚线框占位
+- **布局**：主 claim panel 应大于辅助 panel；4–6 panel 为宜；避免等大 dashboard 格
 - **误差棒**：全文统一（均值±std 或 ±SEM，选一种，在 Experimental Setup 说明）
 - **表格**：booktabs 格式，无竖线，最优加粗，次优下划线
 - **输出**：SVG（矢量，用于编辑）+ PNG 300dpi（用于提交），保存到 `notebooks/fig/`

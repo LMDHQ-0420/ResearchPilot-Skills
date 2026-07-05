@@ -101,8 +101,32 @@ docs/implementation.md exists, docs/dev_log.md does not exist
 docs/dev_log.md exists, docs/manuscripts/ does not exist
   → Phase E: Coding in progress
 
-docs/manuscripts/ exists
-  → Phase F: Paper writing in progress
+docs/manuscripts/ exists, manuscript file has no "=== 论文架构 ===" annotation at the top
+  → G.0 not complete — use /research[G.0]-plan
+
+docs/manuscripts/ exists, manuscript has "=== 论文架构 ===" annotation but no section body text
+  → G.0 complete — use /research[G.1]-method to start writing
+
+docs/manuscripts/ exists, manuscript has Method body, no Experiments body
+  → use /research[G.2]-experiments
+
+docs/manuscripts/ exists, manuscript has Experiments, no Abstract body
+  → use /research[G.3]-abstract
+
+docs/manuscripts/ exists, manuscript has Abstract, no Introduction body
+  → use /research[G.4]-introduction
+
+docs/manuscripts/ exists, manuscript has Introduction, no Related Works body
+  → use /research[G.5]-related
+
+docs/manuscripts/ exists, manuscript has Related Works, no Conclusion body
+  → use /research[G.6]-conclusion
+
+docs/manuscripts/ exists, manuscript has Conclusion, no review report
+  → use /research[G.7]-review
+
+docs/manuscripts/ exists, review report generated (review_report.md exists)
+  → use /research[G.8]-translate (if translation needed) or paper is complete
 ```
 
 ---
@@ -130,8 +154,15 @@ Phase-to-skill mapping:
 | D complete, E not started | `/research[E]-coding` |
 | E in progress | `/research[E]-coding` |
 | F in progress (iteration) | `/research[F]-iteration` |
-| G.0 complete, G.1+ in progress | `/research[G.1]-method` (or the current section) |
-| G.7 review done | `/research[G.7]-review` |
+| G.0 not complete | `/research[G.0]-plan` |
+| G.0 complete, Method not written | `/research[G.1]-method` |
+| Method complete, Experiments not written | `/research[G.2]-experiments` |
+| Experiments complete, Abstract not written | `/research[G.3]-abstract` |
+| Abstract complete, Introduction not written | `/research[G.4]-introduction` |
+| Introduction complete, Related Works not written | `/research[G.5]-related` |
+| Related Works complete, Conclusion not written | `/research[G.6]-conclusion` |
+| Conclusion complete, not yet reviewed | `/research[G.7]-review` |
+| Review complete, translation needed | `/research[G.8]-translate` |
 
 ---
 

@@ -16,6 +16,7 @@
 
 ## News
 
+- 🎨 **[2026/07/05]** Improved figure quality in G.0 and inter-phase transitions.
 - 📄 **[2026/07/02]** v2.0 major release: added code iteration phase (F) and paper writing phase G (G.0–G.7), based on Prof. Pengsida's public learning notes, covering planning, section-by-section writing, full-paper review, and more.
 - 🎉 **[2026/07/01]** Officially renamed **ResearchPilot-Skills** with a full multi-stage skill refactor, eliminating context-overload forgetting.
 - 📝 **[2026/06/07]** Added paper writing support (Phase F): versioned drafts, annotation-driven revisions, and Python figure/table generation.

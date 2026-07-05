@@ -67,7 +67,7 @@ Local attention effectively captures feature variations within short temporal wi
 % 与标准 Transformer 相比，我们的方法将计算复杂度从 O(n²) 降低至 O(nW)。
 Compared to standard Transformers, our method reduces computational complexity from $\mathcal{O}(n^2)$ to $\mathcal{O}(nW)$.
 ```
-- 公式、图表引用编号保持与中文稿一致
+- 公式、图表引用编号严格与中文稿保持一致，英文版不重新编号
 - 每个 section 开头保留写作思路注释块（翻译为英文）：
 ```latex
 % === WRITING PLAN: Method ===
@@ -79,7 +79,7 @@ Compared to standard Transformers, our method reduces computational complexity f
 **翻译约束**：
 - 术语翻译必须全文一致（建立术语对照表写在文件头注释中）
 - 专有名词（数据集名、方法名）保持英文原名，不翻译
-- 数字、公式、引用编号与中文稿完全一致
+- 数字、公式、图表、引用编号严格与中文稿完全一致，英文版不重新编号
 
 ### 步骤 5：版本记录
 

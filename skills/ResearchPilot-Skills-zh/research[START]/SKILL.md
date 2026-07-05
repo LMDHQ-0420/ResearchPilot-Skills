@@ -99,8 +99,32 @@ docs/implementation.md 存在，docs/dev_log.md 不存在
 docs/dev_log.md 存在，docs/manuscripts/ 不存在
   → 阶段 E 编码进行中
 
-docs/manuscripts/ 存在
-  → 阶段 F 论文撰写进行中
+docs/manuscripts/ 存在，手稿文件开头不含 "=== 论文架构 ===" 注释
+  → G.0 未完成，使用 /research[G.0]-plan
+
+docs/manuscripts/ 存在，手稿含 "=== 论文架构 ===" 注释，但无任何章节正文
+  → G.0 完成，使用 /research[G.1]-method 开始写作
+
+docs/manuscripts/ 存在，手稿含 Method 正文，不含 Experiments 正文
+  → 使用 /research[G.2]-experiments
+
+docs/manuscripts/ 存在，手稿含 Experiments 正文，不含 Abstract 正文
+  → 使用 /research[G.3]-abstract
+
+docs/manuscripts/ 存在，手稿含 Abstract，不含 Introduction 正文
+  → 使用 /research[G.4]-introduction
+
+docs/manuscripts/ 存在，手稿含 Introduction，不含 Related Works 正文
+  → 使用 /research[G.5]-related
+
+docs/manuscripts/ 存在，手稿含 Related Works，不含 Conclusion 正文
+  → 使用 /research[G.6]-conclusion
+
+docs/manuscripts/ 存在，手稿含 Conclusion，无审阅报告
+  → 使用 /research[G.7]-review
+
+docs/manuscripts/ 存在，审阅报告已生成（review_report.md 存在）
+  → 使用 /research[G.8]-translate（如需中英翻译）或论文已完成
 ```
 
 ---
@@ -129,8 +153,15 @@ docs/manuscripts/ 存在
 | D 完成，E 未开始 | `/research[E]-coding` |
 | E 进行中 | `/research[E]-coding` |
 | F 进行中（迭代）| `/research[F]-iteration` |
-| G.0 完成，G.1+ 进行中 | `/research[G.1]-method`（或当前所在章节）|
-| G.7 审阅完成 | `/research[G.7]-review` |
+| G.0 未完成 | `/research[G.0]-plan` |
+| G.0 完成，Method 未写 | `/research[G.1]-method` |
+| Method 完成，Experiments 未写 | `/research[G.2]-experiments` |
+| Experiments 完成，Abstract 未写 | `/research[G.3]-abstract` |
+| Abstract 完成，Introduction 未写 | `/research[G.4]-introduction` |
+| Introduction 完成，Related Works 未写 | `/research[G.5]-related` |
+| Related Works 完成，Conclusion 未写 | `/research[G.6]-conclusion` |
+| Conclusion 完成，未审阅 | `/research[G.7]-review` |
+| 审阅完成，需中英翻译 | `/research[G.8]-translate` |
 
 ---
 

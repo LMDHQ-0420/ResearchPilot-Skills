@@ -283,5 +283,5 @@ git push -u origin main
 阶段 E 完成。代码审查通过，README 已写，代码已推送。
 
 → 实验效果不佳时，使用 `/research[F]-iteration` 进入代码迭代阶段。
-→ 实验效果满意，直接进入论文撰写，使用 `/research[G]-paper`。
+→ 实验效果满意，直接进入论文规划，使用 `/research[G.0]-plan`。
 ```

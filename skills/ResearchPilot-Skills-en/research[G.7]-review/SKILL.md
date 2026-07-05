@@ -71,6 +71,13 @@ Output table for every major claim in Abstract and Introduction:
 ```
 Unsupported claims must be addressed — cannot be skipped.
 
+**Issue priority definitions**:
+- High priority: affects the validity of the main contribution or breaks the logical chain (must fix before submission)
+- Medium priority: affects readability or insufficiently supported local argument (recommended to fix)
+- Low priority: writing style, wording, or formatting improvements (optional)
+
+List all findings sorted by priority. Resolve all high-priority issues before submitting.
+
 **Reverse outlining**: extract each paragraph's topic sentence; check if they form a coherent story.
 
 ---

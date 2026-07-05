@@ -35,7 +35,7 @@ license: LICENSE
 > An optional natural-language instruction may follow the command. The AI will treat it as an additional constraint or supplement for this invocation.
 
 
-**Prerequisite**: G.0 planning complete, architecture comments written into manuscript
+**Prerequisite**: Manuscript file contains a complete `=== 论文架构 ===` annotation block at the top, with all sections annotated with content points and figure positions
 
 ---
 

@@ -59,6 +59,11 @@ Wait for the user to confirm the direction before proceeding to F-2.
 
 Based on the diagnosis and user's choice, confirm what needs to change:
 
+**Decision criteria**:
+- All metrics are generally low but ablation results are normal (each component contributes) → prioritize hyperparameter / training changes only
+- One module shows no significant drop when ablated, or one module far outperforms expectations while others contribute little → change model architecture
+- Baseline selection is inappropriate, dataset distribution issues, evaluation metrics don't match RQs, or experiment design fails to answer RQs → change experiment design
+
 ```
 Based on the diagnosis, confirm the scope of changes:
 
@@ -165,7 +170,7 @@ Iteration #{N} results recorded.
 Current best: {key metric value}
 vs. baseline: {surpassed / on par / below}
 
-→ Results satisfactory — move to paper writing: `/research[G]-paper`
+→ Results satisfactory — move to paper planning: `/research[G.0]-plan`
 → Results need more improvement — continue iterating: back to F-1
 → Larger-scope adjustment needed:
    - Change idea → `/research[B]-idea`
@@ -183,5 +188,5 @@ When results are satisfactory:
 ```
 Phase F complete. {N} iteration rounds completed. Final results recorded in dev_log.md.
 
-→ Use `/research[G]-paper` to enter the Paper Writing phase.
+→ Use `/research[G.0]-plan` to enter the Paper Planning phase.
 ```

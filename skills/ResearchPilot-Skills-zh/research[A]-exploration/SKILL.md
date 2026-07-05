@@ -135,13 +135,13 @@ RQ 约束：{用户约束}
 
 ## 硬性约束
 
-1. 阶段 A 未经用户确认，不得自动进入阶段 B。
+1. 未经用户明确确认 `idea_report.md` Part 1 内容，不得启动阶段 B 流程。
 2. 不得捏造引用。所有参考文献必须经 web_search 验证，无法确认的加 `[待核实]`。
 3. 不得隐藏不确定性。低置信度内容加 `⚠️ [低置信度：原因]`。
 4. `download-paper` 命令完成后必须输出文件完整路径。
 5. `user_requirements.md` 由 Claude 通过对话收集维护，不由用户直接编辑。
 6. `references/template-flexibility.md` 中的规则优先于任何具体模板指令。
-7. 每一次 idea 生成或调整前都必须大量阅读文献（见 `references/phase-A.md` 文献阅读原则）。
+7. 每一次 idea 生成或调整前，必须精读 `docs/papers/` 中与当前设计决策直接相关的论文（≥3 篇），理解其核心方法和借鉴点（详见 `references/phase-A.md` 文献阅读原则）。
 
 ---
 

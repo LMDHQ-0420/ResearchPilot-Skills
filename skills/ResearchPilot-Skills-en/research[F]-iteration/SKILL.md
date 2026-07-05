@@ -97,7 +97,7 @@ When results are satisfactory:
 ```
 Phase F complete. {N} iteration rounds completed. Final results recorded in dev_log.md.
 
-→ Use `/research[G]-paper` to enter the Paper Writing phase.
+→ Use `/research[G.0]-plan` to enter the Paper Planning phase.
 ```
 
 ---

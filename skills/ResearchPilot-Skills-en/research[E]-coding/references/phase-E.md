@@ -276,5 +276,5 @@ After code review passes, README is written, and git is pushed:
 Phase E complete. Code review passed, README written, code pushed.
 
 → If experiment results are unsatisfactory, use `/research[F]-iteration` to iterate.
-→ If results are satisfactory, go straight to paper writing: `/research[G]-paper`.
+→ If results are satisfactory, go straight to paper planning: `/research[G.0]-plan`.
 ```
