@@ -123,6 +123,7 @@ bash uninstall.sh && bash install-en.sh
 ## 论文模版
 
 G.0 阶段选择 LaTeX 格式时，可以使用配套的中文论文模版：**[latex-zh-paper-template](https://github.com/LMDHQ-0420/latex-zh-paper-template)**
+
 下载模版文件，放入项目的 `docs/manuscripts/templates/` 目录，在 G.0 阶段选择格式时告知 AI 即可。
 
 ---
