@@ -96,6 +96,8 @@
 
 ## Installation
 
+**macOS / Linux**
+
 ```bash
 git clone https://github.com/LMDHQ-0420/ResearchPilot-Skills.git
 cd ResearchPilot-Skills
@@ -114,6 +116,28 @@ bash uninstall.sh
 
 # Switch to Chinese version
 bash uninstall.sh && bash install-zh.sh
+```
+
+**Windows**
+
+```bat
+git clone https://github.com/LMDHQ-0420/ResearchPilot-Skills.git
+cd ResearchPilot-Skills
+
+:: Install English version
+install-en.bat            :: Claude Code (default)
+install-en.bat codex      :: OpenAI Codex CLI
+install-en.bat codebuddy  :: Tencent CodeBuddy (run inside your project)
+```
+
+Verify: `dir %USERPROFILE%\.claude\skills\ | findstr research` (should show 15 directories)
+
+```bat
+:: Uninstall
+uninstall.bat
+
+:: Switch to Chinese version
+uninstall.bat && install-zh.bat
 ```
 
 ---

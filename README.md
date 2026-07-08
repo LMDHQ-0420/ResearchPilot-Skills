@@ -98,14 +98,16 @@
 
 ## 安装
 
+**macOS / Linux**
+
 ```bash
 git clone https://github.com/LMDHQ-0420/ResearchPilot-Skills.git
 cd ResearchPilot-Skills
 
 # 安装中文版
-bash install-zh.sh          # Claude Code（默认）
-bash install-zh.sh codex    # OpenAI Codex CLI
-bash install-zh.sh codebuddy # 腾讯 CodeBuddy（在项目目录下运行）
+bash install-zh.sh            # Claude Code（默认）
+bash install-zh.sh codex      # OpenAI Codex CLI
+bash install-zh.sh codebuddy  # 腾讯 CodeBuddy（在项目目录下运行）
 ```
 
 验证：`ls ~/.claude/skills/ | grep research`（应看到 16 个目录）
@@ -116,6 +118,28 @@ bash uninstall.sh
 
 # 切换英文版
 bash uninstall.sh && bash install-en.sh
+```
+
+**Windows**
+
+```bat
+git clone https://github.com/LMDHQ-0420/ResearchPilot-Skills.git
+cd ResearchPilot-Skills
+
+:: 安装中文版
+install-zh.bat            :: Claude Code（默认）
+install-zh.bat codex      :: OpenAI Codex CLI
+install-zh.bat codebuddy  :: 腾讯 CodeBuddy（在项目目录下运行）
+```
+
+验证：`dir %USERPROFILE%\.claude\skills\ | findstr research`（应看到 16 个目录）
+
+```bat
+:: 卸载
+uninstall.bat
+
+:: 切换英文版
+uninstall.bat && install-en.bat
 ```
 
 ---
