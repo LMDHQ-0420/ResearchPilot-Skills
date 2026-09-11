@@ -16,7 +16,7 @@
 
 ## News
 
-- 🎨 **[2026/09/11]** Released the independent scientific-figure Skill `/reaesrch[fig]`. It may read project source code, experiment results, and documentation to understand plotting requirements, while every write remains strictly under `code/fig/`. It includes millimeter-based layout references, an Arial type library, semantic color roles, real-data plotting, synchronized PDF/SVG/500 dpi PNG export, and quality assurance.
+- 🎨 **[2026/09/11]** Added the standalone scientific-figure Skill `/reaesrch[fig]`: read real project data and generate validated PDF, SVG, and 500 dpi PNG figures under `code/fig/`.
 - 🌟 **[2026/08/01]** 200 stars! Thank you all for the support. Two improvements ship with this milestone: figure style constraints removed — plots are now fully flexible; writing phases G.1–G.6 now detect architecture change intent automatically, so you can trigger any skill with a structural edit in mind and it will update the plan before writing.
 - 🎨 **[2026/07/05]** Improved figure quality in G.0 and inter-phase transitions.
 - 📄 **[2026/07/02]** v2.0 major release: added code iteration phase (F) and paper writing phase G (G.0–G.7), based on Prof. Pengsida's public learning notes, covering planning, section-by-section writing, full-paper review, and more.
