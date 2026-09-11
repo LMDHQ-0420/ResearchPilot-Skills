@@ -1,0 +1,7 @@
+interface:
+  display_name: "reaesrch[fig] Scientific Figures"
+  short_description: "Create and validate publication figures from real project data"
+  default_prompt: "Use $reaesrch[fig] to create publication-ready figures from the project's real results."
+
+policy:
+  allow_implicit_invocation: true

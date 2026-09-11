@@ -1,0 +1,30 @@
+layout_defaults:
+  units: mm
+
+  full_width: 190
+  single_column_width: 90
+  default_horizontal_gap: 10
+
+  common_sizes:
+    single_column_square:
+      width: 90
+      height: 90
+
+    full_width_compact:
+      width: 190
+      height: 90
+
+    full_width_standard:
+      width: 190
+      height: 120
+
+    full_width_square:
+      width: 190
+      height: 190
+
+    full_width_tall:
+      width: 190
+      height: 220
+
+  raster:
+    dpi: 500

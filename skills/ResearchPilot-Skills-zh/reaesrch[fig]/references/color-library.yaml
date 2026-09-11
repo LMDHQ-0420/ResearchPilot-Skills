@@ -1,0 +1,53 @@
+version: 1
+
+base:
+  ink: "#20242A"
+  charcoal: "#74777B"
+  white: "#FFFFFF"
+  pale_grey: "#EEF1F5"
+  grid_grey: "#D9DEE6"
+
+  blue: "#526FB4"
+  blue_dark: "#304F8C"
+  blue_light: "#AFC0E1"
+
+  slate: "#71869C"
+
+  teal: "#3F929C"
+  teal_light: "#A8D0D3"
+
+  coral: "#D46B5F"
+  coral_light: "#E8B3AD"
+
+  orange: "#D4934B"
+  purple: "#7968A8"
+  rose: "#B66B87"
+  green: "#618E79"
+
+roles:
+  text: ink
+  axis: ink
+  tick: ink
+  background: white
+  grid: grid_grey
+  neutral: charcoal
+  primary: blue
+  secondary: teal
+  highlight: coral
+  background_band: pale_grey
+
+categorical:
+  - blue
+  - coral
+  - teal
+  - orange
+  - purple
+  - green
+  - rose
+  - slate
+
+rules:
+  arbitrary_hex_colors_allowed: false
+  explicit_exception_required: true
+  maintain_semantic_color_consistency: true
+  avoid_rainbow_for_continuous_data: true

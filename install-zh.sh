@@ -26,6 +26,7 @@ mkdir -p "$DEST"
 echo "安装中文版 ResearchPilot-Skills → $DEST"
 
 skills=(
+  "reaesrch[fig]"
   "research[START]"
   "research[A]-exploration"
   "research[B]-idea"
@@ -51,6 +52,6 @@ done
 
 echo ""
 echo "安装完成（${#skills[@]} 个 skill）。"
-echo "验证：ls \"$DEST\" | grep research"
+echo "验证：ls \"$DEST\" | grep -E 'research|reaesrch'"
 echo ""
 echo "启动后运行 /research[START] 测试安装。"

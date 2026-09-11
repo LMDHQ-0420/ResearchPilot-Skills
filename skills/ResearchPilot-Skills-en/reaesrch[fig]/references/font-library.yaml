@@ -1,0 +1,86 @@
+version: 1
+
+family:
+  regular: Arial
+  bold: Arial
+
+fallback_policy:
+  require_exact_family: true
+  allow_silent_fallback: false
+
+sizes:
+  detail: 5.8
+  label: 7.0
+  key: 8.5
+  milestone: 6.3
+  compact: 5.65
+
+roles:
+  tick_label:
+    family: regular
+    size: detail
+    weight: regular
+
+  legend_label:
+    same_as: tick_label
+
+  data_value:
+    family: regular
+    size: detail
+    weight: regular
+
+  annotation:
+    family: regular
+    size: detail
+    weight: regular
+
+  model_label:
+    family: regular
+    size: detail
+    weight: regular
+
+  category_label:
+    family: regular
+    size: label
+    weight: regular
+
+  emphasized_label:
+    family: bold
+    size: label
+    weight: bold
+
+  legend_title:
+    family: bold
+    size: label
+    weight: bold
+
+  axis_title:
+    family: bold
+    size: key
+    weight: bold
+
+  panel_title:
+    family: bold
+    size: key
+    weight: bold
+
+  panel_letter:
+    family: bold
+    size: key
+    weight: bold
+
+  milestone_label:
+    family: regular
+    size: milestone
+    weight: regular
+
+  compact_annotation:
+    family: regular
+    size: compact
+    weight: regular
+
+rules:
+  legend_matches_tick: true
+  category_between_tick_and_axis_title: true
+  arbitrary_font_sizes_allowed: false
+  explicit_exception_required: true

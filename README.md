@@ -16,6 +16,7 @@
 
 ## News
 
+- 🎨 **[2026/09/11]** 发布独立科研绘图 Skill `/reaesrch[fig]`：可只读项目源代码、实验结果和文档理解绘图需求，所有写入严格限制在 `code/fig/`；内置毫米级版面参考、Arial 字体库与语义颜色库，支持真实数据绘图、PDF/SVG/500 dpi PNG 同步导出和质量检查。
 - 🌟 **[2026/08/01]** 突破 200 stars！感谢大家的支持。借此机会优化了两处体验：作图不再强制样式，可以更加灵活的作图；写作阶段新增架构变更检测，随时带着修改意图触发任意 G.1–G.6 skill。
 - 🎨 **[2026/07/07]** 中文 LaTeX 论文模版现已可用：[latex-zh-paper-template](https://github.com/LMDHQ-0420/latex-zh-paper-template)，可直接配合 G.0 阶段使用。
 - 🎨 **[2026/07/05]** 优化 G.0 阶段的绘图效果和各阶段之间的衔接。
@@ -35,6 +36,8 @@
 🧱 **设计文档与代码强绑定**：每次修改代码前必须先更新设计文档（`idea_report.md` / `implementation.md`），禁止只在代码里打补丁绕过设计问题，回溯全链路进行。
 
 📝 **论文写作有据可依**：基于彭思达老师公开学习笔记，每个章节有写作框架、例子和约束。每次修改前先读全文，避免章节割裂。
+
+🎨 **独立科研绘图**：`/reaesrch[fig]` 从真实项目数据生成期刊级图件，统一物理尺寸、字体和语义配色，同步交付 PDF、SVG 与 500 dpi PNG；它可以读取项目上下文，但所有写入只发生在 `code/fig/`。
 
 ---
 
@@ -58,6 +61,7 @@
 
 | Skill | 命令 | 职责 |
 |-------|------|------|
+| 科研绘图（独立） | `/reaesrch[fig]` | 只读理解项目，在 `code/fig/` 内制作并检查科研图件 |
 | 入口路由 | `/research[START]` | 检测当前阶段，路由到对应 skill |
 | 方向探索 | `/research[A]-exploration` | 文献检索、RQ 确认、Part 1 汇编 |
 | Idea 深化 | `/research[B]-idea` | 技术框架、pipeline、Method 写作 |
@@ -93,6 +97,9 @@
 # 独立下载一篇论文（不启动研究流程）
 /research[A]-exploration download-paper Attention Is All You Need
 /research[A]-exploration download-paper 2312.00752 --to ./my-papers
+
+# 独立制作科研图件（不进入阶段链）
+/reaesrch[fig] 使用 code/results/ 中的真实结果绘制主实验对比图，两张图同行排列
 ```
 
 ---
@@ -111,7 +118,7 @@ bash install-zh.sh codex      # OpenAI Codex CLI
 bash install-zh.sh codebuddy  # 腾讯 CodeBuddy（在项目目录下运行）
 ```
 
-验证：`ls ~/.claude/skills/ | grep research`（应看到 16 个目录）
+验证：`ls ~/.claude/skills/ | grep -E 'research|reaesrch'`（应看到 17 个目录）
 
 ```bash
 # 卸载
@@ -133,7 +140,7 @@ install-zh.bat codex      :: OpenAI Codex CLI
 install-zh.bat codebuddy  :: 腾讯 CodeBuddy（在项目目录下运行）
 ```
 
-验证：`dir %USERPROFILE%\.claude\skills\ | findstr research`（应看到 16 个目录）
+验证：`dir %USERPROFILE%\.claude\skills\ | findstr "research reaesrch"`（应看到 17 个目录）
 
 ```bat
 :: 卸载
@@ -172,6 +179,7 @@ docs/
     templates/            # LaTeX 模版
 
 code/
+  fig/                    # 独立科研绘图脚本、规格、PDF/SVG/PNG 与 QA 报告
   src/
     models/               # 本文方法（一个文件一个模型）
       baseline/           # Baseline 实现（接口与主模型一致）
@@ -194,7 +202,7 @@ code/
 
 **Skill 没有触发？**
 ```bash
-ls ~/.claude/skills/ | grep research
+ls ~/.claude/skills/ | grep -E 'research|reaesrch'
 ```
 若目录缺失，重新执行安装脚本，重启 AI 助手后再试。
 

@@ -16,6 +16,7 @@
 
 ## News
 
+- 🎨 **[2026/09/11]** Released the independent scientific-figure Skill `/reaesrch[fig]`. It may read project source code, experiment results, and documentation to understand plotting requirements, while every write remains strictly under `code/fig/`. It includes millimeter-based layout references, an Arial type library, semantic color roles, real-data plotting, synchronized PDF/SVG/500 dpi PNG export, and quality assurance.
 - 🌟 **[2026/08/01]** 200 stars! Thank you all for the support. Two improvements ship with this milestone: figure style constraints removed — plots are now fully flexible; writing phases G.1–G.6 now detect architecture change intent automatically, so you can trigger any skill with a structural edit in mind and it will update the plan before writing.
 - 🎨 **[2026/07/05]** Improved figure quality in G.0 and inter-phase transitions.
 - 📄 **[2026/07/02]** v2.0 major release: added code iteration phase (F) and paper writing phase G (G.0–G.7), based on Prof. Pengsida's public learning notes, covering planning, section-by-section writing, full-paper review, and more.
@@ -34,6 +35,8 @@
 🧱 **Code and design documents are tightly coupled**: every code change requires updating the design documents (`idea_report.md` / `implementation.md`) first. Patching code without updating documents is not allowed; backtracking follows the full chain.
 
 📝 **Paper writing grounded in evidence**: based on Prof. Pengsida's public learning notes, every section has a writing framework, examples, and constraints. The full manuscript is read before each revision to prevent section disconnection.
+
+🎨 **Independent scientific figures**: `/reaesrch[fig]` turns real project results into publication-ready figures with consistent physical sizing, typography, and semantic colors, delivering PDF, SVG, and 500 dpi PNG together. It may read project context, but writes only under `code/fig/`.
 
 ---
 
@@ -57,6 +60,7 @@
 
 | Skill | Command | Responsibility |
 |-------|---------|---------------|
+| Scientific Figures (independent) | `/reaesrch[fig]` | Read project context and create validated figures only under `code/fig/` |
 | Entry router | `/research[START]` | Detect current phase and route to the correct skill |
 | Direction Exploration | `/research[A]-exploration` | Literature search, RQ confirmation, Part 1 assembly |
 | Idea Deepening | `/research[B]-idea` | Technical framework, pipeline, Method writing |
@@ -91,6 +95,9 @@
 # Download a paper without starting the research workflow
 /research[A]-exploration download-paper Attention Is All You Need
 /research[A]-exploration download-paper 2312.00752 --to ./my-papers
+
+# Create scientific figures independently of the phase workflow
+/reaesrch[fig] Plot the main experiment results from code/results/ as two figures in one row
 ```
 
 ---
@@ -109,7 +116,7 @@ bash install-en.sh codex      # OpenAI Codex CLI
 bash install-en.sh codebuddy  # Tencent CodeBuddy (run inside your project)
 ```
 
-Verify: `ls ~/.claude/skills/ | grep research` (should show 15 directories)
+Verify: `ls ~/.claude/skills/ | grep -E 'research|reaesrch'` (should show 16 directories)
 
 ```bash
 # Uninstall
@@ -131,7 +138,7 @@ install-en.bat codex      :: OpenAI Codex CLI
 install-en.bat codebuddy  :: Tencent CodeBuddy (run inside your project)
 ```
 
-Verify: `dir %USERPROFILE%\.claude\skills\ | findstr research` (should show 15 directories)
+Verify: `dir %USERPROFILE%\.claude\skills\ | findstr "research reaesrch"` (should show 16 directories)
 
 ```bat
 :: Uninstall
@@ -162,6 +169,7 @@ docs/
     templates/            # LaTeX templates
 
 code/
+  fig/                    # Independent plotting scripts, specs, PDF/SVG/PNG, and QA reports
   src/
     models/               # Proposed model (one file per model)
       baseline/           # Baseline implementations (identical interface to main model)
@@ -184,7 +192,7 @@ code/
 
 **Skill not triggering?**
 ```bash
-ls ~/.claude/skills/ | grep research
+ls ~/.claude/skills/ | grep -E 'research|reaesrch'
 ```
 If directories are missing, re-run the install script and restart the AI assistant.
 
