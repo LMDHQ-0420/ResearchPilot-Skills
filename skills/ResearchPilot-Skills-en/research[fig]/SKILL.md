@@ -1,5 +1,5 @@
 ---
-name: reaesrch[fig]
+name: research[fig]
 description: >
   Independently create, revise, and validate publication figures. May read project source code, result data, and Markdown documents to understand the research and plotting requirements, but all project writes are strictly limited to code/fig/; use for real-data plotting, journal-aware physical sizing, consistent typography and color, and synchronized PDF/SVG/PNG delivery.
 license: LICENSE

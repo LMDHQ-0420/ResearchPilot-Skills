@@ -27,7 +27,7 @@ if not exist "%DEST%" mkdir "%DEST%"
 echo 安装中文版 ResearchPilot-Skills -^> %DEST%
 echo.
 
-set skills=reaesrch[fig] research[START] research[A]-exploration research[B]-idea research[C]-experiment research[D]-implementation research[E]-coding research[F]-iteration research[G.0]-plan research[G.1]-method research[G.2]-experiments research[G.3]-abstract research[G.4]-introduction research[G.5]-related research[G.6]-conclusion research[G.7]-review research[G.8]-translate
+set skills=research[fig] research[START] research[A]-exploration research[B]-idea research[C]-experiment research[D]-implementation research[E]-coding research[F]-iteration research[G.0]-plan research[G.1]-method research[G.2]-experiments research[G.3]-abstract research[G.4]-introduction research[G.5]-related research[G.6]-conclusion research[G.7]-review research[G.8]-translate
 
 set count=0
 for %%s in (%skills%) do (
@@ -42,7 +42,7 @@ for %%s in (%skills%) do (
 
 echo.
 echo 安装完成（%count% 个 skill）。
-echo 验证：dir "%DEST%" | findstr "research reaesrch"
+echo 验证：dir "%DEST%" | findstr research
 echo.
 echo 启动后运行 /research[START] 测试安装。
 endlocal

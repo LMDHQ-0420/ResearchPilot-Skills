@@ -16,7 +16,7 @@
 
 ## News
 
-- 🎨 **[2026/09/11]** Added the standalone scientific-figure Skill `/reaesrch[fig]`: read real project data and generate validated PDF, SVG, and 500 dpi PNG figures under `code/fig/`.
+- 🎨 **[2026/09/11]** Added the standalone scientific-figure Skill `/research[fig]`: read real project data and generate validated PDF, SVG, and 500 dpi PNG figures under `code/fig/`.
 - 🌟 **[2026/08/01]** 200 stars! Thank you all for the support. Two improvements ship with this milestone: figure style constraints removed — plots are now fully flexible; writing phases G.1–G.6 now detect architecture change intent automatically, so you can trigger any skill with a structural edit in mind and it will update the plan before writing.
 - 🎨 **[2026/07/05]** Improved figure quality in G.0 and inter-phase transitions.
 - 📄 **[2026/07/02]** v2.0 major release: added code iteration phase (F) and paper writing phase G (G.0–G.7), based on Prof. Pengsida's public learning notes, covering planning, section-by-section writing, full-paper review, and more.
@@ -36,7 +36,7 @@
 
 📝 **Paper writing grounded in evidence**: based on Prof. Pengsida's public learning notes, every section has a writing framework, examples, and constraints. The full manuscript is read before each revision to prevent section disconnection.
 
-🎨 **Independent scientific figures**: `/reaesrch[fig]` turns real project results into publication-ready figures with consistent physical sizing, typography, and semantic colors, delivering PDF, SVG, and 500 dpi PNG together. It may read project context, but writes only under `code/fig/`.
+🎨 **Independent scientific figures**: `/research[fig]` turns real project results into publication-ready figures with consistent physical sizing, typography, and semantic colors, delivering PDF, SVG, and 500 dpi PNG together. It may read project context, but writes only under `code/fig/`.
 
 ---
 
@@ -60,7 +60,7 @@
 
 | Skill | Command | Responsibility |
 |-------|---------|---------------|
-| Scientific Figures (independent) | `/reaesrch[fig]` | Read project context and create validated figures only under `code/fig/` |
+| Scientific Figures (independent) | `/research[fig]` | Read project context and create validated figures only under `code/fig/` |
 | Entry router | `/research[START]` | Detect current phase and route to the correct skill |
 | Direction Exploration | `/research[A]-exploration` | Literature search, RQ confirmation, Part 1 assembly |
 | Idea Deepening | `/research[B]-idea` | Technical framework, pipeline, Method writing |
@@ -97,7 +97,7 @@
 /research[A]-exploration download-paper 2312.00752 --to ./my-papers
 
 # Create scientific figures independently of the phase workflow
-/reaesrch[fig] Plot the main experiment results from code/results/ as two figures in one row
+/research[fig] Plot the main experiment results from code/results/ as two figures in one row
 ```
 
 ---
@@ -116,7 +116,7 @@ bash install-en.sh codex      # OpenAI Codex CLI
 bash install-en.sh codebuddy  # Tencent CodeBuddy (run inside your project)
 ```
 
-Verify: `ls ~/.claude/skills/ | grep -E 'research|reaesrch'` (should show 16 directories)
+Verify: `ls ~/.claude/skills/ | grep research` (should show 16 directories)
 
 ```bash
 # Uninstall
@@ -138,7 +138,7 @@ install-en.bat codex      :: OpenAI Codex CLI
 install-en.bat codebuddy  :: Tencent CodeBuddy (run inside your project)
 ```
 
-Verify: `dir %USERPROFILE%\.claude\skills\ | findstr "research reaesrch"` (should show 16 directories)
+Verify: `dir %USERPROFILE%\.claude\skills\ | findstr research` (should show 16 directories)
 
 ```bat
 :: Uninstall
@@ -192,7 +192,7 @@ code/
 
 **Skill not triggering?**
 ```bash
-ls ~/.claude/skills/ | grep -E 'research|reaesrch'
+ls ~/.claude/skills/ | grep research
 ```
 If directories are missing, re-run the install script and restart the AI assistant.
 

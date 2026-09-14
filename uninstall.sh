@@ -19,7 +19,7 @@ esac
 echo "卸载 ResearchPilot-Skills from $DEST"
 
 skills=(
-  "reaesrch[fig]"
+  "research[fig]"
   "research[START]"
   "research[A]-exploration"
   "research[B]-idea"

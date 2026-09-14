@@ -26,7 +26,7 @@ mkdir -p "$DEST"
 echo "Installing ResearchPilot-Skills (English) → $DEST"
 
 skills=(
-  "reaesrch[fig]"
+  "research[fig]"
   "research[START]"
   "research[A]-exploration"
   "research[B]-idea"
@@ -51,6 +51,6 @@ done
 
 echo ""
 echo "Installation complete (${#skills[@]} skills)."
-echo "Verify: ls \"$DEST\" | grep -E 'research|reaesrch'"
+echo "Verify: ls \"$DEST\" | grep research"
 echo ""
 echo "Run /research[START] in Claude Code to test."

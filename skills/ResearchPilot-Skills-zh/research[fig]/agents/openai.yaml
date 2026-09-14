@@ -1,0 +1,7 @@
+interface:
+  display_name: "research[fig] 科研绘图"
+  short_description: "用真实项目数据制作并校验期刊级科研图件"
+  default_prompt: "使用 $research[fig] 根据项目结果制作一组可投稿的科研图件。"
+
+policy:
+  allow_implicit_invocation: true

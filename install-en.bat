@@ -27,7 +27,7 @@ if not exist "%DEST%" mkdir "%DEST%"
 echo Installing ResearchPilot-Skills (English) -^> %DEST%
 echo.
 
-set skills=reaesrch[fig] research[START] research[A]-exploration research[B]-idea research[C]-experiment research[D]-implementation research[E]-coding research[F]-iteration research[G.0]-plan research[G.1]-method research[G.2]-experiments research[G.3]-abstract research[G.4]-introduction research[G.5]-related research[G.6]-conclusion research[G.7]-review
+set skills=research[fig] research[START] research[A]-exploration research[B]-idea research[C]-experiment research[D]-implementation research[E]-coding research[F]-iteration research[G.0]-plan research[G.1]-method research[G.2]-experiments research[G.3]-abstract research[G.4]-introduction research[G.5]-related research[G.6]-conclusion research[G.7]-review
 
 set count=0
 for %%s in (%skills%) do (
@@ -42,7 +42,7 @@ for %%s in (%skills%) do (
 
 echo.
 echo Installation complete (%count% skills).
-echo Verify: dir "%DEST%" | findstr "research reaesrch"
+echo Verify: dir "%DEST%" | findstr research
 echo.
 echo Run /research[START] in Claude Code to test.
 endlocal

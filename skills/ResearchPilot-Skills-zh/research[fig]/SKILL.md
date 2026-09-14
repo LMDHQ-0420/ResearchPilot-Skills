@@ -1,5 +1,5 @@
 ---
-name: reaesrch[fig]
+name: research[fig]
 description: >
   独立生成、调整和检查论文科研图件。可只读检查项目源代码、结果数据和 Markdown 文档以理解研究与绘图需求，但所有项目写入严格限制在 code/fig/；适用于需要真实数据绘图、期刊尺寸规划、统一字体颜色以及 PDF/SVG/PNG 三格式交付的任务。
 license: LICENSE
