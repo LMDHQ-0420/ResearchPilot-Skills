@@ -60,13 +60,13 @@ Sub-section titles use semantic names, never placeholder text like `{Module Name
 | 1 Datasets | REQUIRED | — |
 | 2 Main Experiments | REQUIRED | — |
 | 2 Ablation Study | REQUIRED | — |
-| 2 Additional Experiments A: field-standard (mandatory) | REQUIRED | Omit only if the field has no recurring standard additional experiment |
+| 2 Additional Experiments A: field conventions | OPTIONAL | Select by RQ relevance and evidence gaps |
 | 2 Additional Experiments B: extension (user-selected) | REQUIRED | Omit only if the user chooses to do no extension experiments |
-| 3 Resource Estimate (reference) | REQUIRED | — |
+| 3 Resource constraints, cost, and execution plan | REQUIRED | — |
 
 ### implementation.md (Phase D output)
 
-> See `references/phase-implementation.md` for the detailed format. There are two formats, chosen by whether a strong baseline is used:
+> Phase D defines implementation guidance; choose fields appropriate to baseline reuse or building from scratch.
 
 **Format A: Strong Baseline Rewrite**
 

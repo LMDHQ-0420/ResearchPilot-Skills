@@ -32,7 +32,7 @@ At the end of each phase, the AI gives the next command. No phase is skipped wit
 | Step | What | Based on | Output | Constraint |
 |------|------|----------|--------|------------|
 | A-1 | Parse input, collect requirements | User input | Write to `user_requirements.md` | Ask all questions in one message |
-| A-2 | Initial literature search | Top venues (NeurIPS/ICML/ICLR/CVPR/ACL etc.) | Recommended download list | ≥15 papers; ≥2 per gap; up to 3 supplementary rounds |
+| A-2 | Initial literature search | Top venues (NeurIPS/ICML/ICLR/CVPR/ACL etc.) | Recommended download list | coverage-driven paper count; ≥2 per gap; up to 3 supplementary rounds |
 | A-3 | Confirm download list | Search results | Batch download after confirmation | Do not download without confirmation |
 | A-4 | Execute downloads | arXiv → OpenReview → abstract TXT | `docs/papers/{title}.pdf` or `.txt` | Output full file path after each download |
 | A-4.5 | Ask whether to introduce each paper | User preference | Recorded in `user_requirements.md` | All downloaded papers included regardless |
@@ -106,36 +106,11 @@ Pipeline: {Phase B only}
 
 ---
 
-## Phase C — `/research[C]-experiment` Experiment Design
+## Phase C — /research[C]-experiment Experiment design
 
-| Item | Detail |
-|------|--------|
-| **Command** | `/research[C]-experiment` |
-| **Prerequisite** | `idea_report.md` contains Part 2 |
-| **Main output** | `idea_report.md` Part 3 (datasets, experiment design, resource estimate) |
-| **Next phase** | `/research[D]-implementation` |
+Read relevant baseline papers/code and design main, ablation, and boundary experiments around falsifiable hypotheses. Reuse hardware, time, and budget constraints before planning; provide full and executable core plans with supporting, contradicting, and inconclusive outcomes and conclusion boundaries.
 
-### Flow Steps
-
-| Step | What | Based on | Output | Constraint |
-|------|------|----------|--------|------------|
-| C-1 | Deep-read baseline papers and code | Baselines in Part 2 Method | Part 3 Section 0 (survey) | Show reading plan; wait for confirmation |
-| C-2 | Survey field experiment conventions | Same-domain papers (last 3 years) + C-1 | Standard benchmarks/metrics/ablation patterns | — |
-| C-3 | Verify data and code availability | Public links and repos | Availability table (✅/⚠️/❌) | Pause and inform user if either fails |
-| C-4 | Propose experiment outline, confirm | Field conventions + availability | Outline (datasets/experiment list/extensions) | Skeleton first; expand only after confirmation |
-| C-5 | Generate Part 3 full content | Confirmed outline | Append to `idea_report.md` | Every experiment must have "why designed this way"; every model explained individually |
-| C-6 | Provide resource estimate | Model scale/data size/experiment count | Appended to end of Part 3 | Reference only; given after design is complete |
-
-> **Design principle**: The sole purpose of all experiments is to rigorously prove the idea's effectiveness. Resource constraints are not design inputs.
-
-### Hard Constraints
-
-| # | Constraint |
-|---|------------|
-| 1 | Do not proceed to Phase D without explicit confirmation |
-| 2 | Show experiment outline (C-4) and confirm before writing full Part 3 |
-| 3 | Do not collect GPU/training-time constraints before design |
-| 4 | Every evaluation model must be explained individually |
+Perform authorized investigation directly and consolidate material method/protocol decisions once. Expand approved outlines into Part 3 and check fairness, leakage, randomness, costs, and completion evidence. See the [Phase C workflow](skills/ResearchPilot-Skills-en/research[C]-experiment/references/phase-C.md).
 
 ---
 
@@ -199,105 +174,17 @@ code/
 
 ---
 
-## Phase E — `/research[E]-coding` Coding
+## Phase E — /research[E]-coding Coding
 
-| Item | Detail |
-|------|--------|
-| **Command** | `/research[E]-coding` |
-| **Prerequisite** | `docs/implementation.md` exists |
-| **Main output** | All code under `code/`, `code/README.md`, `docs/dev_log.md` |
-| **Next phase** | `/research[F]-iteration` (unsatisfactory) or `/research[G.0]-plan` (satisfied) |
+Implement and validate the guide, preserving the project environment and recording versions and reconstruction commands. Follow project uv rules when required. Fix ordinary errors directly; synchronize affected design documents for method/evaluation changes. Append historical events per meaningful change unit while updating mutable progress/run summaries.
 
-### Flow Steps
-
-| Step | What | Based on | Output | Constraint |
-|------|------|----------|--------|------------|
-| E-0 | Pre-coding checklist (6 items) | Conversation | Write to `user_requirements.md` Phase E | All 6 confirmed before coding starts |
-| E-1 | Create dev_log.md | Checklist results | `docs/dev_log.md` | Includes progress table and "How to Run" chapter |
-| E-2 | File-by-file coding | `implementation.md` | Code files | Append dev_log entry after each file |
-| E-3 | Per-module validation | Code vs implementation.md | — | Signatures / parameters / return values / tensor shapes |
-| E-4–E-6 | Handle blockers / doc errors / improvements | Conversation | Append dev_log entries | Update doc before code; every code change appends a log entry |
-| E-7 | Code review | All code | Review report | Two hard requirements: runs without error + logically correct |
-| E-8 | Write README.md | Confirmed location + dev_log "How to Run" | `README.md` | Written after all coding is done |
-| E-9 | Git commit and push | E-0 git config | Remote repository | Check for files >100 MB before pushing |
-
-### E-0 Pre-Coding Checklist
-
-| # | Item | Description |
-|---|------|-------------|
-| 1 | Runtime environment | Name; reuse existing or create from requirements.txt |
-| 2 | Device requirements | CUDA / cuDNN / Apple MPS / CPU-only / Python version |
-| 3 | Dataset preparation | Check each; fast → download; slow → provide link and wait |
-| 4 | Auto-run strategy | Auto / user-run / mixed |
-| 5 | Git repository | Existing URL or create new; push scope; username/email |
-| 6 | README location | Project root or `code/` directory |
-
-### dev_log.md Rules
-
-| Rule | Description |
-|------|-------------|
-| Append-only | Every code change must append a new log entry; never overwrite |
-| Fixed "How to Run" chapter | Every run command with parameter meanings, what happens, what outputs |
-| Auto-check after every change | If commands/parameters/outputs changed → update "How to Run" immediately |
-
-### Hard Constraints
-
-| # | Constraint |
-|---|------------|
-| 1 | `requirements.txt` must not contain torch, torchvision, or torchaudio |
-| 2 | dev_log.md is append-only; every code change appends a log entry |
-| 3 | Design issue found: update document first, then update code |
-| 4 | README.md is written after all coding is complete |
+Distinguish static checks, smoke runs, and full experiments. Commit/push only when authorized; remote publication is not a coding completion criterion. See the [Phase E workflow](skills/ResearchPilot-Skills-en/research[E]-coding/references/phase-E.md).
 
 ---
 
-## Phase F — `/research[F]-iteration` Code Iteration
+## Phase F — /research[F]-iteration Code iteration
 
-| Item | Detail |
-|------|--------|
-| **Command** | `/research[F]-iteration` |
-| **Prerequisite** | Phase E complete; experiment results unsatisfactory |
-| **Main output** | `dev_log.md` appended iteration records |
-| **Next phase** | `/research[G.0]-plan` (when satisfied) |
-
-### Flow Steps
-
-| Step | What | Based on | Output | Constraint |
-|------|------|----------|--------|------------|
-| F-1 | Diagnostic analysis | `dev_log.md` + `results/` + `idea_report.md` | Diagnostic report (data/model/training) | Must read all three; no guessing |
-| F-2 | Confirm backtrack scope | Diagnosis + user choice | Confirmed scope | Three paths: hyperparams / architecture / experiment design |
-| F-3 | Update design documents | Confirmed scope | Updated docs | Update docs first, then code |
-| F-4 | Code changes | Updated documents | Code + dev_log iteration entry | Append log after every file |
-| F-5 | Validation | Run experiments | dev_log results entry | Per E-0 run strategy |
-| F-6 | Decide whether to continue | Validation results | — | Satisfied → G.0; needs more → F-1 |
-
-### Backtrack Scope
-
-| What changes | Update documents | Key requirement |
-|-------------|-----------------|-----------------|
-| Hyperparams / training settings only | `configs/` | No changes to idea_report or implementation.md |
-| Model architecture | `idea_report.md` Part 2 + Part 3 (if ablation changes) + `implementation.md` | Re-run three-way validation |
-| Experiment design | `idea_report.md` Part 3 + `implementation.md` | Re-run three-way validation |
-
-### Iteration Log Format
-
-```markdown
-### {YYYY-MM-DD HH:MM} — Iteration #{N}: {brief description}
-**Reason**: {which problem from F-1 diagnosis}
-**Changes**:
-- `{file path}`: {what changed}
-**Expected effect**: {how metrics should change and why}
-**Document sync**: idea_report.md {yes/no} | implementation.md {yes/no}
-```
-
-### Hard Constraints
-
-| # | Constraint |
-|---|------------|
-| 1 | dev_log.md is append-only; every code change appends a log entry |
-| 2 | Read dev_log.md / results/ / idea_report.md before diagnosing |
-| 3 | Update design documents before code |
-| 4 | If architecture changes, update Part 3 ablation if affected |
+Diagnose real data, implementation, training, and hypotheses, checking errors and alternative explanations first. Consolidate confirmation only for material method/evaluation changes beyond authorization. Synchronize affected artifacts and validation records; retain failed and negative results and stop by predefined questions/budget/criteria rather than requiring a baseline win. See the [Phase F workflow](skills/ResearchPilot-Skills-en/research[F]-iteration/references/phase-F.md).
 
 ---
 

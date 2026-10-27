@@ -10,7 +10,7 @@
 
 Entered automatically after the user confirms a direction in Phase A.
 
-> Phase B has already established the research direction and RQs; the goal is to deepen the "research question" into an "implementable method". **Every output likewise begins with the confirmation card** (in Phase B the card adds two more fields on top of Phase A: "Confirmed technical framework" and "Confirmed pipeline"). Deepening proceeds through three layers of step-by-step confirmation: technical framework → detailed pipeline → Introduction polishing.
+> Phase B has already established the research direction and RQs; the goal is to deepen the "research question" into an "implementable method". **Show the confirmation card when decisions change, resuming, or handing off** (in Phase B the card adds two more fields on top of Phase A: "Confirmed technical framework" and "Confirmed pipeline"). Deepening proceeds through three layers of step-by-step confirmation: technical framework → detailed pipeline → Introduction polishing.
 
 > **Literature first**: before each generation or adjustment of the idea (technical framework / pipeline / Method) in this phase, you must follow the "Literature Reading Principle" above — first read closely the literature already in `docs/papers/`, and re-run the download flow only when the existing literature is insufficient to support a design decision. This applies to the initial deepening and to every later adjustment (including those backtracked from Phase D/E).
 

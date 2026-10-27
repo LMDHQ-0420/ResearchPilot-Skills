@@ -38,7 +38,7 @@ Chapter presence and content volume follow `references/template-flexibility.md`.
 
 ### idea_report.md Full Template
 
-> **Pure blank template** (copy directly to `docs/idea_report.md` to start filling in): see `references/idea_report-template.md`.
+> **Pure blank template** (copy directly to `docs/idea_report.md` to start filling in): see the relevant fields in this document.
 > This section documents the format spec (symbol semantics, required/optional chapters); the blank template contains only the skeleton without explanatory text.
 
 ````markdown
@@ -105,7 +105,7 @@ Continuous paragraphs, academic style, cite key papers.}
 
 > The table lists key works only; the per-paper entries below include **every downloaded paper** (not just key works), with short names consistent with the headings.
 
-<!-- Per-paper entries: include every downloaded paper. Whether to write the four-point detailed introduction depends on the user's Phase A choice (see phase-research.md A-4.5). -->
+<!-- Per-paper entries: include every downloaded paper. Whether to write the four-point detailed introduction depends on the user's Phase A choice (see the Phase A paper-introduction choice). -->
 #### {Short Name} ({Venue} {Year}) [n]
 {When the user chose detailed introductions, expand into four points, academic style:
 1. What research problem it solves;
@@ -251,7 +251,7 @@ Every baseline and every metric must have a paper citation as justification.}
 
 ### Data & Code Availability Summary
 
-> Verifies only whether the datasets and baseline code can be obtained; does not involve GPU/VRAM or other resources — resources are only estimated afterward at the end of Part 3.
+> Verify data/code access and resource feasibility, distinguishing measured costs from estimates.
 
 | Item | Status | Notes |
 |------|--------|-------|
@@ -284,24 +284,24 @@ If no standard tool exists, describe the standard preprocessing pipeline.}
 
 ### 2 Experiment Design
 
-**Workload baseline (top venue standard)**:
+**Experiment scale**: Choose by RQs, evidence coverage, field conventions, and budget; no universal minimum count.
 
-| Dimension | Minimum | Recommended |
-|-----------|---------|-------------|
-| Main experiment datasets | 2 | 3–5 (covering different scales / domains) |
-| Baseline models compared | 4 | 5–8 (recent SOTA + classic methods) |
-| Ablation variants | 1 per innovation | 3–6 variants, systematically covering all core designs |
-| Additional experiment types | All field-standard ones | Beyond the standard ones, add 1–3 extension experiments |
-| Multiple runs required | Yes | Report mean ± std, at least 3 random seeds |
+| Dimension | Decision basis | Reporting |
+|-----------|----------------|-----------|
+| Datasets | Claimed distributions and boundaries | Revisions, splits, rationale |
+| Baselines | Competitive, scientifically relevant controls | Sources, settings, search budgets, fairness |
+| Ablations | Key designs and alternative explanations | Variants, controls, decision criteria |
+| Additional experiments | Missing generalization/efficiency evidence | RQ linkage and priority |
+| Repeats | Randomness, costs, and required precision | Seeds, repetitions, error/interval definitions |
 
 **Coherence requirements**:
 - Every experiment must correspond to at least one innovation or hypothesis in the idea — no unrelated experiments
 - Ablations must systematically cover all core design modules, each validated independently
 - Additional experiments must validate properties the main experiment cannot cover (e.g., generalization, efficiency) — no redundancy with main experiments
-- Additional experiments that recur across multiple papers in the field are treated as standard and must be done; beyond those, propose extension experiments from multiple angles for the user to choose
+- Choose customary additional experiments by RQ relevance and evidence gaps; justify inclusion or omission
 - All experiments use the same set of random seeds to ensure reproducibility
 
-> If an experiment cannot meet the workload baseline above, explain the reason in that experiment's "Purpose" field (e.g., scarce public datasets in the domain, compute resource constraints).
+> If experiments are reduced, identify missing evidence and conclusions the reduced plan cannot establish.
 
 Each experiment (main, ablation, additional) uses the following unified format:
 
@@ -309,7 +309,7 @@ Each experiment (main, ablation, additional) uses the following unified format:
 
 **Purpose**: {what this experiment validates — which innovation or hypothesis from the idea it tests}
 
-**Why designed this way**: {Explain why this experiment adopts this setup (dataset choice, range of comparison models, metric combination), and what this design means for supporting the core method — i.e., "which point of the idea this experiment proves". This is the core field of this section and must not be omitted.}
+**Why designed this way**: {Explain why this experiment adopts this setup (dataset choice, range of comparison models, metric combination), and what this design means for supporting the core method — i.e., "which hypothesis this tests and which outcomes support or contradict it". This is the core field of this section and must not be omitted.}
 
 **Dataset and Splits**:
 
@@ -325,7 +325,7 @@ Each experiment (main, ablation, additional) uses the following unified format:
 
 > {Explain why this set of metrics accurately reflects the purpose of this experiment}
 
-**Expected Outcome**: {how much better the proposed method is expected to perform vs. baselines, and why this improvement is anticipated}
+**Predefined decision criteria**: {Primary metrics, effect sizes, and uncertainty; supporting, contradicting, and inconclusive outcomes. Expectations are not measurements.}
 
 **Models Under Evaluation**:
 
@@ -335,7 +335,7 @@ Each experiment (main, ablation, additional) uses the following unified format:
 | Model | Difference from our method | Significance of inclusion (support for the idea) | Type | Source paper (display only) | Code |
 |-------|---------------------------|------------------------------------------------|------|----------------------------|------|
 | **Ours** | — | Proposed method | Proposed method | — | — |
-| {Baseline 1} | {how it differs from ours — missing which innovation module, or taking a different technical route} | {what advantage of ours this comparison highlights / which design choice it proves correct} | {classic / current SOTA / ablation variant} | {Author} et al. [n] ({Venue Year}) / used as a baseline by [n] | {repo or N/A} |
+| {Baseline 1} | {how it differs from ours — missing which innovation module, or taking a different technical route} | {what advantage of ours this comparison highlights / which design choice and applicability boundary it tests} | {classic / current SOTA / ablation variant} | {Author} et al. [n] ({Venue Year}) / used as a baseline by [n] | {repo or N/A} |
 | {Baseline 2} | {...} | {...} | {type} | {source} | {repo or N/A} |
 
 > {Explain the overall selection logic of this group: which method categories are covered, why this comparison is fair and representative}
@@ -376,7 +376,7 @@ Fill in using the unified format above; models under evaluation are the ablation
 
 ### 3 Resource Estimate (reference)
 
-> Filled in Phase C-6 after the experiment plan is complete. **The resource estimate is for reference only, not a constraint on the experiment design** — the first purpose of the design is to rigorously prove the effectiveness of the idea.
+> Experiments test falsifiable hypotheses. Account for hardware, time, and budget during planning; record full and executable core plans and the conclusion limits of deferred experiments.
 
 | Experiment | Est. VRAM | Est. time per run | # Groups |
 |-----------|-----------|-------------------|----------|
@@ -384,7 +384,7 @@ Fill in using the unified format above; models under evaluation are the ablation
 | Ablation study | ~{N}GB | ~{N} h/variant | {N} |
 | {Additional experiment} | ~{N}GB | ~{N} h | {N} |
 
-> These are rough estimates; actual consumption depends on the specific implementation and hardware. If resources are limited, you may run the core experiments first and run in batches, without compromising the effectiveness proof.
+> These estimates need a stated basis and uncertainty. Execute core evidence first under resource limits and disclose untested conclusions.
 
 ---
 

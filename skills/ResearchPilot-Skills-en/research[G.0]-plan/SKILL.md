@@ -1,31 +1,17 @@
 ---
 name: research[G.0]-plan
 description: >
-  ResearchPilot Research Assistant [Phase G.0]: Paper planning
+  Plan a paper structure, argument, and figures from the research report and real results, including restructuring existing manuscripts.
 version: 2.0.0
 license: LICENSE
 ---
 
+> At startup, read the [execution and handoff contract](references/workflow-contract.md) for authorization, state, research, and reproducibility rules.
+
+
 # Phase G.0: Paper Planning
 
-> **user_requirements.md priority**: All user constraints in `docs/user_requirements.md` **take precedence over any default instruction in this skill**. Always read it before generating output.
-
-## Overview
-
-### Paper Writing Stage Chain
-
-| Skill | Responsibility |
-|-------|---------------|
-| `/research[G.0]-plan` | Update idea_report → plan structure/figures → select format |
-| `/research[G.1]-method` | Write / revise Method |
-| `/research[G.2]-experiments` | Write / revise Experiments |
-| `/research[G.3]-abstract` | Write / revise Abstract |
-| `/research[G.4]-introduction` | Write / revise Introduction |
-| `/research[G.5]-related` | Write / revise Related Works |
-| `/research[G.6]-conclusion` | Write / revise Conclusion + References |
-| `/research[G.7]-review` | Full-paper review (five dimensions + claim-evidence) |
-
----
+> **user_requirements.md priority**: All user constraints in `docs/user_requirements.md` **take precedence over any default instruction in this skill**. Read it if present before generating output.
 
 ## Command
 

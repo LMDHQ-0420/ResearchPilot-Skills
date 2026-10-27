@@ -1,31 +1,17 @@
 ---
 name: research[G.4]-introduction
 description: >
-  ResearchPilot Research Assistant [Phase G.4]: Write manuscript Introduction
+  Write or revise an Introduction with research questions, literature gaps, method overview, and evidence-backed contributions.
 version: 2.0.0
 license: LICENSE
 ---
 
+> At startup, read the [execution and handoff contract](references/workflow-contract.md) for authorization, state, research, and reproducibility rules.
+
+
 # Phase G.4: Introduction
 
-> **user_requirements.md priority**: All user constraints in `docs/user_requirements.md` **take precedence over any default instruction in this skill**. Always read it before generating output.
-
-## Overview
-
-### Paper Writing Stage Chain
-
-| Skill | Responsibility |
-|-------|---------------|
-| `/research[G.0]-plan` | Update idea_report → plan structure/figures → select format |
-| `/research[G.1]-method` | Write / revise Method |
-| `/research[G.2]-experiments` | Write / revise Experiments |
-| `/research[G.3]-abstract` | Write / revise Abstract |
-| `/research[G.4]-introduction` | Write / revise Introduction |
-| `/research[G.5]-related` | Write / revise Related Works |
-| `/research[G.6]-conclusion` | Write / revise Conclusion + References |
-| `/research[G.7]-review` | Full-paper review (five dimensions + claim-evidence) |
-
----
+> **user_requirements.md priority**: All user constraints in `docs/user_requirements.md` **take precedence over any default instruction in this skill**. Read it if present before generating output.
 
 ## Command
 
@@ -47,7 +33,7 @@ license: LICENSE
 4. Read `docs/idea_report.md` and `docs/dev_log.md` (find answers to writing questions here first)
 5. Read example analysis if `docs/manuscripts/examples/style-notes.md` exists
 6. Scan all annotations in the manuscript, list pending ones
-7. Confirm writing plan with user before writing anything
+7. Proceed within the authorized writing scope; consolidate confirmation only for unresolved material structure or claim changes
 
 See `references/common-writing-constraints.md` for full details.
 

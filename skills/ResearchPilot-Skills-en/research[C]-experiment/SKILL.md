@@ -1,12 +1,15 @@
 ---
 name: research[C]-experiment
 description: >
-  ResearchPilot Research Assistant [Phase C]: Experiment design
+  Design main, ablation, and boundary experiments from hypotheses and baseline papers/code; produce an executable, budget-aware report Part 3.
 version: 2.0.0
 license: LICENSE
 ---
 
-> **user_requirements.md priority**: All user constraints recorded in `docs/user_requirements.md` (direction preferences, implementation requirements, document format, etc.) **take precedence over any default instruction in this skill**. Always read that file before generating any output to ensure compliance with confirmed user constraints.
+> At startup, read the [execution and handoff contract](references/workflow-contract.md) for authorization, state, research, and reproducibility rules.
+
+
+> **user_requirements.md priority**: All user constraints recorded in `docs/user_requirements.md` (direction preferences, implementation requirements, document format, etc.) **take precedence over any default instruction in this skill**. Read that file if present before generating any output to ensure compliance with confirmed user constraints.
 
 
 # Phase C: Experiment Design
@@ -15,65 +18,9 @@ Read baseline papers and code, synthesize field experiment conventions, design
 main/ablation/additional experiments, and append `docs/idea_report.md` Part 3.
 Then move to Phase D.
 
-**Prerequisite**: `docs/idea_report.md` contains Part 2 (Phase B complete).
+**Prerequisite**: Part 2 has substantive method content and applicable confirmation evidence; a heading alone does not establish Phase B completion.
 
-**Design principle**: The sole purpose of every experiment is to rigorously
-prove the idea's effectiveness. Resource constraints are not design inputs —
-only a post-design estimate is provided.
-
-## Workflow Overview & Outputs
-
-ResearchPilot-Skills splits a complete academic research project into seven independent
-stage skills. The current skill is one link in that chain.
-
-### Seven-Stage Chain
-
-| Skill | Phase | Main Output |
-|-------|-------|-------------|
-| `/research[A]-exploration` | Direction Exploration | `docs/idea_report.md` Part 1 |
-| `/research[B]-idea` | Idea Deepening | `docs/idea_report.md` Part 2 |
-| `/research[C]-experiment` | Experiment Design | `docs/idea_report.md` Part 3 |
-| `/research[D]-implementation` | Implementation Design | `docs/implementation.md` |
-| `/research[E]-coding` | Coding | `code/` + `docs/dev_log.md` |
-| `/research[F]-iteration` | Code Iteration | `dev_log.md` iteration records |
-| `/research[G.0]-plan` | Paper Planning | manuscript architecture + `notebooks/figures.ipynb` |
-| `/research[G.1]-method` | Method | manuscript Method section |
-| `/research[G.2]-experiments` | Experiments | manuscript Experiments section |
-| `/research[G.3]-abstract` | Abstract | manuscript Abstract |
-| `/research[G.4]-introduction` | Introduction | manuscript Introduction |
-| `/research[G.5]-related` | Related Works | manuscript Related Works |
-| `/research[G.6]-conclusion` | Conclusion + References | manuscript Conclusion |
-| `/research[G.7]-review` | Full-paper Review | review report |
-
-### Project Directory Structure
-
-```
-docs/
-  idea_report.md        # Research report in three parts:
-                        #   Part 1: Motivation, RQs, Key Works  (Phase A)
-                        #   Part 2: Introduction, Related Works, Method  (Phase B)
-                        #   Part 3: Datasets, Experiment Design, Resource Estimate  (Phase C)
-  implementation.md     # Coding guide: file- and function-level implementation plan  (Phase D)
-  dev_log.md            # Dev log: progress, decisions, "How to Run" section  (Phase E)
-  user_requirements.md  # User constraints: collected and maintained by Claude
-  papers/               # Downloaded paper PDFs or abstract TXTs
-  manuscripts/          # Paper drafts, each revision archived separately
-                        #   (e.g. v1.0-initial-draft.md, v1.1-revision.md)
-
-code/
-  src/                  # Core model and training code
-  scripts/              # Run scripts (train.sh, evaluate.sh, ablation.sh)
-  configs/              # Hyperparameter config files
-  src/models/baseline/  # Baseline implementations (interface matches main model)
-  notebooks/            # Visualization notebooks; paper figure/table generation
-  data/                 # Datasets (gitignored)
-  results/              # Experiment results (gitignored)
-  logs/                 # Training logs (gitignored)
-  README.md             # Environment setup and run commands
-  requirements.txt      # Dependencies (library names only, no torch family)
-```
-
----
+**Design principle**: Test falsifiable hypotheses, including supporting, contradicting, and inconclusive outcomes. Account for resources before design and provide both full evidence and executable core plans with explicit conclusion boundaries.
 
 ## Command
 
@@ -88,14 +35,14 @@ code/
 ## Phase C Flow Overview
 
 ```
-C-1 Read baseline papers and code (show reading plan, wait for user confirmation)
+C-1 Read known constraints and resources, then relevant baseline papers and code
 C-2 Search field experiment conventions (recent 3-year papers in same domain)
 C-3 Verify data and code availability
 C-4 Propose experiment outline, confirm with user (skeleton first, then details)
 C-5 Generate idea_report.md Part 3 full content
-C-6 Provide resource estimate (reference only, appended to Part 3)
-C-7 Ask user whether to proceed to Phase D
-C-8 Iterative refinement (loop until user confirms)
+C-6 Estimate runtime costs; check core-plan feasibility and conclusion boundaries
+C-7 Check completion evidence, then continue if authorized or suggest Phase D
+C-8 Refine within scope; consolidate material unresolved choices
 ```
 
 Full step-by-step instructions: `references/phase-C.md`.
@@ -104,11 +51,10 @@ Full step-by-step instructions: `references/phase-C.md`.
 
 ## Non-Negotiable Constraints
 
-1. Do not advance to Phase D without explicit user confirmation.
+1. Phase D requires applicable authorization; do not repeat confirmation when continuous work was already authorized.
 2. Must show the experiment outline (C-4) and get user confirmation before
    writing the full Part 3 content.
-3. Do not collect GPU/training-time resource constraints before design — only
-   provide a post-design estimate.
+3. Reuse or obtain hardware, time, and budget constraints before design; disclose untested conclusions in reduced plans.
 4. Every model in evaluation tables must be explained individually: difference
    from the proposed method, reason for inclusion, source paper.
 5. Never fabricate citations. Unverifiable content gets `⚠️ [low confidence: reason]`.

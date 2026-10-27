@@ -1,12 +1,15 @@
 ---
 name: research[B]-idea
 description: >
-  ResearchPilot Research Assistant [Phase B]: Idea deepening
+  Develop research questions into a technical approach with a pipeline, rationale, and testable hypotheses; write or revise report Part 2.
 version: 2.0.0
 license: LICENSE
 ---
 
-> **user_requirements.md priority**: All user constraints recorded in `docs/user_requirements.md` (direction preferences, implementation requirements, document format, etc.) **take precedence over any default instruction in this skill**. Always read that file before generating any output to ensure compliance with confirmed user constraints.
+> At startup, read the [execution and handoff contract](references/workflow-contract.md) for authorization, state, research, and reproducibility rules.
+
+
+> **user_requirements.md priority**: All user constraints recorded in `docs/user_requirements.md` (direction preferences, implementation requirements, document format, etc.) **take precedence over any default instruction in this skill**. Read that file if present before generating any output to ensure compliance with confirmed user constraints.
 
 
 # Phase B: Idea Deepening
@@ -16,60 +19,6 @@ question" into an "implementable method" through three layers of confirmation.
 Produces `docs/idea_report.md` Part 2, then moves to Phase C.
 
 **Prerequisite**: `docs/idea_report.md` exists and contains Part 1 (Phase A complete).
-
-## Workflow Overview & Outputs
-
-ResearchPilot-Skills splits a complete academic research project into seven independent
-stage skills. The current skill is one link in that chain.
-
-### Seven-Stage Chain
-
-| Skill | Phase | Main Output |
-|-------|-------|-------------|
-| `/research[A]-exploration` | Direction Exploration | `docs/idea_report.md` Part 1 |
-| `/research[B]-idea` | Idea Deepening | `docs/idea_report.md` Part 2 |
-| `/research[C]-experiment` | Experiment Design | `docs/idea_report.md` Part 3 |
-| `/research[D]-implementation` | Implementation Design | `docs/implementation.md` |
-| `/research[E]-coding` | Coding | `code/` + `docs/dev_log.md` |
-| `/research[F]-iteration` | Code Iteration | `dev_log.md` iteration records |
-| `/research[G.0]-plan` | Paper Planning | manuscript architecture + `notebooks/figures.ipynb` |
-| `/research[G.1]-method` | Method | manuscript Method section |
-| `/research[G.2]-experiments` | Experiments | manuscript Experiments section |
-| `/research[G.3]-abstract` | Abstract | manuscript Abstract |
-| `/research[G.4]-introduction` | Introduction | manuscript Introduction |
-| `/research[G.5]-related` | Related Works | manuscript Related Works |
-| `/research[G.6]-conclusion` | Conclusion + References | manuscript Conclusion |
-| `/research[G.7]-review` | Full-paper Review | review report |
-
-### Project Directory Structure
-
-```
-docs/
-  idea_report.md        # Research report in three parts:
-                        #   Part 1: Motivation, RQs, Key Works  (Phase A)
-                        #   Part 2: Introduction, Related Works, Method  (Phase B)
-                        #   Part 3: Datasets, Experiment Design, Resource Estimate  (Phase C)
-  implementation.md     # Coding guide: file- and function-level implementation plan  (Phase D)
-  dev_log.md            # Dev log: progress, decisions, "How to Run" section  (Phase E)
-  user_requirements.md  # User constraints: collected and maintained by Claude
-  papers/               # Downloaded paper PDFs or abstract TXTs
-  manuscripts/          # Paper drafts, each revision archived separately
-                        #   (e.g. v1.0-initial-draft.md, v1.1-revision.md)
-
-code/
-  src/                  # Core model and training code
-  scripts/              # Run scripts (train.sh, evaluate.sh, ablation.sh)
-  configs/              # Hyperparameter config files
-  src/models/baseline/  # Baseline implementations (interface matches main model)
-  notebooks/            # Visualization notebooks; paper figure/table generation
-  data/                 # Datasets (gitignored)
-  results/              # Experiment results (gitignored)
-  logs/                 # Training logs (gitignored)
-  README.md             # Environment setup and run commands
-  requirements.txt      # Dependencies (library names only, no torch family)
-```
-
----
 
 ## Command
 
@@ -99,7 +48,7 @@ Full step-by-step instructions: `references/phase-B.md`.
 
 ## Confirmation Card
 
-Every output in this phase begins with a confirmed-content card:
+Show a concise confirmed-content card when decisions change, resuming, or handing off:
 
 ```
 ━━━━━━━━━━ Confirmed Content ━━━━━━━━━━

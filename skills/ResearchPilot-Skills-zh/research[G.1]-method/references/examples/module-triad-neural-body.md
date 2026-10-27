@@ -5,7 +5,7 @@
 Local source references:
 
 1. Annotated figure showing motivation/design/advantages split.
-3. Text-converted annotation notes: `references/examples/method/neural-body-annotated-figure-text.md`
+3. Text-converted annotation notes: `references/examples/example-of-the-three-elements.md`
 
 Triad mapping template:
 
@@ -15,5 +15,5 @@ Triad mapping template:
 
 Direct usage:
 
-1. Read `neural-body-annotated-figure-text.md` to map each paragraph to one triad element.
+1. Read `example-of-the-three-elements.md` to map each paragraph to one triad element.
 2. Rebuild your own Method subsection with the same triad order.

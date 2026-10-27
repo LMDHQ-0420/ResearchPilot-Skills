@@ -1,130 +1,39 @@
 ---
 name: research[G.7]-review
 description: >
-  ResearchPilot Research Assistant [Phase G.7]: Full-paper review
+  Review paper contributions, writing, experiments, and evaluation; align claims with actual evidence and report located, prioritized findings.
 version: 2.0.0
 license: LICENSE
 ---
 
-# Phase G.7: Full-Paper Review
+# Phase G.7: Full-paper or scoped review
 
-> **user_requirements.md priority**: All user constraints in `docs/user_requirements.md` **take precedence over any default instruction in this skill**. Always read it before generating output.
+Read the [execution and handoff contract](references/workflow-contract.md) and confirmed requirements. A review request authorizes inspection without a separate writing-plan approval. Produce findings by default; edit the manuscript only when authorized.
 
-## Overview
+## Reading and evidence
 
-### Paper Writing Stage Chain
+Read the full current manuscript, references, relevant research-report sections, and evaluation data/run records at the project's actual configured result paths. Results may be under code/results/ or elsewhere; do not hard-code results/. Mark unavailable evidence rather than inventing numbers or declaring a pass.
 
-| Skill | Responsibility |
-|-------|---------------|
-| `/research[G.0]-plan` | Update idea_report → plan structure/figures → select format |
-| `/research[G.1]-method` | Write / revise Method |
-| `/research[G.2]-experiments` | Write / revise Experiments |
-| `/research[G.3]-abstract` | Write / revise Abstract |
-| `/research[G.4]-introduction` | Write / revise Introduction |
-| `/research[G.5]-related` | Write / revise Related Works |
-| `/research[G.6]-conclusion` | Write / revise Conclusion + References |
-| `/research[G.7]-review` | Full-paper review (five dimensions + claim-evidence) |
+## Five dimensions
 
----
+1. Contribution: direct claim support, hypotheses distinguished from verified conclusions, honest negative results and applicability boundaries.
+2. Clarity: paragraph focus, terminology, equations, and figures; reverse-outline to find logical gaps.
+3. Experimental strength: RQs answered by main, ablation, and boundary experiments; alternative explanations addressed. Beating every baseline is not required.
+4. Evaluation: no leakage in splits, preprocessing fitting, model selection, or tuning; fair baseline search budgets; correct metrics and uncertainty/statistical reporting.
+5. Method soundness: agreement among rationale, implementation, and ablations; no untested mechanism assertions presented as established facts.
 
-## Command
+## Claim–evidence table
 
-```
-/research[G.7]-review
-```
-> An optional natural-language instruction may follow the command. The AI will treat it as an additional constraint or supplement for this invocation.
+List every major Abstract and Introduction claim:
 
+| Claim and manuscript location | Evidence file/run ID/figure location | Status | Issue and remedy |
+|-------------------------------|--------------------------------------|--------|------------------|
+| Actual claim | Actual source and revision | supported / needs evidence / missing / contradicted | Experiment, weakening, or correction |
 
-**Prerequisite**: Any or all sections written
+Do not skip unsupported or contradicted claims. Priorities: high affects contributions or main conclusions; medium affects local reasoning/readability; low is formatting/wording. Each finding includes location, evidence, impact, and an actionable remedy, not just a score.
 
----
+## Delivery and completion
 
-## Before Writing: Required Steps
+Except for read-only requests, save docs/manuscripts/review_report.md with project-relative paths and actual SHA-256 hashes for the manuscript, references, and result files; record scope, unchecked items, and high-priority findings/resolution status. Report existence does not mean a pass. Pass only with sufficient current-version evidence and all high-priority findings resolved. Keep unverifiable issues open and update phase state per the contract.
 
-1. Read the full manuscript (avoid disconnection from already-written sections)
-2. Read all existing references (References section or .bib file)
-3. Read the `=== Paper Architecture ===` comment block at the top of the manuscript
-4. Read `docs/idea_report.md` and `docs/dev_log.md` (find answers to writing questions here first)
-5. Read example analysis if `docs/manuscripts/examples/style-notes.md` exists
-6. Scan all annotations in the manuscript, list pending ones
-7. Confirm writing plan with user before writing anything
-
-See `references/common-writing-constraints.md` for full details.
-
----
-
-## Full-Paper Review Section-Specific Requirements
-
-**Five Dimensions (Master-cai paper-review.md)**:
-1. Contribution: every claimed contribution supported by experiments?
-2. Writing clarity: one message per paragraph? topic sentence covers the paragraph? consistent terminology?
-3. Experimental strength: main/ablation/additional experiments cover all RQs? no missing strong baselines?
-4. Evaluation completeness: fair comparisons? metric selection justified?
-5. Method design soundness: every design choice motivated? ablation-verified?
-
-**Claim-evidence alignment (required)**:
-Output table for every major claim in Abstract and Introduction:
-```
-| Claim | Evidence | Status |
-|-------|----------|--------|
-| ... | ... | supported / needs evidence / missing |
-```
-Unsupported claims must be addressed — cannot be skipped.
-
-**Issue priority definitions**:
-- High priority: affects the validity of the main contribution or breaks the logical chain (must fix before submission)
-- Medium priority: affects readability or insufficiently supported local argument (recommended to fix)
-- Low priority: writing style, wording, or formatting improvements (optional)
-
-List all findings sorted by priority. Resolve all high-priority issues before submitting.
-
-**Reverse outlining**: extract each paragraph's topic sentence; check if they form a coherent story.
-
----
-
-## Version Management
-
-Back up before writing:
-```bash
-cp paper.md paper_{mm-dd_hh-mm}.md   # or .tex
-```
-Append modification record to file header after writing (see `references/common-writing-constraints.md`).
-
----
-
-## Reference Maintenance
-
-When a new citation is needed, append immediately:
-
-**md**:
-```markdown
-[N] {Author}. "{Title}." *{Journal/Conference}*, {Year}.
-> Core contribution: {what this paper does, one sentence}
-> Reason for citation: {where in the paper, why cited here}
-```
-
-**LaTeX .bib**:
-```bibtex
-% [Core contribution] {one-sentence contribution}
-% [Reason for citation] {section}: {why cited here}
-@article{key, ...}
-```
-
----
-
-## On Phase Completion
-
-```
-Full-Paper Review section written/revised.
-
-→ Paper writing complete.
-→ Or use `/research[G.7]-review` for a full-paper review at any time.
-```
-
----
-
-## Reference Files
-
-- Review guide source: `references/section-guide-source.md`
-- Writing flow source: `references/writing-flow-source.md`
-- Template flexibility: `references/template-flexibility.md`
+When authorized to edit, follow [writing constraints](references/common-writing-constraints.md) and [template rules](references/template-flexibility.md). Review alone does not require manuscript backups or rewriting. Consult the [review source](references/section-guide-source.md) and [writing-flow source](references/writing-flow-source.md) when useful.

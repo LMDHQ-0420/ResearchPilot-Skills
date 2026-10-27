@@ -30,9 +30,9 @@
 
 🔬 **End-to-end coverage**: direction exploration → literature review → idea deepening → experiment design → coding → code iteration → paper writing. One skill suite, every phase loaded independently with precise context.
 
-📐 **Experiments without compromise**: the sole purpose of experiment design is to rigorously prove the idea's effectiveness. Resource constraints play no role in design — they are only estimated after the plan is finalized.
+> **Experiment design**: Test falsifiable hypotheses and preserve negative results. Present full and executable core plans within hardware/time/budget constraints, with explicit conclusion boundaries.
 
-🧱 **Code and design documents are tightly coupled**: every code change requires updating the design documents (`idea_report.md` / `implementation.md`) first. Patching code without updating documents is not allowed; backtracking follows the full chain.
+🧱 **Code and design documents are tightly coupled**: method or evaluation changes update affected design documents (`idea_report.md` / `implementation.md`) first. Ordinary implementation errors are fixed and verified directly.
 
 📝 **Paper writing grounded in evidence**: based on Prof. Pengsida's public learning notes, every section has a writing framework, examples, and constraints. The full manuscript is read before each revision to prevent section disconnection.
 
@@ -44,11 +44,11 @@
 
 | Phase | Skill | What it does | Output |
 |-------|-------|-------------|--------|
-| **A** Exploration | `research[A]-exploration` | Literature search (≥15 papers) → three-layer RQ confirmation → necessity argument → assemble Part 1 | `idea_report.md` Part 1 |
+| **A** Exploration | `research[A]-exploration` | Literature search (coverage-driven paper count) → three-layer RQ confirmation → necessity argument → assemble Part 1 | `idea_report.md` Part 1 |
 | **B** Idea Deepening | `research[B]-idea` | Technical framework → plain-language pipeline → Method writing → Introduction polish | `idea_report.md` Part 2 |
 | **C** Experiment Design | `research[C]-experiment` | Deep-read baseline code → synthesize field conventions → confirm outline → design main/ablation/additional experiments | `idea_report.md` Part 3 |
 | **D** Implementation Design | `research[D]-implementation` | Generate function-level coding guide → three-way validation (coverage / consistency / completeness) | `implementation.md` |
-| **E** Coding | `research[E]-coding` | File-by-file implementation → per-module validation → code review → write README → git push | code + `dev_log.md` |
+| **E** Coding | `research[E]-coding` | File-by-file implementation → per-module validation → code review → README → authorized commit/push | code + `dev_log.md` |
 | **F** Code Iteration | `research[F]-iteration` | Diagnose from results → confirm backtrack scope → update docs first → update code → append iteration record | `dev_log.md` iteration records |
 | **G** Paper Writing | `research[G.0]`–`research[G.7]` | Update idea_report → plan figures → write each section → full-paper review | `docs/manuscripts/` |
 
@@ -233,3 +233,15 @@ MIT License — see [LICENSE](LICENSE)
    <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=LMDHQ-0420/ResearchPilot-Skills&type=date&legend=top-left&sealed_token=IltPC-yhq4XX_TcD2-J1LSKQP6pMqrTSgSzEjyk4Yk1rtjz81_5nxLhkqOopVaKJl5ibQuiWR_xgbI3BoPUQz98jmDn1sGD_qsHy1ueS4Se2mAtBBziKdQ" />
  </picture>
 </a>
+
+
+## Skill maintenance and validation
+
+Edit shared/en/workflow-contract.md for phase state, confirmation, research, and reproducibility rules, and shared/en/template-flexibility.md for templates. Chinese sources are under shared/zh/. Synchronize installed-skill payloads and validate with:
+
+```powershell
+node scripts/sync-shared-references.mjs
+node scripts/validate-skills.mjs
+```
+
+Check drift without writes: `node scripts/sync-shared-references.mjs --check`. Skills remain independently installable and do not depend on shared files outside their folders. Research projects use docs/research_state.json; routing is read-only by default and legacy projects are inferred from substantive content. See [validation scenarios](docs/skill-validation.md).

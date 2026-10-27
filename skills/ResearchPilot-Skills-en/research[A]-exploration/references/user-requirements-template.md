@@ -52,7 +52,7 @@ At the start of each phase, if the user's input lacks sufficient detail, Claude 
 ### Document preferences
 {Extracted from user conversation: language, detail level, etc. Default: English throughout}
 
-> Note: Phase C (Experiment Design) does not collect resource constraints (GPU/training time). The first purpose of experiment design is to rigorously prove the effectiveness of the idea; resources are only given as an estimate after the design is complete (written into the "Resource Estimate" section of `idea_report.md` Part 3), not as a constraint.
+> Experiments test falsifiable hypotheses. Account for hardware, time, and budget during planning; record full and executable core plans and the conclusion limits of deferred experiments.
 
 ---
 
@@ -101,10 +101,10 @@ Before starting the literature search, a few quick questions (skip any that don'
 
 If the user's input is already detailed enough, Claude extracts and writes directly — no questions asked.
 
-Phase A uses **step-by-step confirmation**: the research direction and each RQ are locked one at a time through conversation. As each item is confirmed, immediately update the corresponding field in this file (distinguishing "Research Direction Constraints" from "RQ Constraints"), and refresh it in the confirmation card at the top of the next output (card format in `references/phase-research.md`).
+Phase A uses **step-by-step confirmation**: the research direction and each RQ are locked one at a time through conversation. As each item is confirmed, immediately update the corresponding field in this file (distinguishing "Research Direction Constraints" from "RQ Constraints"), and refresh it in the confirmation card at the top of the next output (card format in `references/phase-A.md`).
 
 ### Phase C (Experiment Design)
-Does not collect resource constraints. After the experiment design is complete, Claude provides a resource estimate directly in `idea_report.md` Part 3 (for reference only, see `references/phase-research.md` C-6).
+Record known hardware, time, and budget constraints before design; Phase C reports complete and executable core plans with costs and conclusion boundaries in Part 3.
 
 ### Phase D (Implementation Design)
 Collected in two passes:
@@ -117,4 +117,4 @@ Before designing the implementation, a few quick questions:
 3. Any hard requirements? (e.g., multi-GPU DDP, ONNX export)
 ```
 
-**Before coding starts (pre-coding checklist, see `references/phase-implementation.md` D-Final-2):** environment name, device-specific requirements, dataset download method, code run strategy, README location. Write each into the Phase D section of this file after confirmation.
+**Before coding starts (pre-coding checklist, see `docs/implementation.md` D-Final-2):** environment name, device-specific requirements, dataset download method, code run strategy, README location. Write each into the Phase D section of this file after confirmation.

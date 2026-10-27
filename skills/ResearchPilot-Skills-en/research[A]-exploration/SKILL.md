@@ -1,12 +1,15 @@
 ---
 name: research[A]-exploration
 description: >
-  ResearchPilot Research Assistant [Phase A]: Direction exploration
+  Explore research directions, verify literature, formulate research questions, and produce report Part 1; also download individual papers.
 version: 2.0.0
 license: LICENSE
 ---
 
-> **user_requirements.md priority**: All user constraints recorded in `docs/user_requirements.md` (direction preferences, implementation requirements, document format, etc.) **take precedence over any default instruction in this skill**. Always read that file before generating any output to ensure compliance with confirmed user constraints.
+> At startup, read the [execution and handoff contract](references/workflow-contract.md) for authorization, state, research, and reproducibility rules.
+
+
+> **user_requirements.md priority**: All user constraints recorded in `docs/user_requirements.md` (direction preferences, implementation requirements, document format, etc.) **take precedence over any default instruction in this skill**. Read that file if present before generating any output to ensure compliance with confirmed user constraints.
 
 
 # Phase A: Direction Exploration
@@ -14,60 +17,6 @@ license: LICENSE
 Starting from a vague research interest, converge through multi-turn interaction
 to a well-grounded research direction and a clear set of research questions (RQs).
 Produces `docs/idea_report.md` Part 1, then moves to Phase B.
-
-## Workflow Overview & Outputs
-
-ResearchPilot-Skills splits a complete academic research project into seven independent
-stage skills. The current skill is one link in that chain.
-
-### Seven-Stage Chain
-
-| Skill | Phase | Main Output |
-|-------|-------|-------------|
-| `/research[A]-exploration` | Direction Exploration | `docs/idea_report.md` Part 1 |
-| `/research[B]-idea` | Idea Deepening | `docs/idea_report.md` Part 2 |
-| `/research[C]-experiment` | Experiment Design | `docs/idea_report.md` Part 3 |
-| `/research[D]-implementation` | Implementation Design | `docs/implementation.md` |
-| `/research[E]-coding` | Coding | `code/` + `docs/dev_log.md` |
-| `/research[F]-iteration` | Code Iteration | `dev_log.md` iteration records |
-| `/research[G.0]-plan` | Paper Planning | manuscript architecture + `notebooks/figures.ipynb` |
-| `/research[G.1]-method` | Method | manuscript Method section |
-| `/research[G.2]-experiments` | Experiments | manuscript Experiments section |
-| `/research[G.3]-abstract` | Abstract | manuscript Abstract |
-| `/research[G.4]-introduction` | Introduction | manuscript Introduction |
-| `/research[G.5]-related` | Related Works | manuscript Related Works |
-| `/research[G.6]-conclusion` | Conclusion + References | manuscript Conclusion |
-| `/research[G.7]-review` | Full-paper Review | review report |
-
-### Project Directory Structure
-
-```
-docs/
-  idea_report.md        # Research report in three parts:
-                        #   Part 1: Motivation, RQs, Key Works  (Phase A)
-                        #   Part 2: Introduction, Related Works, Method  (Phase B)
-                        #   Part 3: Datasets, Experiment Design, Resource Estimate  (Phase C)
-  implementation.md     # Coding guide: file- and function-level implementation plan  (Phase D)
-  dev_log.md            # Dev log: progress, decisions, "How to Run" section  (Phase E)
-  user_requirements.md  # User constraints: collected and maintained by Claude
-  papers/               # Downloaded paper PDFs or abstract TXTs
-  manuscripts/          # Paper drafts, each revision archived separately
-                        #   (e.g. v1.0-initial-draft.md, v1.1-revision.md)
-
-code/
-  src/                  # Core model and training code
-  scripts/              # Run scripts (train.sh, evaluate.sh, ablation.sh)
-  configs/              # Hyperparameter config files
-  src/models/baseline/  # Baseline implementations (interface matches main model)
-  notebooks/            # Visualization notebooks; paper figure/table generation
-  data/                 # Datasets (gitignored)
-  results/              # Experiment results (gitignored)
-  logs/                 # Training logs (gitignored)
-  README.md             # Environment setup and run commands
-  requirements.txt      # Dependencies (library names only, no torch family)
-```
-
----
 
 ## Commands
 
@@ -98,7 +47,7 @@ Otherwise → enter direction exploration flow
 
 ```
 A-1 Parse input, collect requirements (write to user_requirements.md)
-A-2 Initial literature search (≥15 papers, ≥2 per gap, up to 3 rounds)
+A-2 Search by question scope; check supporting/contradicting evidence and stop at adequate coverage
 A-3 Show download list to user for confirmation
 A-4 Execute downloads, report results
 A-4.5 Ask whether user wants detailed per-paper introductions
@@ -113,7 +62,7 @@ Full step-by-step instructions: `references/phase-A.md`.
 
 ## Confirmation Card
 
-Every output in this phase begins with a confirmed-content card (when content exists):
+Show a concise confirmed-content card when decisions change, resuming, or handing off:
 
 ```
 ━━━━━━━━━━ Confirmed Content ━━━━━━━━━━
@@ -144,11 +93,10 @@ Full download logic (arXiv → OpenReview → abstract TXT fallback) is in
    unverifiable entries get `[to verify]`.
 3. Never hide uncertainty. Low-confidence content gets `⚠️ [low confidence: reason]`.
 4. After `download-paper`, always output the full file path.
-5. `user_requirements.md` is maintained by Claude through conversation only.
+5. Record confirmed user constraints in user_requirements.md; respect direct user edits and current explicit instructions.
 6. Rules in `references/template-flexibility.md` take precedence over any
    specific template instruction.
-7. Before every idea generation or adjustment, read existing literature
-   extensively (see `references/phase-A.md`, Literature Reading Principle).
+7. Read primary literature relevant to the current idea decision. Reuse prior reading records; add reading when key evidence is missing rather than rereading a fixed count.
 
 ---
 

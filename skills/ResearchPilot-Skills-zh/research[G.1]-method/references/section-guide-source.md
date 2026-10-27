@@ -64,7 +64,7 @@ Definition:
 
 Local cite:
 
-1. `references/examples/method/example-of-the-three-elements.md`
+1. `references/examples/example-of-the-three-elements.md`
 
 ## Method Content Decomposition
 
@@ -97,7 +97,7 @@ Sentence skeleton:
 
 Local cite:
 
-1. `references/examples/method/module-design-instant-ngp.md`
+1. `references/examples/module-design-instant-ngp.md`
 
 ## How to Write Module Motivation
 
@@ -111,7 +111,7 @@ Typical opening sentences:
 
 Local cite:
 
-1. `references/examples/method/module-motivation-patterns.md`
+1. `references/examples/module-motivation-patterns.md`
 
 ## How to Check Whether Method is Easy to Understand
 
@@ -145,7 +145,7 @@ Local cite:
 
 Local cite:
 
-1. `references/examples/method/section-skeleton.md`
+1. `references/examples/section-skeleton.md`
 
 ## Overview Subsection
 
@@ -160,7 +160,7 @@ Writing structure:
 
 Local cite:
 
-1. `references/examples/method/overview-template.md`
+1. `references/examples/overview-template.md`
 
 ## Section 3.1 and Other Module Subsections
 
@@ -168,7 +168,7 @@ Local cite:
 
 Local cite:
 
-1. `references/examples/method/example-of-the-three-elements.md`
+1. `references/examples/example-of-the-three-elements.md`
 
 ## Module Writing Pattern (Mermaid)
 
@@ -185,12 +185,12 @@ flowchart TB
 
 ## Example Bank
 
-1. `references/examples/method-examples.md`
-2. `references/examples/method/pre-writing-questions.md`
-3. `references/examples/method/module-triad-neural-body.md`
-4. `references/examples/method/module-design-instant-ngp.md`
-5. `references/examples/method/module-motivation-patterns.md`
-6. `references/examples/method/section-skeleton.md`
-7. `references/examples/method/overview-template.md`
-8. `references/examples/method/example-of-the-three-elements.md`
-9. `references/examples/method/method-writing-common-issues-note.md`
+1. `references/examples/example-of-the-three-elements.md`
+2. `references/examples/pre-writing-questions.md`
+3. `references/examples/module-triad-neural-body.md`
+4. `references/examples/module-design-instant-ngp.md`
+5. `references/examples/module-motivation-patterns.md`
+6. `references/examples/section-skeleton.md`
+7. `references/examples/overview-template.md`
+8. `references/examples/example-of-the-three-elements.md`
+9. `references/examples/common-issues.md`

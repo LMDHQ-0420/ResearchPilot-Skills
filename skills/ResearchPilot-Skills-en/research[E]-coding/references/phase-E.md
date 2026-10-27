@@ -1,280 +1,49 @@
-# Phase E Detailed Flow: Coding
-
-## Phase E: Coding
-
-> **user_requirements.md takes priority**: All constraints in `docs/user_requirements.md` take precedence over any default instruction in this file. Read it before coding.
-
-> **dev_log.md is append-only**: Every code change must append a new log entry. Never overwrite or delete existing entries.
-
-### Trigger
-
-Entered automatically after the user confirms `implementation.md` in Phase D.
-
----
-
-### E-0 Pre-Coding Checklist
-
-**Before any coding begins**, confirm the following 6 items with the user (present all at once; user may answer item by item):
-
-```
-Implementation plan confirmed. Before coding, confirm a few things:
-
-**1. Runtime Environment**
-Which environment do you plan to use? What is its name?
-  - I will look for an existing environment (e.g. `conda env list`):
-    found → reuse directly; not found → I create one from requirements.txt.
-
-**2. Device Requirements**
-Any special device requirements? (e.g. CUDA version, cuDNN, Apple MPS, CPU-only, Python version)
-
-**3. Dataset Preparation**
-{Per dataset} "Dataset {name}": detected {already downloaded at data/{name}/ ✅ / not yet ❌}.
-  - Not downloaded, fast (small / direct link) → I download it.
-  - Not downloaded, slow (large / login / application required) → I give you the link and command:
-    Link: {url}; Command: {cmd}; Place in: `data/raw/{name}/` (with preprocessing) or `data/{name}/` (direct use)
-
-**4. Auto-Run After Coding**
-Should I run the code automatically after writing?
-  - Fast (seconds to minutes) → I run it to verify
-  - Slow (hours to days) → you run it
-  - Mixed → I run fast scripts; you run slow ones (full training, all ablations)
-  Your choice?
-
-**5. Git Repository**
-Do you have an existing GitHub repository?
-  - Yes → please provide the URL; push the whole project or just `code/`?
-  - No → should I initialize a new one?
-  Also: what is your git username and email? (for `git config`)
-
-**6. README Location**
-After all coding is done I will write a README.md (project overview, env setup, run commands).
-Should it go in the {project root} or `code/` directory?
-
-Confirm the above and I will start coding.
-```
-
-Write user answers to `docs/user_requirements.md` Phase E section (env name, device requirements, dataset handling, run strategy, git config, README location).
-
-**Dataset handling**:
-- Check whether each dataset already exists under `data/`
-- Not downloaded, fast → download directly
-- Not downloaded, slow → output instructions and wait:
-```
-**Dataset: {dataset_name}**
-Download URL: {official link}
-Command: {wget/kaggle/etc.}
-Place in: `data/raw/{dataset_name}/` (with preprocessing) or `data/{dataset_name}/` (direct use)
-Let me know when done.
-```
-
-**Git initialization** (if user has a repo or wants a new one):
-```bash
-git init
-git config user.name "{username}"
-git config user.email "{email}"
-```
-
-Create `.gitignore`:
-```
-# Datasets and large files
-data/
-# Model weights (may exceed 100 MB each)
-results/checkpoints/
-results/**/*.pth
-results/**/*.pt
-results/**/*.bin
-results/**/*.ckpt
-# CSV/JSON result files are tracked by default
-# Logs
-logs/
-# Python
-__pycache__/
-*.pyc
-.env
-```
-
-> **Large file check**: if any single file (dataset, weights, etc.) may exceed 100 MB, ask the user to confirm exclusion before pushing.
-
----
-
-### E-1 Create dev_log.md
-
-```markdown
-# Dev Log — {topic}
-> Created: {YYYY-MM-DD} | Last updated: {YYYY-MM-DD}
-> Linked implementation guide: docs/implementation.md
-> ⚠️ This file is append-only. Every code change must append a new log entry.
-
-## Project Overview
-| Item | Detail |
-|------|--------|
-| Research direction | {topic} |
-| Implementation strategy | from scratch |
-| Framework | {PyTorch x.x} |
-| Git repository | {repo URL or "local"} |
-| Push scope | {whole project / code/ only} |
+# Phase E: Detailed coding workflow
 
-## Implementation Progress
+## E-0 Inspect existing context
 
-| Module | File | Status | Completed | Notes |
-|--------|------|--------|-----------|-------|
-| Init | requirements.txt, configs/ | ⬜ TODO | — | |
-| Data loading | src/data/ | ⬜ TODO | — | |
-| Main model | src/models/{model}.py | ⬜ TODO | — | |
-| Baseline | src/models/baseline/ | ⬜ TODO | — | |
-| Training | src/train.py (or src/train/) | ⬜ TODO | — | |
-| Evaluation | src/evaluate.py (or src/evaluate/) | ⬜ TODO | — | |
-| Utils | src/utils/ | ⬜ TODO | — | |
-| Scripts | scripts/ | ⬜ TODO | — | |
-| README | README.md | ⬜ TODO | — | written after all coding is done |
+Read substantive implementation guidance, requirements, project environments, and Git status. Reuse confirmed devices, data paths, run strategy, and README location. Ask only about missing information that affects execution; do not require a fixed six-question form or change Git identity, branches, or remotes automatically.
 
-Status: ⬜ TODO / 🔄 WIP / ✅ Done (run-verified) / ❌ Blocked
+Separate lightweight validation from expensive training. Follow existing authorization; if expensive runs are not authorized, provide commands and cost estimates while completing independent work.
 
-## Dev Log
+## E-1 Environment and data
 
-### {YYYY-MM-DD HH:MM} — Project initialized
-- **Completed**: {details}
-- **Issues**: {description, or "none"}
-- **Solution**: {description, or "none"}
+Reuse compatible environments and locks, subject to the user's manager choice. When uv is required, maintain .venv, .uv-python, .uv-cache, pyproject.toml, uv.lock, and .python-version inside the authorized root according to project rules. Do not create environments for file inspection.
 
-## Known Issues
-- [ ] {description}
+Record Python, PyTorch, CUDA/driver compatibility, dependency versions, package indexes, and reconstruction commands. requirements.txt may include versions and the torch family. If torch requires a separate index/install, document it explicitly rather than omitting it. Do not mix managers to bypass user instructions.
 
-## How to Run
+Use real data; document official sources, revisions, access requirements, and expected sizes for missing data. Download within authorization. Never present synthetic data as experimental results; label test fixtures as tests.
 
-> This chapter is always at the bottom of dev_log.md — it is the "run manual" for this codebase. List every run command; for each command explain every parameter, what happens when it runs, and what it outputs (file/directory, format). Fill in commands as code progresses. **After every code change, check whether this chapter needs updating.**
+Preserve existing .gitignore rules and add appropriate data, weights, logs, .venv/, .uv-cache/, .uv-python/, __pycache__/, and *.py[cod] entries as needed. Retain small reproducible result files according to project needs.
 
-### Environment Setup
-```bash
-{create/activate commands}
-```
-> Note: {what this does; prerequisites, e.g. PyTorch already installed for the right CUDA version}
+## E-2 Implementation and logs
 
-### {Command 1: e.g. Training}
-```bash
-{full run command, e.g. bash scripts/train.sh --config configs/default.yaml}
-```
-- **Parameters**: `{--param}`: {meaning, range, default}
-- **What happens**: {step-by-step: reads what → does what → outputs what}
-- **Output**: {files/directories produced and their format}
+Follow implementation dependencies. Check interfaces, tensor shapes, data flow, loss/metric definitions, ablation switches, and configuration behavior. Adapt to existing layout; do not force notebooks for noninteractive tasks.
 
-### {Command 2: e.g. Evaluation / Ablation / Preprocessing …}
-> Fill in all training / evaluation / ablation / preprocessing commands in the same format.
-```
+Append a dev_log.md historical entry per meaningful change unit: rationale, affected files, document sync, validation commands/results, and remaining work. Historical entries are immutable; progress tables, known issues, and current run instructions can be updated. Synchronize README when execution, dependencies, or structure changes.
 
----
+## E-3 Implementation errors and design changes
 
-### E-2 Implement Files in Order
+Fix ordinary import, path, type, or established-semantics errors directly and verify. For a local mistake in the implementation guide, correct the guide first, then the code, and log it without repetitive approval.
 
-Implementation order: `requirements.txt` → `configs/` → `src/data/` → `src/models/{model}.py` → `src/models/baseline/` → `src/train.py` → `src/utils/` → `src/evaluate.py` → `scripts/`
+For changes to core hypotheses, methods, or evaluation protocols, present evidence, a proposal, and affected scope. Continue if authorization covers it; otherwise consolidate confirmation once. Update affected Part 2, Part 3, and implementation guidance without mechanically repeating all B/C/D.
 
-After completing each file, immediately:
-1. Update the `dev_log.md` progress table (`✅ Done`, fill in time)
-2. **Append** a log entry to `dev_log.md` (completed / issues / solution)
-3. **Check whether the "How to Run" chapter needs updating**: if this file adds/changes run commands, parameters, output files or formats, update it immediately; otherwise skip
+## E-4 Necessary validation
 
-After completing each module (data / model / training loop / utils / scripts), run one consistency check against `implementation.md`:
-- Function signatures, parameters, return values match description
-- Tensor shapes match expected values
-- If mismatch found, enter E-5 flow
+Choose checks for the project and change, reusing existing tests. For research training code, prioritize:
 
-**Follow the run strategy confirmed in E-0 item 4**:
-- Auto-run → run immediately, mark `✅ Done` only after no errors
-- User-run → static check (imports / syntax / shape inference), mark `🔄 WIP`, mark `✅ Done` after user confirms it passes
-- Mixed → run fast scripts automatically; hand slow ones to the user
+- splits and preprocessing fit only on permitted training data, with no test-set model selection;
+- small-sample end-to-end smoke runs and finite losses/gradients;
+- metrics matching independent hand calculations or trusted references;
+- ablation switches changing the intended computation;
+- configurations, seeds, data revisions, and artifacts traceable to runs.
 
----
+Run necessary relevant checks, not new tests for wording or log changes. Distinguish implemented, statically checked, smoke-tested, and full-experiment-pending states. Do not claim comprehensive validation prematurely.
 
-### E-3 requirements.txt Rules
+## E-5 README, state, and optional Git actions
 
-- Library names only, no version numbers
-- **Must not include `torch`, `torchvision`, or `torchaudio`**
+README covers purpose, environment reconstruction, data preparation, training/evaluation/ablation commands, and output locations. Update state and evidence per workflow-contract.md. Missing remotes or pending full training do not prevent accurate reporting of completed coding scope.
 
----
+Commit/push only when authorized. Inspect repository, branch, remotes, and diff first. Stage task files explicitly rather than defaulting to git add .; do not force a main rename or initialize a nested repository inside an existing checkout. Check large files and sensitive configurations, and use only the authorized destination.
 
-### E-4 Blocking Issues
-
-Stop immediately and prompt:
-```
-⚠️ Blocking issue: {specific problem}
-
-Options:
-- Tell me how to fix it → fix and continue
-- Needs idea change → use `/research[B]-idea` to go back to Phase B
-- Needs experiment design change → use `/research[C]-experiment`
-- Needs implementation plan change → use `/research[D]-implementation`
-```
-
----
-
-### E-5 implementation.md Error Found
-
-If a logic error, mismatch, or unimplementable design is found in `implementation.md`, **do not patch around it in code**:
-
-1. Stop coding immediately
-2. Report the issue (location / description / impact / suggested fix)
-3. Wait for user confirmation
-4. After confirmation, **update implementation.md first**, run validation
-5. Then update code accordingly and continue
-6. Append a log entry to `dev_log.md` recording the issue and correction
-
----
-
-### E-6 User Requests Code Improvement
-
-After each change, append to `dev_log.md` (completed / reason / impact) and check whether "How to Run" needs updating. **Never change code without updating dev_log.**
-
----
-
-### E-7 Code Review (proactive, after all coding is complete)
-
-Two hard requirements only:
-1. **Runs without error**: imports complete, requirements.txt covers all libraries, paths and configs consistent, scripts launch via nohup with correct log paths
-2. **Logically correct**: core module matches Method description, tensor shapes consistent end-to-end, loss/metrics match Part 3 definitions, ablation switches actually change behavior
-
-Issues under (1) or (2) → must fix, confirm with user, append dev_log entry.
-Style/engineering issues only → mention at most in one sentence, user decides.
-
----
-
-### E-8 Write README.md
-
-After all code is complete and the review passes, write README.md (at the location confirmed in E-0):
-
-**Must include**:
-- **Project overview**: one paragraph on what this project does (from idea_report.md topic)
-- **Environment setup**: create/activate commands based on E-0; install PyTorch per official guide (by CUDA version); `pip install -r requirements.txt` for the rest
-- **Detailed run commands**: sync from the "How to Run" chapter in dev_log.md
-
----
-
-### E-9 Git Commit and Push
-
-After README.md is written, commit and push per the git config from E-0:
-
-```bash
-git add .
-git commit -m "Initial commit: {topic} implementation"
-git branch -M main
-git remote add origin {repo_url}
-git push -u origin main
-```
-
-> **Push scope**:
-> - Whole project → run from project root
-> - `code/` only → initialize git inside `code/`, push from there
-
-**Large file check**: before pushing, check for files over 100 MB (`find . -size +100M`). If any found, ask user to confirm exclusion.
-
----
-
-### E-10 Phase E Complete
-
-After code review passes, README is written, and git is pushed:
-
-```
-Phase E complete. Code review passed, README written, code pushed.
-
-→ If experiment results are unsatisfactory, use `/research[F]-iteration` to iterate.
-→ If results are satisfactory, go straight to paper planning: `/research[G.0]-plan`.
-```
+Report checks actually run, outcomes, unrun work, and limitations; continue iteration or hand off to writing according to the user's scope.

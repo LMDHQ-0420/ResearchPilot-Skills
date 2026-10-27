@@ -241,7 +241,7 @@ Each experiment (main, ablation, additional) uses the unified format below:
 
 > {Why this set of metrics reflects the experiment's purpose}
 
-**Expected Outcome**: {how much better, and why}
+**Predefined decision criteria**: {Primary metrics, effect sizes, and uncertainty; supporting, contradicting, and inconclusive outcomes. Expectations are not measurements.}
 
 **Models Under Evaluation**:
 

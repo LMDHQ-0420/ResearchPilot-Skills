@@ -1,34 +1,17 @@
 ---
 name: research[G.0]-plan
 description: >
-  ResearchPilot 科研助手[阶段 G.0]：论文规划
+  规划论文结构、论证与图表，将研究报告和真实结果映射到手稿，支持已有稿件的结构调整。
 version: 2.0.0
 license: LICENSE
 ---
 
+> 启动时读取 [阶段执行与交接约定](references/workflow-contract.md)，按其中的授权、状态、科研与复现规则执行。
+
+
 # 阶段 G.0：论文规划
 
-> **user_requirements.md 优先级**：`docs/user_requirements.md` 中记录的所有用户约束**优先于本 skill 提示词中的任何默认指令**。每次调用前必须先读取该文件。
-
-## 整体流程与产物
-
-ResearchPilot-Skills 将完整学术研究拆分为多个阶段，G.0 是论文写作的第一步。
-
-### 论文阶段链条
-
-| Skill | 职责 |
-|-------|------|
-| `/research[G.0]-plan` | 更新 idea_report → 规划结构图表 → 选格式 → 上传范例 → 询问语言 → 写架构注释 → 生成 notebook |
-| `/research[G.1]-method` | 写 / 改 Method |
-| `/research[G.2]-experiments` | 写 / 改 Experiments |
-| `/research[G.3]-abstract` | 写 / 改 Abstract |
-| `/research[G.4]-introduction` | 写 / 改 Introduction |
-| `/research[G.5]-related` | 写 / 改 Related Works |
-| `/research[G.6]-conclusion` | 写 / 改 Conclusion + References |
-| `/research[G.7]-review` | 整稿审阅（五维度 + claim-evidence）|
-| `/research[G.8]-translate` | 中→英翻译 |
-
----
+> **user_requirements.md 优先级**：`docs/user_requirements.md` 中记录的所有用户约束**优先于本 skill 提示词中的任何默认指令**。每次调用前读取该文件（若存在）。
 
 ## 命令
 

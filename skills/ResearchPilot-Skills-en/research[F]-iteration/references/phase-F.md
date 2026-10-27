@@ -3,13 +3,13 @@
 ## Phase F: Code Iteration
 
 > **user_requirements.md takes priority**: All constraints in `docs/user_requirements.md` take precedence over any default instruction in this file.
-> **dev_log.md is append-only**: Every code change must append a new log entry. Never overwrite or delete existing entries.
+> **dev_log.md is append-only**: Append historical events per meaningful change unit; preserve old events while updating progress and current run instructions.
 
 ### Trigger
 
 Entered after Phase E coding is complete and experiment results are unsatisfactory. Use `/research[F]-iteration`.
 
-This phase supports multiple iteration rounds (F-1 → F-5 → F-1 loop) until results are satisfactory.
+This phase supports multiple iteration rounds (F-1 → F-5 → F-1 loop) until the predefined question is answered, the budget is exhausted, or a stopping criterion is met; preserve results that do not support the hypothesis.
 
 ---
 
@@ -17,7 +17,7 @@ This phase supports multiple iteration rounds (F-1 → F-5 → F-1 loop) until r
 
 **First, read the following files to gather full context**:
 1. `docs/dev_log.md`: experiment results and previous iteration history
-2. `results/` evaluation files (eval json / ablation summary csv, etc.)
+2. Evaluation files at the project’s actual configured result path (eval json / ablation summary csv, etc.)
 3. `docs/idea_report.md` Part 2 (Method) and Part 3 (Experiment Design)
 
 Based on the above, systematically examine three angles and produce a diagnostic report:
@@ -51,7 +51,7 @@ Does this diagnosis look accurate? Which direction would you like to pursue, or 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-Wait for the user to confirm the direction before proceeding to F-2.
+Combine diagnosis and scope decisions in F-2; continue directly when existing authorization covers them.
 
 ---
 
@@ -61,7 +61,7 @@ Based on the diagnosis and user's choice, confirm what needs to change:
 
 **Decision criteria**:
 - All metrics are generally low but ablation results are normal (each component contributes) → prioritize hyperparameter / training changes only
-- One module shows no significant drop when ablated, or one module far outperforms expectations while others contribute little → change model architecture
+- No significant ablation effect → inspect switches, statistical power, and alternatives first; change architecture only with sufficient evidence and authorization
 - Baseline selection is inappropriate, dataset distribution issues, evaluation metrics don't match RQs, or experiment design fails to answer RQs → change experiment design
 
 ```
@@ -82,7 +82,7 @@ Based on the diagnosis, confirm the scope of changes:
 After confirming the scope, I will update the design documents first, then change the code.
 ```
 
-**Constraint**: the scope must be confirmed by the user. Design documents must be updated before any code changes. Patching code without updating documents is not allowed.
+Consolidate confirmation once for method/evaluation changes beyond authorization. Execute configuration changes and ordinary fixes directly; update affected design documents first only when design semantics change.
 
 ---
 
@@ -105,14 +105,14 @@ Update per the scope confirmed in F-2:
 - Update `implementation.md`
 - Run implementation.md validation
 
-After updating, show the user a change summary and confirm:
+After updating, report a change summary and continue within the approved scope:
 ```
 Documents updated. Summary of changes:
 - idea_report.md: {what changed, which section}
 - implementation.md: {which functions/modules}
 - Validation result: {passed / issues found: …}
 
-Confirmed? I will start modifying the code.
+Continue code changes within the authorized scope.
 ```
 
 ---
@@ -121,7 +121,7 @@ Confirmed? I will start modifying the code.
 
 Modify the code per the updated documents.
 
-After each file is changed, **append** an iteration log entry to `dev_log.md`:
+After each meaningful change unit, **append** an iteration log entry to `dev_log.md`:
 
 ```markdown
 ### {YYYY-MM-DD HH:MM} — Iteration #{N}: {brief description}
@@ -135,7 +135,7 @@ After each file is changed, **append** an iteration log entry to `dev_log.md`:
 ```
 
 **Constraints**:
-- Every code change must append a log entry — never change code silently
+- Log each meaningful change unit and preserve failed and negative outcomes
 - If the change affects run commands or parameters, update the "How to Run" chapter in `dev_log.md`
 
 ---

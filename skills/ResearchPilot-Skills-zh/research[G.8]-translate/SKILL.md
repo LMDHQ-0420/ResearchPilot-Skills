@@ -1,10 +1,13 @@
 ---
 name: research[G.8]-translate
 description: >
-  ResearchPilot 科研助手[阶段 G.8]：中英翻译（仅中文版）
+  将中文科研手稿翻译为英文 LaTeX，保持技术含义、数据、公式和引用一致。
 version: 2.0.0
 license: LICENSE
 ---
+
+> 启动时读取 [阶段执行与交接约定](references/workflow-contract.md)，按其中的授权、状态、科研与复现规则执行。
+
 
 # 阶段 G.8：中→英翻译
 

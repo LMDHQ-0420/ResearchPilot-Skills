@@ -29,9 +29,9 @@
 
 🔬 **端到端覆盖**：方向探索 → 文献调研 → Idea 深化 → 实验设计 → 编码 → 代码迭代 → 论文写作，一套 skill 贯穿全程，每个阶段独立加载，上下文精准。
 
-📐 **实验设计不妥协**：实验的唯一目的是严格证明 idea 有效性。资源约束不参与设计，只在方案完成后作事后预估。
+> **实验设计原则**：检验可证伪假设，保留负结果；结合设备、时间和预算提供完整证据方案与核心执行方案，并明确结论边界。
 
-🧱 **设计文档与代码强绑定**：每次修改代码前必须先更新设计文档（`idea_report.md` / `implementation.md`），禁止只在代码里打补丁绕过设计问题，回溯全链路进行。
+🧱 **设计文档与代码强绑定**：方法或评估协议变化时先更新受影响设计文档（`idea_report.md` / `implementation.md`），普通实现错误直接修复并验证；按影响同步，避免机械重走全部阶段。
 
 📝 **论文写作有据可依**：基于彭思达老师公开学习笔记，每个章节有写作框架、例子和约束。每次修改前先读全文，避免章节割裂。
 
@@ -43,11 +43,11 @@
 
 | 阶段 | Skill | 主要工作 | 产物 |
 |------|-------|---------|------|
-| **A** 方向探索 | `research[A]-exploration` | 文献检索（≥15 篇）→ 三层 RQ 确认 → 必要性论证 → 汇编 Part 1 | `idea_report.md` Part 1 |
+| **A** 方向探索 | `research[A]-exploration` | 文献检索（按证据覆盖确定数量）→ 三层 RQ 确认 → 必要性论证 → 汇编 Part 1 | `idea_report.md` Part 1 |
 | **B** Idea 深化 | `research[B]-idea` | 技术框架 → 大白话 pipeline → Method 撰写 → Introduction 精修 | `idea_report.md` Part 2 |
 | **C** 实验设计 | `research[C]-experiment` | 精读 baseline 代码 → 归纳领域惯例 → 确认实验大纲 → 设计主/消融/附加实验 | `idea_report.md` Part 3 |
 | **D** 实现设计 | `research[D]-implementation` | 生成函数级编码指南 → 三项校验（覆盖/一致性/完整性）| `implementation.md` |
-| **E** 编码 | `research[E]-coding` | 逐文件实现 → 逐模块校验 → 代码审查 → 写 README → git 推送 | 代码 + `dev_log.md` |
+| **E** 编码 | `research[E]-coding` | 逐文件实现 → 逐模块校验 → 代码审查 → 写 README → 按授权提交/推送 | 代码 + `dev_log.md` |
 | **F** 代码迭代 | `research[F]-iteration` | 读实验结果诊断 → 确认回溯范围 → 先改文档再改代码 → 追加迭代记录 | `dev_log.md` 迭代记录 |
 | **G** 论文写作 | `research[G.0]`–`research[G.8]` | 更新 idea_report → 规划结构图表 → 按章节写作 → 整稿审阅 → 中英翻译 | `docs/manuscripts/` |
 
@@ -232,3 +232,15 @@ ls ~/.claude/skills/ | grep research
 ## 许可证
 
 MIT License — 见 [LICENSE](LICENSE)
+
+
+## 技能维护与校验
+
+阶段状态、确认边界、科研与复现规则维护在 shared/zh/workflow-contract.md；模板规则维护在 shared/zh/template-flexibility.md。英文源位于 shared/en/。运行以下命令同步独立技能内的副本并校验：
+
+```powershell
+node scripts/sync-shared-references.mjs
+node scripts/validate-skills.mjs
+```
+
+只读检查副本是否漂移：`node scripts/sync-shared-references.mjs --check`。各技能仍可独立安装，不依赖安装目录外的 shared 文件。阶段状态写入研究项目的 docs/research_state.json；入口检测默认只读，旧项目按实际内容恢复。维护回归场景见 [校验说明](docs/skill-validation.md)。

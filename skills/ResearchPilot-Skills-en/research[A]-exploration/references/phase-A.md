@@ -140,9 +140,9 @@ fi
 
 ## Literature Reading Principle (applies to idea generation and every adjustment)
 
-> This principle applies to **the initial idea generation** as well as **any later adjustment of the idea** (including adjustments triggered by backtracking from Phase D/E — see the backtracking flow in `phase-implementation.md`).
+> This principle applies to **the initial idea generation** as well as **any later adjustment of the idea** (including adjustments triggered by backtracking from Phase D/E — see the backtracking flow in the Phase D implementation guide).
 
-Before writing or revising the idea each time, you must **read existing literature extensively**:
+Read literature relevant to the current idea decision, reusing existing reading records when sufficient:
 
 - **Read what is already downloaded first; do not rush to download new papers**: first read closely the relevant papers already in `docs/papers/`, mastering them as the basis for design.
 - **Download more only when needed**: when you find the existing literature **cannot support the current design decision, or cannot answer a newly surfaced question**, then re-run the "paper download logic" (search → confirm the download list with the user → download → read closely) and add the new papers to `docs/papers/`.
@@ -164,7 +164,7 @@ Please tell me the direction you want to research. For example:
 
 ### Confirmation Card (shared by Phases A / B)
 
-Every output in Phase A and Phase B begins with a "confirmed content card", so the user can always see the currently locked consensus. Format:
+Show a concise confirmed-content card when decisions change, resuming, or handing off. Format:
 
 ```
 ━━━━━━━━━━ Confirmed Content ━━━━━━━━━━
