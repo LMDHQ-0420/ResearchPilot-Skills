@@ -10,8 +10,6 @@
 
 [English](README.en.md) | 中文
 
-</div>
-
 ---
 
 ## News
