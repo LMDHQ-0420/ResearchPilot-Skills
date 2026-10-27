@@ -1,0 +1,7 @@
+interface:
+  display_name: "research[fig] Figuras científicas"
+  short_description: "Crea y valida figuras científicas con datos reales"
+  default_prompt: "Usa $research[fig] para crear figuras listas para publicación a partir de los resultados reales del proyecto."
+
+policy:
+  allow_implicit_invocation: true
