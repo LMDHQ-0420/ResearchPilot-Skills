@@ -1,35 +1,40 @@
 @echo off
-:: ResearchPilot-Skills 卸载脚本（Windows，中英文均可）
-:: Usage / 用法：uninstall.bat [claude|codex|codebuddy]
+:: ResearchPilot-Skills uninstaller for all editions: zh / en / es.
+:: Usage: uninstall.bat [claude|codex|codebuddy]
+setlocal EnableExtensions DisableDelayedExpansion
 
-setlocal EnableDelayedExpansion
+set "TARGET=%~1"
+if "%TARGET%"=="" set "TARGET=claude"
+set "DEST="
 
-set TARGET=%~1
-if "%TARGET%"=="" set TARGET=claude
-
-if "%TARGET%"=="claude"    set DEST=%USERPROFILE%\.claude\skills
-if "%TARGET%"=="codex"     set DEST=%USERPROFILE%\.codex\skills
-if "%TARGET%"=="codebuddy" set DEST=%CD%\.codebuddy\skills
+if /I "%TARGET%"=="claude" set "DEST=%USERPROFILE%\.claude\skills"
+if /I "%TARGET%"=="codex" set "DEST=%USERPROFILE%\.codex\skills"
+if /I "%TARGET%"=="codebuddy" set "DEST=%CD%\.codebuddy\skills"
 
 if not defined DEST (
-    echo 用法 / Usage: uninstall.bat [claude^|codex^|codebuddy]
+    echo Usage: uninstall.bat [claude^|codex^|codebuddy]
     exit /b 1
 )
 
-echo 卸载 ResearchPilot-Skills from %DEST%
-echo.
+:: All editions share these names. G.8 belongs to the Chinese edition.
+set "skills=research[fig] research[START] research[A]-exploration research[B]-idea research[C]-experiment research[D]-implementation research[E]-coding research[F]-iteration research[G.0]-plan research[G.1]-method research[G.2]-experiments research[G.3]-abstract research[G.4]-introduction research[G.5]-related research[G.6]-conclusion research[G.7]-review research[G.8]-translate"
+for %%D in ("%DEST%") do set "DEST=%%~fD"
 
-set skills=research[fig] research[START] research[A]-exploration research[B]-idea research[C]-experiment research[D]-implementation research[E]-coding research[F]-iteration research[G.0]-plan research[G.1]-method research[G.2]-experiments research[G.3]-abstract research[G.4]-introduction research[G.5]-related research[G.6]-conclusion research[G.7]-review research[G.8]-translate
-
-set removed=0
+echo Uninstalling ResearchPilot-Skills [zh/en/es] from "%DEST%"
+set "removed=0"
 for %%s in (%skills%) do (
-    if exist "%DEST%\%%s" (
+    if exist "%DEST%\%%s\" (
         rmdir /S /Q "%DEST%\%%s"
+        if exist "%DEST%\%%s\" (
+            echo [ERROR] Could not remove %%s
+            exit /b 1
+        )
         echo   [removed] %%s
-        set /a removed+=1
+        set /a removed+=1 >nul
     )
 )
 
 echo.
-echo 已卸载 %removed% 个 skill。
+echo Removed: %removed% skills.
 endlocal
+exit /b 0

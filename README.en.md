@@ -8,13 +8,15 @@
 
 **A full-pipeline AI research assistant — from research question to published paper**
 
-[中文](README.md) | English
+[中文](README.md) | English | [Español](README.es.md)
 
 </div>
 
 ---
 
 ## News
+
+- 🌍 **[2026/10/27]** Added the [Spanish edition](README.es.md), `install-es.bat` / `install-es.sh`, and shared uninstall support for all three languages.
 
 - 🎨 **[2026/09/11]** Added the standalone scientific-figure Skill `/research[fig]`: read real project data and generate validated PDF, SVG, and 500 dpi PNG figures under `code/fig/`.
 - 🌟 **[2026/08/01]** 200 stars! Thank you all for the support. Two improvements ship with this milestone: figure style constraints removed — plots are now fully flexible; writing phases G.1–G.6 now detect architecture change intent automatically, so you can trigger any skill with a structural edit in mind and it will update the plan before writing.
@@ -124,6 +126,14 @@ bash uninstall.sh
 
 # Switch to Chinese version
 bash uninstall.sh && bash install-zh.sh
+
+# Install Spanish (choose one target)
+bash install-es.sh
+bash install-es.sh codex
+bash install-es.sh codebuddy
+
+# Switch Codex to Spanish
+bash uninstall.sh codex && bash install-es.sh codex
 ```
 
 **Windows**
@@ -146,7 +156,21 @@ uninstall.bat
 
 :: Switch to Chinese version
 uninstall.bat && install-zh.bat
+
+:: Install Spanish (choose one target)
+install-es.bat
+install-es.bat codex
+install-es.bat codebuddy
+
+:: Switch Codex to Spanish
+uninstall.bat codex && install-es.bat codex
 ```
+
+---
+
+The shared uninstaller supports Chinese, English, and Spanish. Pass the same target used for installation, such as `bash uninstall.sh codex` or `uninstall.bat codex`; the default is Claude Code. Editions share skill names, so uninstall before switching languages. The uninstaller also removes the Chinese-only G.8 skill and leaves unrelated skills in place.
+
+Chinese includes 17 skills; English and Spanish each include 16. In PowerShell, prefix BAT commands with `.\`, for example `.\install-es.bat codex`, and run installation after uninstallation succeeds. Run CodeBuddy installation and uninstallation from the target project directory; the Spanish installer can be called by its absolute path.
 
 ---
 

@@ -8,13 +8,15 @@
 
 **从研究问题到发表论文的全流程 AI 研究助手**
 
-[English](README.en.md) | 中文
+[English](README.en.md) | 中文 | [Español](README.es.md)
 
 </div>
 
 ---
 
 ## News
+
+- 🌍 **[2026/10/27]** 新增[西语版说明](README.es.md)及 `install-es.bat` / `install-es.sh`；通用卸载脚本支持中、英、西三种版本。
 
 - 🎨 **[2026/09/11]** 新增独立科研绘图 Skill `/research[fig]`：读取真实项目数据，在 `code/fig/` 下生成并检查 PDF、SVG 和 500 dpi PNG 图件。
 - 🌟 **[2026/08/01]** 突破 200 stars！感谢大家的支持。借此机会优化了两处体验：作图不再强制样式，可以更加灵活的作图；写作阶段新增架构变更检测，随时带着修改意图触发任意 G.1–G.6 skill。
@@ -126,6 +128,14 @@ bash uninstall.sh
 
 # 切换英文版
 bash uninstall.sh && bash install-en.sh
+
+# 安装西语版（Claude Code / Codex / CodeBuddy，三选一）
+bash install-es.sh
+bash install-es.sh codex
+bash install-es.sh codebuddy
+
+# 将 Codex 切换为西语版
+bash uninstall.sh codex && bash install-es.sh codex
 ```
 
 **Windows**
@@ -148,7 +158,21 @@ uninstall.bat
 
 :: 切换英文版
 uninstall.bat && install-en.bat
+
+:: 安装西语版（Claude Code / Codex / CodeBuddy，三选一）
+install-es.bat
+install-es.bat codex
+install-es.bat codebuddy
+
+:: 将 Codex 切换为西语版
+uninstall.bat codex && install-es.bat codex
 ```
+
+---
+
+中、英、西三种版本使用同一套 `uninstall.bat` / `uninstall.sh`。卸载时指定与安装相同的目标，例如 `bash uninstall.sh codex` 或 `uninstall.bat codex`；不传参数时默认为 Claude Code。切换语言前先卸载，因为各语言版本的技能名称相同；通用卸载还会移除中文版独有的 G.8，其余技能不受影响。
+
+中文版包含 17 个技能，英文版和西语版各包含 16 个。PowerShell 中运行 BAT 时加 `.\`，例如 `.\install-es.bat codex`；先卸载成功，再执行安装。CodeBuddy 的安装和卸载都从目标项目目录运行，西语安装脚本也支持通过绝对路径调用。
 
 ---
 

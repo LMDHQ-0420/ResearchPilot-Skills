@@ -1,23 +1,20 @@
 #!/bin/bash
-# ResearchPilot-Skills 卸载脚本（中英文均可）
-# 用法：bash uninstall.sh [claude|codex|codebuddy]
-
-set -e
+# ResearchPilot-Skills uninstaller for all editions: zh / en / es.
+# Usage: bash uninstall.sh [claude|codex|codebuddy]
+set -euo pipefail
 
 TARGET="${1:-claude}"
-
 case "$TARGET" in
   claude)    DEST="$HOME/.claude/skills" ;;
   codex)     DEST="$HOME/.codex/skills" ;;
-  codebuddy) DEST=".codebuddy/skills" ;;
+  codebuddy) DEST="$PWD/.codebuddy/skills" ;;
   *)
-    echo "用法 / Usage: bash uninstall.sh [claude|codex|codebuddy]"
+    echo "Usage: bash uninstall.sh [claude|codex|codebuddy]" >&2
     exit 1
     ;;
 esac
 
-echo "卸载 ResearchPilot-Skills from $DEST"
-
+# All editions share these names. G.8 belongs to the Chinese edition.
 skills=(
   "research[fig]"
   "research[START]"
@@ -38,15 +35,16 @@ skills=(
   "research[G.8]-translate"
 )
 
+echo "Uninstalling ResearchPilot-Skills [zh/en/es] from $DEST"
 removed=0
 for skill in "${skills[@]}"; do
   target="$DEST/$skill"
-  if [ -d "$target" ]; then
-    rm -rf "$target"
-    echo "  🗑️  $skill"
-    ((removed++)) || true
+  if [ -d "$target" ] || [ -L "$target" ]; then
+    rm -rf -- "$target"
+    echo "  [removed] $skill"
+    removed=$((removed + 1))
   fi
 done
 
 echo ""
-echo "已卸载 $removed 个 skill。"
+echo "Removed: $removed skills."
